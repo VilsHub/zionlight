@@ -1,0 +1,303 @@
+/* CSS Document */
+@keyframes glow{
+	from{
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+@keyframes load{
+	from{
+		left: 0;
+	}
+	to {
+		left: 80%;
+	}
+}
+html,body{
+	height: 100%;
+	width:100%;
+	background-color: #1a1a1a;
+}
+#topRule{
+	position: relative;
+	height: 2px;
+	z-index:223 ;
+	background-color: purple;
+	border: 0;
+
+}
+#bg{
+	height: 100%;
+	width:100%;
+	display: flex;
+	top:0;
+	z-index:222;
+	position: fixed;
+	transition: .8s top cubic-bezier(.83,.01,.99,.34);
+	min-height: 600px;
+	background-color: #1a1a1a;
+	box-sizing: border-box;
+
+}
+#bg #splash{
+	height: 100%;
+	width:97%;
+	max-width: 1349px;
+	display: flex;
+	flex-direction: row;
+	margin: 0 auto;
+}
+
+#splash #greetingsCon{
+	flex-basis: 27%;
+	position: relative;
+	background-color: #1a1a1a;
+}
+#splash #greetingsCon #gContent{
+	width: 100%;
+	height: 200px;
+	position: absolute;
+	top: 30%;
+}
+#splash #greetingsCon #gContent #logoCon{
+	width: 100%;
+	height: 30%;
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+#splash #greetingsCon #gContent #logoCon #logo{
+	flex-basis: 50%;
+	height: 100%;
+	display: flex;
+	flex-flow: row;
+	justify-content: center;
+	align-items: center;
+}
+#splash #greetingsCon #gContent #logoCon #logo a{
+	margin: 0 auto;
+	flex-basis: 0%;
+	transition: all .5s ease-out;
+}
+#splash #greetingsCon #gContent #greetings{
+	width: 100%;
+	height:auto;
+}
+#splash #greetingsCon #gContent #greetings p:nth-child(2){
+	color: white;
+	text-align: center;
+	font-family: "CommercialScript3";
+	margin-top: 10px;
+	font-size: 20px;
+}
+
+#splash #summaryCon #splitter{
+	width: 7px;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content:center;
+}
+#splash #summaryCon #splitter #line{
+	width: 100%;
+	flex-basis: 0;
+	background-color:#BA26C7;
+	border-radius: 5px;
+	transition: all .3s ease-out;
+}
+#splash #summaryCon{
+	flex-basis: 72%;
+	background-color: #1a1a1a;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+#splash #summaryCon #titleCon{
+	flex-basis: 8%;
+	background-color: #1a1a1a;
+
+}
+#splash #summaryCon #listCon{
+	flex-basis: 92%;
+	display: flex;
+	overflow: hidden;
+	position:relative;
+}
+#splash #summaryCon #listCon ul{
+	margin: 34px 0 0 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	flex-basis: 100%;
+	height: auto;
+}
+#splash #summaryCon #listCon ul li .lcon{
+	height: 100%;
+	position: relative;
+	padding: 5px 5px 5px 158px;
+	box-sizing: border-box;
+	border-top-right-radius: 30px;
+	border-bottom-right-radius: 30px;
+	transition: left .35s cubic-bezier(.48,.09,.42,1.27);
+	visibility: hidden;
+	font-weight: 500;
+	font-style: italic;
+	left: 0;
+	background-color:rgba(255,255,255,.10);
+}
+#splash #summaryCon #listCon ul li #softDev{
+	width: 516px;/*358 + 158*/
+}
+
+#splash #summaryCon #listCon ul li #Hes{
+	/*background-color: rgba(219,0,0,1.00);*/
+	width: 498px;/*340 + 158*/
+}
+
+#splash #summaryCon #listCon ul li #hus{
+	/*background-color: rgba(0,86,219,1.00);*/
+	width: 338px;/*180 + 158*/
+}
+
+#splash #summaryCon #listCon ul li #trn{
+	/*background-color: #ba26c7;*/
+	width: 578px;/*420 + 158*/
+}
+
+#splash #summaryCon #listCon ul li .lcon .grid{
+	width: 100%;
+	height: 100%;
+	padding:0 15% 0 3%;
+	box-sizing: border-box;
+	border: dashed 1.5px #BA26C7;
+	border-left: none;
+	border-top-right-radius: 30px;
+	border-bottom-right-radius: 30px;
+	font-size: 18px;
+	line-height: 250%;
+	font-family:"Times New Roman";
+	background-color:rgba(255,255,255,.10);
+	color: white;
+}
+#splash #summaryCon #listCon ul li{
+	/*flex-basis: 3%;*/
+	margin-bottom: 15px;
+	color:white;
+
+}
+#splash #summaryCon #listCon #progressCon{
+	position: absolute;
+	width: 200px;
+	height:200px;
+	bottom:20px;
+	right: 20px;
+}
+#splash #summaryCon #listCon #progressCon #glowCon{
+	position: absolute;
+	width: 100%;
+	height:100%;
+	z-index: 2;
+}
+#splash #summaryCon #listCon #progressCon #glowCon #glow{
+	width: 100%;
+	height:100%;
+	background-color: transparent;
+	border-radius: 50%;
+	animation-duration: 1.7s;
+	animation-name: glow;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	animation-direction: alternate-reverse;
+	transition: 1.7s all linear;
+}
+#splash #summaryCon #listCon #progressCon #prog{
+	position: absolute;
+	width: 100%;
+	height:100%;
+	background-color: #1a1a1a;
+
+}
+#splash #summaryCon #listCon #progressCon #loadIndicator{
+	position: absolute;
+	width: 100%;
+	height:100%;
+	z-index: 3;
+	background-color: transparent;
+}
+#splash #summaryCon #listCon #progressCon #loadIndicator #irow{
+	position: absolute;
+	width: 100%;
+	height:5%;
+	bottom: 22%;
+}
+#splash #summaryCon #listCon #progressCon #loadIndicator #irow #dotCon{
+	width: 40%;
+	height:100%;
+	margin: 0 auto;
+	position: relative;
+	border: solid 1px rgba(39,39,39,1.00);
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: inset 0 0 0 1px #ccc;
+	display: none;
+}
+#splash #summaryCon #listCon #progressCon #loadIndicator #irow #dotCon .dot{
+	width: 20%;
+	height:100%;
+	background-color: white;
+	border-radius: 5px;
+	position: absolute;
+	left: 0;
+	animation-name: load;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-direction: alternate;
+	animation-timing-function: linear;
+	animation-delay: .2s;
+}
+#inBtt .locked{
+	color: #0A0A0A;
+	border: 1px solid #0A0A0A;
+	cursor: not-allowed;
+}
+#inBtt .locked:hover{
+	color: #0A0A0A;
+	border: 1px solid #0A0A0A;
+	box-shadow: inset 0px 0px 0px #0A0A0A;
+
+}
+* .vicon-spinner{
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	line-height:50px;
+	font-size: 30px;
+	color: #0A0A0A;
+	margin-top: -20px;
+}
+#inBtt button{
+	border-radius: 55px;
+	color: white;
+	width:260px;
+	height: 50px;
+	background-color: #1a1a1a;
+	border: 1px solid purple;
+	cursor: pointer;
+	font-size: 14px;
+	font-family: arial;
+	transition: 0.2s box-shadow ease-in;
+	font-weight: 100;
+	display: none;
+	box-sizing: border-box;
+}
+#inBtt button:hover{
+	box-shadow: inset 0px 0px 16px purple;
+}
+#inBtt button:active{
+	box-shadow: inset 0px 0px 16px black;
+}

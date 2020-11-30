@@ -1,0 +1,16 @@
+h1{
+  font-size: 46px!important;
+}
+.page .maintenanceInfo img{
+  height:250px;
+}
+@media screen and (max-width:999px){
+  .page .maintenanceInfo{
+    width:70%;
+  }
+}
+@media screen and (max-width:700px){
+  .page .maintenanceInfo{
+    width:100%;
+  }
+}

@@ -1,0 +1,21 @@
+{
+    "name": "vilshub/xhrHandler",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Starlyvil",
+            "email": "stalyvil@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+      "php":">=5.3.0",
+      "vilshub/helpers": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "vilshub\\xhrHandler\\" : "src"
+        }
+    }
+}

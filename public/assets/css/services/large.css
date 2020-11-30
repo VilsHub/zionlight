@@ -1,0 +1,114 @@
+/* CSS Document */
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails{
+	perspective: 1000px;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(1){
+	transform: rotateY(10deg);
+	flex-basis: 27%;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(2){
+	height: 562px;
+	margin-top:5px;
+	flex-basis: 35%;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(3){
+	transform: rotateY(-10deg);
+	flex-basis: 27%;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(4)::after{
+	width:10px;
+	height: 10px;
+	content: "";
+	position: absolute;
+	top: 50%;
+	margin-top: -5px;
+	border-radius: 10px;
+	background-color: hsla(0,0%,100%,1.00);
+	right: -5px;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(5)::before{
+	left: 75px;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(6)::after{
+	right: 55px;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(1){
+	flex-basis: 30%;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(2){
+	flex-basis: 28%;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(3){
+	flex-basis: 14%;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(4){
+	flex-basis: 14%;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(5){
+	flex-basis: 20%;
+	text-align: right;
+	padding-right: 40px;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(6){
+	flex-basis: 7%;
+	padding-left: 40px;
+	text-align: left;
+}
+
+/*Responsive fix*/
+	/* Land page */
+	@media screen and (max-width:1162px){
+		.page #content #pID #contentCon #summary h1::before , .page #content #pID #contentCon #summary h1::after{
+		    width: 70%;
+		}
+		.page #content #pID #contentCon #summary h1::after{
+		    right: -74%;
+		}
+		.page #content #pID #contentCon #summary h1::before{
+		    left: -74%;
+		}
+	}
+	@media screen and (max-width:1118px){
+		.page #content #pID #contentCon #summary h1::before , .page #content #pID #contentCon #summary h1::after{
+		    width: 60%;
+		}
+		.page #content #pID #contentCon #summary h1::after{
+		    right: -64%;
+		}
+		.page #content #pID #contentCon #summary h1::before{
+		    left: -64%;
+		}
+	}
+		@media screen and (max-width:1066px){
+			.page #content #pID #contentCon #summary h1::before , .page #content #pID #contentCon #summary h1::after{
+			    width: 50%;
+			}
+			.page #content #pID #contentCon #summary h1::after{
+			    right: -54%;
+			}
+			.page #content #pID #contentCon #summary h1::before{
+			    left: -54%;
+			}
+
+		}
+
+
+		/* Software development */
+			@media screen and (max-width:1144px){
+				.page #content .serDetailsCon .details .detailsSummary {
+				   width: 92%;
+				}
+			}
+
+		/*Expert human */
+			@media screen and (max-width:1300px){
+					.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul li{
+						font-size: 12px;
+					}
+			}
+			@media screen and (max-width:1030px){
+					.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul li{
+						font-size: 11px;
+					}
+			}
+}

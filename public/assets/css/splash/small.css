@@ -1,0 +1,192 @@
+/* CSS Document */
+#splash #greetingsCon #gContent #greetings p:first-of-type{
+	color: white;
+	margin-left: 10px;
+	font-family:"sans-serif";
+	font-size: 18px;
+	font-weight: 100;
+	width: 100%;
+	letter-spacing: 35px;
+	text-transform:uppercase;
+	text-align: center;
+	word-wrap: break-word;
+}
+#bg #splash{
+	margin: 0px auto 0 auto;
+	/*flex-direction: column;
+	justify-content:center;
+	align-content: center*/
+	display: block;
+}
+#splash #greetingsCon #gContent {
+    width: 100%;
+    height: 100%;
+    position: relative;
+   	top: 0%;
+	/* box-sizing: border-box;*/
+}
+#splash #greetingsCon {
+    flex-basis: 28%;
+	width:  90%;
+	margin: 0px auto 0 auto;
+	position: relative;
+	padding-top: 30px;
+	
+	
+}
+#bg{
+	height:100%;
+	border-bottom:none;
+	
+}
+#splash #summaryCon #titleCon h1{
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 2% 0 0 5%;
+	line-height: 200%;
+	text-align:center;
+	color: #3F3F3F;
+	font-size: 20px;
+	letter-spacing: 20px;
+	word-spacing: 10px;
+	font-weight: 100;
+	box-sizing: border-box;
+}
+#splash #summaryCon{
+	flex-basis: 72%;
+	background-color: #1a1a1a;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	width: 90%;
+	margin: 0 auto 0 auto;
+}
+#splash #summaryCon #splitter {
+	display: none;
+}
+#splash #summaryCon #listCon {
+	margin-bottom: 68px;
+	display: block;
+	overflow: visible;
+}
+#splash #summaryCon #listCon ul {
+	width: 100%;
+	display: block;
+	height: auto;
+	margin: 34px auto 0 auto;
+	float: left;
+}
+#splash #summaryCon #listCon ul li{
+	width: 100%;
+	height: auto;
+	list-style: none;
+}
+#splash #summaryCon #listCon ul li .lcon{
+	display: block;
+	/*visibility: visible;*/
+	padding: 5px 5px 5px 5px;
+	margin: 0 auto 0 auto;
+	box-sizing: border-box;
+    border-radius: 30px;
+	font-size: 9px;
+	
+}
+
+#splash #summaryCon #listCon ul li .lcon .grid {
+    width: 100%;
+    height: 100%;
+	padding: 0;
+    box-sizing: border-box;
+    border: dashed 1.5px #BA26C7;
+    border-radius: 30px;
+	text-align: center;
+	font-size: 15px;
+}
+#splash #summaryCon #listCon ul li #softDev {
+    /*width: 65.38511834706421%;*/
+	width: 0;
+}
+#splash #summaryCon #listCon ul li #trn {
+    /*width: 80.67053347423787%;*/
+	width: 0;
+}
+#splash #summaryCon #listCon ul li #Hes {
+    /*width: 72.60348012681408%;*/
+	width: 0;
+}
+#splash #summaryCon #listCon ul li #hus {
+   /* width: 48.40232008454272%*/
+	width: 0;
+}
+#splash #summaryCon #listCon #progressCon #prog{
+	width: 100%;
+	height: 100%;
+}
+#splash #summaryCon #listCon #progressCon{
+	width: 150px;
+	height: 150px;
+	position: absolute;
+	left: 50%;
+	margin-left: -75px;
+	bottom:-170px;
+	
+}
+#inBtt{
+	float:none;
+	width: 100%;
+	height: 55px;
+	position:absolute;
+	z-index: 40;
+	border-bottom: 2px solid purple;
+	bottom: 0;
+}
+#inBtt button{
+	color: white;
+	width:260px;
+	height: 50px;
+	font-size: 14px;	
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#inBtt .vProgress::before {
+    position: absolute;
+	top: 0;
+	left: 20px;
+	width: 50px;
+	height: 50px;
+	content: attr(data-icon);
+	animation-name: progressIndicator;
+	animation-iteration-count: infinite;
+	animation-duration: 2s;
+	animation-timing-function: linear;
+	box-sizing: border-box;
+	font-family: vicon;
+	text-align: center;
+	line-height:50px;
+	font-size: 30px;
+	color: #0A0A0A;
+}
+/*Fix*/
+@media screen and (max-width:420px){
+	#splash #summaryCon #listCon #progressCon{
+		bottom:-155px;
+	}
+}
+@media screen and (max-width:352px){
+	#splash #summaryCon #listCon ul li .lcon .grid{
+		font-size: 14px;
+	}
+	#splash #summaryCon #listCon #progressCon{
+		bottom:-170px;
+	}
+}
+@media screen and (min-width:320px){
+	#splash #greetingsCon #gContent #greetings p:first-of-type{
+		font-size: 16px;
+		letter-spacing: 20px;
+		text-align: center;
+	}
+}

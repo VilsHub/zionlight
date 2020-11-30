@@ -1,0 +1,915 @@
+/* CSS Document */
+/* Gen */
+.page #content .serDetailsCon .details h2::before, .page #content .serDetailsCon:nth-child(2n+1) .details h2::before  {
+    height: 78%;
+  }
+  .page #content .serDetailsCon:nth-child(even) .Pagelink{
+    left:50px;
+
+  }
+  .page #content .serDetailsCon:nth-child(even) .Pagelink::before{
+    border-top:50px solid #BA26C7;
+    border-left:25px solid transparent;
+    border-right:25px solid transparent;
+  }
+  .page #content .serDetailsCon:nth-child(even) .Pagelink::after{
+    border-top:50px solid #3E3E3E;
+    border-left:25px solid transparent;
+    border-right:25px solid transparent;
+  }
+  .page #content .serDetailsCon:nth-child(odd){
+    background-color:#5B5B5B;
+  }
+  .page #content .serDetailsCon:nth-child(odd) .Pagelink{
+    right:0px;
+  }
+  .page #content .serDetailsCon:nth-child(odd) .Pagelink::before{
+    border-top:50px solid #BA26C7;
+    border-left:25px solid transparent;
+    border-right:25px solid transparent;
+  }
+  .page #content .serDetailsCon:nth-child(odd) .Pagelink::after{
+    border-top:50px solid #5B5B5B;
+    border-left:25px solid transparent;
+    border-right:25px solid transparent;
+  }
+  .page #content #sftdev .details .detailsSummary .quest p:last-of-type{
+    width:30rem;
+  }
+
+/* Land page */
+	.page #content #pID{
+		background-image: url(../../../../images/content/ourServicesSmall.jpg);
+	}
+  .page #content #pID #contentCon #summary #serCon .sCon::before{
+  	content: none;
+  }
+	.page #content #pID #contentCon #summary h1{
+		font-size: 69px;
+  	height: 115px;
+  	line-height: 110px;
+  	margin: 0 auto;
+	}
+	.page #content #pID #contentCon #summary h1::before , .page #content #pID #contentCon #summary h1::after{
+	    width: 20%;
+	}
+	.page #content #pID #contentCon #summary h1::after{
+	    right: -3%;
+	}
+	.page #content #pID #contentCon #summary h1::before{
+	    left: -3%;
+	}
+	.page #content #pID #contentCon #summary #serCon{
+		width: 530px;
+    height: auto;
+	}
+	.page #content #pID #contentCon #summary #serCon .sCon::before{
+		width:5px;
+		height: 5px;
+		margin-top: -2px;
+		border-radius: 5px;
+		left: -5px;
+    top:69%;
+	}
+	.page #content #pID #contentCon #summary #serCon .sCon:nth-child(4)::after{
+		width:5px;
+		height: 5px;
+		content: none;
+		position: absolute;
+		top: 69%;
+		margin-top: -2px;
+		border-radius: 5px;
+		background-color: hsla(0,0%,100%,1.00);
+		right: -5px;
+	}
+
+	.page #content #pID #contentCon #summary #serCon .sCon{
+		height: 23px;
+		line-height: 23px;
+	}
+/**************************************************/
+
+/* Services */
+	.page #content .serDetailsCon .details .detailsSummary p {
+	    width: 100%;
+	}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item .GIDCon {
+    height: 69px;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item .GIDCon .GID::before {
+    font-size: 40px;
+		line-height: 68px;
+		height:100%;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item .GIDCon .GID {
+    height: 69px;
+    width: 70px;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item .labelCon .label {
+  width:auto;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con #line {
+    height: 35px;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con {
+    margin: 0 auto 46px auto;
+}
+.page #content #sdtrn .details .detailsSummary .platformCon .con {
+    margin: 0 auto 46px auto;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon{
+	flex-basis: 100%;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails{
+	perspective: 1000px;
+  flex-wrap: wrap;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(1){
+  transform: rotateX(-10deg) rotateY(0deg);
+  flex-basis: 70%;
+  height:477px;
+  margin-top: 37px;  /*3d effect correction for vertical rhythm*/
+  margin-bottom: 43px;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(2){
+  height: 575px;
+  margin-top:0px;
+  flex-basis: 70%;
+  transform: rotateX(-10deg);
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(3){
+  transform: rotateY(0deg) rotateX(-10deg);
+  margin-top: -5px;
+  height:506px;
+  flex-basis: 70%;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(5)::before{
+	left: 75px;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(6)::after{
+	right: 55px;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:nth-child(1), .page #content #pID #contentCon #summary #serCon .sCon:nth-child(2),.page #content #pID #contentCon #summary #serCon .sCon:nth-child(3), .page #content #pID #contentCon #summary #serCon .sCon:nth-child(4), .page #content #pID #contentCon #summary #serCon .sCon:nth-child(5), .page #content #pID #contentCon #summary #serCon .sCon:nth-child(6){
+	flex-basis: 100%;
+}
+
+.page #content .serDetailsCon .details .detailsSummary {
+	 width: 92%;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul li{
+	font-size: 11px;
+}
+/***************************************************************************************************************/
+
+
+
+
+/*Realtime solutions*/
+  .page #content .serDetailsCon .details .detailsSummary .quest p{
+  	font-size: 20px;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang,.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os{
+  	flex-basis: 115px;
+  	height: 115px;
+  	margin-top: 46px;
+  	margin-left: 0;
+  }
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul .Dselected{
+		z-index: 1;
+	}
+  .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul{
+    min-width:350px;
+    width:auto;
+    left:55px;
+    /* transition: left .6s linear, right .3s linear; */
+  }
+  .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #up:nth-child(2){
+    background-image: linear-gradient(to right, #272727 0%, rgba(39, 39, 39, 0) 100%);
+  }
+  .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #down:nth-child(4){
+    background-image: linear-gradient(to left, rgba(39, 39, 39, 1) 0%, rgba(39, 39, 39, 0) 100%);
+  }
+  .page #content .serDetailsCon .details .detailsSummary #ad {
+      margin: 115px 0 23px 0;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon{
+  	height:483px;
+  	top:69px;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #down{
+  	height:69px;
+    background-color: transparent;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #up{
+  	height:69px;
+  	padding-top: 23px;
+  	box-sizing: border-box;
+    background-color: transparent;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList{
+  	height:69px;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul{
+  	padding:46px 0 46px 0;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .stepsCon {
+    flex-wrap: wrap;
+  }
+	.page #content .serDetailsCon .details .detailsSummary .stepsCon .step{
+		flex-basis: 48%;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .stepsCon .step:last-of-type{
+	   margin-top: 138px;
+     flex-basis: 50%;
+	}
+  .page #content .serDetailsCon .details .detailsSummary .domainCon{
+		flex-direction: column;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon{
+		flex-basis: 75%;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon{
+		width:100%;
+		position: relative;
+		box-sizing: border-box;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #up{
+		width:50px;
+		position: absolute;
+		left:0;
+		padding-top: 0;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon {
+    height: 92px;
+    top: 0;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #down button, .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #up button {
+		z-index:2;
+		top:12px;
+	}
+	.detailsSummary .domainCon #DomNavCon #NavCon #up button::before {
+	   content: "\e906"!important;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul{
+		padding:0px 0 0px 0!important;
+		top:23px;
+		position: absolute;
+    /* display:table; */
+    /* display: flex; */
+	}
+	.detailsSummary .domainCon #DomNavCon #NavCon #domainList ul li {
+    /* flex-basis: 170px!important; */
+    width:170px!important;
+    border-top-right-radius: 7px;
+    border-bottom-left-radius: 0px!important;
+		margin-right:5px;
+    /* flex-shrink: 0; */
+	}
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul .Dselected::after {
+		bottom: 0!important;
+    right: -30px;
+    transform: rotate(90deg);
+		line-height: 45px;
+		padding-left: 14px;
+		box-sizing: border-box;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul .Dselected::before {
+    top: auto;
+    right: 0!important;
+    color: #888;
+		left:-30px;
+		padding-left:15px;
+		box-sizing: border-box;
+		bottom:0;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #down {
+    width:50px;
+		position: absolute;
+		right:0;
+		padding-top: 0;
+		top: 23px;
+		height: 69px;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #down button::before {
+	    content: "\e905" !important;
+	}
+	.page #content .serDetailsCon:nth-child(3) .details .detailsSummary .quest .btCons {
+    width: 100%;
+  	height: 69px;
+  	margin:23px auto;
+	}
+  .page #content .serDetailsCon .details .detailsSummary .quest button{
+  	height: 69px!important;
+  	line-height: 69px;
+  }
+  .page #content .serDetailsCon:nth-child(3) .details .detailsSummary .quest .btCons .subCon {
+    height: 69px!important;
+  }
+/***************************************************************************************************************/
+
+
+
+/*Hire us section */
+
+  .page #content #hireDev .details .detailsSummary h3{
+  	margin: 0px auto 23px auto;
+    line-height: 23px;
+  }
+  .page #content #hireDev .details .detailsSummary ul {
+    margin-bottom: 46px;
+    width:100%;
+  }
+  .page #content #hireDev .details .detailsSummary ul:nth-child(8) {
+    margin-bottom: 23px;
+  }
+  .page #content #hireDev .details .detailsSummary p{
+  	margin: 0px auto 46px auto;
+  }
+  .page #content #hireDev .details .detailsSummary p:nth-child(4),   .page #content #hireDev .details .detailsSummary p:nth-child(7){
+  	margin: 0px auto 0px auto;
+  }
+  .page #content #hireDev .details .detailsSummary p:nth-child(9){
+  	margin: 0px auto 0px auto;
+  }
+	.page #content #hireDev .details #HGid::before {
+		font-size:100px;
+		line-height: 125px;
+	}
+	.page #content #hireDev .details #HGid {
+    width: 150px;
+    height: 150px;
+    display:none;
+	}
+	.page #content #hireDev .details .detailsSummary p {
+	    width: 100%;
+	}
+  .page #content #hireDev .details .detailsSummary .quest{
+  	margin:46px  auto 46px auto;
+  }
+  .page #content #hireDev .details .detailsSummary .quest p{
+  	margin-bottom: 23px;
+  }
+/***************************************************************************************************************/
+
+
+/* Training section */
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails{
+  	margin: 46px 0 46px 0;
+  }
+  .page #content #sdtrn .details .detailsSummary .platformConDetails{
+  	margin: 23px 0 46px 0;
+  }
+
+	.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon{
+	    width: 100%;
+	}
+	.page #content #sdtrn .details .detailsSummary p {
+	  width: 24rem;
+    margin:0px auto 23px auto;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkUP {
+    width: 70px;
+    height: 120px;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkUP .linkGid {
+     width: 30px;
+     right: 25px;
+     top: -59px;
+     height:80px;
+     background-color: #3e3e3e;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkUP .linkGid::after {
+     left: -6px;
+     bottom: -10px;
+     width:140%;
+     background-color: #3e3e3e;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkDOWN {
+    width: 70px;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkDOWN .linkGid {
+     width: 50px;
+     right:15px;
+     height:100px;
+     bottom: -53px;
+	}
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .lft {
+    flex-basis: 0;
+    position: absolute;
+    left:0;
+    height: 46px;
+    width:100%;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .lft span {
+    font-size: 16px;
+    margin-top: 0;
+    top: 0;
+    height:46px;
+  	line-height:46px;
+    padding-left: 55px;
+    text-align: left;
+	}
+	.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .rgt {
+    flex-basis: 100%;
+    padding-top: 69px;
+    height:auto;
+	}
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .lft::after {
+    height: 46px;
+    width: 46px;
+    bottom: 0;
+    left: 0%;
+    text-align: center;
+    line-height: 46px;
+    margin-left: 0;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails #web .lft::after {
+    font-size: 30px;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails #pc .lft::after {
+    font-size: 30px;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails #ebd .lft::after {
+    font-size: 30px;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .rgt .slist{
+    margin: 0 auto 0 auto!important;
+  }
+/***************************************************************************************************************/
+
+
+
+/*Responsive fix*/
+  /* Gen */
+  @media screen and (max-width:400px){
+    .page #content .serDetailsCon:nth-child(odd) .Pagelink{
+      right:25px;
+      width:50px;
+    }
+    .page #content .serDetailsCon:nth-child(even) .Pagelink{
+      left:25px;
+      width:50px;
+    }
+  }
+
+
+	/* Land page */
+	@media screen and (max-width:530px){
+    	.page #content #pID #contentCon #summary #serCon{
+    		width: 100%;
+    	}
+	}
+	@media screen and (max-width:499px){
+    	.page #content #pID #contentCon #summary h1::before , .page #content #pID #contentCon #summary h1::after{
+    	    width: 12%;
+    	}
+    	.page #content #pID #contentCon #summary h1::after{
+    	    right: 6%;
+    	}
+    	.page #content #pID #contentCon #summary h1::before{
+    	    left: 6%;
+    	}
+	}
+	@media screen and (max-width:480px){
+    .page #content #pID #contentCon #summary h1 {
+      width: 100%;
+      min-width: 100%;
+    }
+  }
+  @media screen and (max-width:450px){
+    	.page #content #pID #contentCon #summary h1::before , .page #content #pID #contentCon #summary h1::after{
+    	    width: 8%;
+    	}
+    	.page #content #pID #contentCon #summary h1::after{
+    	    right: 8%;
+    	}
+    	.page #content #pID #contentCon #summary h1::before{
+    	    left: 8%;
+    	}
+  }
+  @media screen and (max-width:420px){
+    	.page #content #pID #contentCon #summary h1::after{
+    	    right: 5%;
+    	}
+    	.page #content #pID #contentCon #summary h1::before{
+    	    left: 5%;
+    	}
+  }
+  @media screen and (max-width:400px){
+    	.page #content #pID #contentCon #summary h1{
+    		font-size: 43px;
+    	}
+      	.page #content #pID #contentCon #summary h1::before , .page #content #pID #contentCon #summary h1::after{
+      	    width:12%;
+      	}
+      	.page #content #pID #contentCon #summary h1::after{
+      	    right: 8%;
+      	}
+      	.page #content #pID #contentCon #summary h1::before{
+      	    left: 8%;
+      	}
+  }
+
+
+
+/* Our services page */
+@media screen and (max-width:550px){
+  .page #content #sftdev .details .detailsSummary .quest p:last-of-type {
+      width: 100%;
+  }
+}
+
+@media screen and (max-width:500px){
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(1){
+    flex-basis: 90%;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(2){
+    flex-basis: 90%;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(3){
+    flex-basis: 90%;
+  }
+}
+@media screen and (max-width:400px){
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(1){
+    flex-basis: 95%;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(2){
+    flex-basis: 95%;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(3){
+    flex-basis: 95%;
+  }
+}
+@media screen and (max-width:350px){
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(1){
+    flex-basis: 98%;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(2){
+    flex-basis: 98%;
+  }
+  .page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon:nth-child(3){
+    flex-basis: 98%;
+  }
+}
+
+
+/* Realtime solutions */
+
+  @media screen and (max-width:580px){
+    .page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content p {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .page #content .serDetailsCon:nth-child(3) .details .detailsSummary .quest .btCons {
+      width: 250px;
+      height: 161px;
+    }
+    .page #content .serDetailsCon:nth-child(3) .details .detailsSummary .quest .btCons .subCon {
+      top: 92px;
+    }
+  }
+
+  @media screen and (max-width:505px){
+    .page #content .serDetailsCon .details .detailsSummary #ad {
+        margin: 138px 0 23px 0;
+    }
+  }
+  @media screen and (max-width:480px){
+    .page #content .serDetailsCon .details .detailsSummary .stepsCon .step:last-of-type{
+  	   margin-top: 161px;
+  	}
+  }
+  @media screen and (max-width:450px){
+    .page #content .serDetailsCon .details .detailsSummary .stepsCon .step:last-of-type{
+  	   margin-top: 184px;
+  	}
+  }
+  @media screen and (max-width:405px){
+    .page #content .serDetailsCon .details .detailsSummary .stepsCon .step{
+       margin-bottom: 115px;
+       flex-basis: 80%;
+  	}
+    .page #content .serDetailsCon .details .detailsSummary .stepsCon .step:last-of-type{
+  	   margin-top: 0px;
+       flex-basis: 80%;
+       margin-bottom: 0px;
+  	}
+    .page #content .serDetailsCon .details .detailsSummary #ad {
+        margin: 115px 0 23px 0;
+    }
+  }
+  @media screen and (max-width:365px){
+    .page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon {
+      width: 100%;
+    }
+    .page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon button {
+      width: 130px;
+    }
+    .detailsSummary .domainCon #domContent .subNav .Btcon button:nth-child(2) {
+      right: 10px;
+      left:auto!important;
+    }
+    .detailsSummary .domainCon #domContent .subNav .Btcon button:nth-child(1) {
+      left: 10px!important;
+    }
+  }
+  @media screen and (max-width:350px){
+    .page #content .serDetailsCon .details .detailsSummary .stepsCon .step{
+       flex-basis: 90%;
+  	}
+    .page #content .serDetailsCon .details .detailsSummary .stepsCon .step:last-of-type{
+       flex-basis: 90%;
+       margin-bottom: 0px;
+  	}
+  }
+  @media screen and (max-width:325px){
+    .detailsSummary .domainCon #domContent .subNav .Btcon button:nth-child(2) {
+      right: 5px;
+      left:auto!important;
+    }
+    .detailsSummary .domainCon #domContent .subNav .Btcon button:nth-child(1) {
+      left: 5px!important;
+    }
+  }
+
+
+/* Hire US */
+
+
+/* large 	=> 980  x 275	:: Q:80%	// 801 - 980
+medium	=> 800  x 200	:: Q:50%	// 501 - 800
+small 	=> 500  x 75	:: Q:30%	//500 */
+
+  @media screen and (max-width:590px){
+      .page #content #hireDev .details .detailsSummary h3{
+        width:100%;
+      }
+  }
+  @media screen and (max-width:450px){
+    h2 {
+      font-size: 18px;
+    }
+  }
+  @media screen and (max-width:440px){
+    .page #content #sdtrn .details .detailsSummary p {
+      width: 100%;
+    }
+  }
+  @media screen and (max-width:360px){
+    h2 {
+      font-size: 16px;
+    }
+  }
+
+
+  /* Training */
+
+    @media screen and (max-width:470px){
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .rgt p{
+          width: 100%!important;
+          padding: 0 23px 23px 23px;
+      	}
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .rgt .slist{
+          padding:0 23px 0px 23px;
+          margin: 0 auto 0 auto!important;
+          font-size: 14px;
+      	}
+      	.page #content #sdtrn .details .detailsSummary p {
+          margin:0px auto 0px auto;
+      	}
+        .page #content #sdtrn .details .detailsSummary .quest p {
+          margin:0px auto 23px auto;
+      	}
+      	.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .rgt {
+          padding-bottom:46px;
+      	}
+    }
+    @media screen and (max-width:450px){
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .rgt .slist{
+          font-size: 13px;
+      	}
+    }
+    @media screen and (max-width:389px){
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails #ebd .rgt .slist:nth-child(3) span:nth-child(3){
+          width:77px;
+          height: 23px;
+          display: inline-block;
+      	}
+    }
+    @media screen and (max-width:390px){
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails #ebd .rgt .slist:nth-child(4) span:nth-child(3){
+          width:77px;
+          height: 23px;
+          display: inline-block;
+      	}
+
+    }
+    @media screen and (max-width:365px){
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails #pc .rgt .slist:nth-child(4) span:nth-child(3){
+          width:77px;
+          height: 23px;
+          display: inline-block;
+      	}
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails #pc .rgt .slist:nth-child(3) span:nth-child(3){
+          width:77px;
+          height: 23px;
+          display: inline-block;
+      	}
+    }
+    @media screen and (max-width:351px){
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails #ebd .rgt .slist:nth-child(4) span:nth-child(3){
+          width:0;
+      	}
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails #ebd .rgt .slist:nth-child(4) span:nth-child(2){
+          width:77px;
+          height: 23px;
+          display: inline-block;
+      	}
+
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails #ebd .rgt .slist:nth-child(3) span:nth-child(3){
+          width:0;
+      	}
+        .page #content .serDetailsCon .details .detailsSummary .platformConDetails #ebd .rgt .slist:nth-child(3) span:nth-child(2){
+          width:77px;
+          height: 23px;
+          display: inline-block;
+      	}
+    }
+    @media screen and (max-width:326px){
+      .page #content .serDetailsCon .details .detailsSummary .platformConDetails #pc .rgt .slist:nth-child(4) span:nth-child(3){
+        width:0;
+      }
+      .page #content .serDetailsCon .details .detailsSummary .platformConDetails #pc .rgt .slist:nth-child(4) span:nth-child(2){
+        width:77px;
+        height: 23px;
+        display: inline-block;
+      }
+      .page #content .serDetailsCon .details .detailsSummary .platformConDetails #pc .rgt .slist:nth-child(3) span:nth-child(3){
+        width:0;
+      }
+      .page #content .serDetailsCon .details .detailsSummary .platformConDetails #pc .rgt .slist:nth-child(3) span:nth-child(2){
+        width:77px;
+        height: 23px;
+        display: inline-block;
+      }
+    }
+    @media screen and (max-width:346px){
+      .page #content .serDetailsCon .details .detailsSummary .platformConDetails #web .rgt .slist:nth-child(4) span:nth-child(2){
+        width:77px;
+        height: 23px;
+        display: inline-block;
+      }
+      .page #content .serDetailsCon .details .detailsSummary .platformConDetails #web .rgt .slist:nth-child(3) span:nth-child(2){
+        width:75px;
+        height: 23px;
+        display: inline-block;
+      }
+    }
+
+  /* Modal responsiveness */
+  /* General */
+  @media screen and (max-width:520px){
+    .formCon{
+      width: 85%;
+    }
+    .formCon .formHeaderCon span{
+      z-index: 2;
+      font-size: 13px;
+    }
+  }
+  @media screen and (max-width:464px){
+    .formCon .formHeaderCon span{
+      font-size: 13px;
+      height:auto;
+      line-height: 23px;
+      width:80%;
+    }
+  }
+  @media screen and (max-width:338px){
+    .formCon .formHeaderCon span{
+      font-size: 12px;
+    }
+  }
+
+  /* Software development form */
+  @media screen and (max-width:520px){
+
+    .formCon .inputCon section .row #pbnpd {
+      height: 184px;
+    }
+    .formCon .inputCon section .row .inputField #pduration{
+      width:100%;
+    }
+    .formCon .inputCon section .row .inputField #pbudget {
+      width: 100%;
+      top: 92px;
+      left: 0;
+    }
+  }
+  @media screen and (max-width:470px){
+    .formCon .inputCon section .row .inputField #platformFset{
+      height:73px;
+    }
+  }
+
+  /* Realtime solution delivery form */
+  @media screen and (max-width:520px){
+    .formCon .inputCon #domainInformation .selRow .inputField{
+      height: 69px;
+    }
+    .formCon .inputCon section .row #domainDet .gInputField:first-of-type{
+        height: 69px;
+        margin-top: 13px;
+    }
+    .formCon .inputCon section .row #domainDet .gInputField{
+        height: 69px;
+        margin-top: 23px;
+    }
+    .formCon .inputCon section .row #tdomain .ilabel{
+      width: 100%;
+      text-align: left;
+    }
+    .formCon .inputCon section .row #tdomain .select{
+      width: 100%;
+    }
+  }
+  @media screen and (max-width:500px){
+    .formCon .inputCon section .row #domainDet .iwrapper{
+      position: static;
+      width: 100%;
+
+    }
+  }
+  /*Hire us form */
+  @media screen and (max-width:510px){
+    .formCon .inputCon section .trow:last-child{
+      margin-top:10px;
+    }
+    .formCon .inputCon #tinfo .row #tDesc{
+      height:auto;
+    }
+    .formCon .inputCon #tinfo .row .inputField{
+      height:69px;
+      box-sizing: border-box;
+    }
+    .formCon .inputCon #tinfo .row #tdate{
+      height:74px;
+    }
+    .formCon .inputCon #tinfo .row .inputField .ilabel{
+      width:100%;
+      text-align: left;
+    }
+    .formCon .inputCon #tinfo .row .inputField .select, .formCon .inputCon #tinfo .row .inputField .label-txt{
+      width:100%;
+
+    }
+  }
+
+  /*training form */
+  @media screen and (max-width:520px){
+    .formCon .inputCon section .row #ptype{
+      height:69px;
+    }
+    .formCon .inputCon section .row #ptype .ilabel{
+      width:100%;
+      text-align: left;
+    }
+    .formCon #trninfo .row #ptype .iwrapper.select{
+      width:100%;
+
+    }
+    .formCon .inputCon section .row #pkgtype{
+      height: 92px;
+    }
+    .formCon .inputCon section .row #pkgtype .ilabel{
+      width:100%;
+      text-align: left;
+    }
+    .formCon .inputCon section .row #pkgtype .select{
+      width:100%!important;
+      text-align: left;
+      margin-left: 0!important;
+    }
+    .formCon .inputCon section .row #pkgtype .pkgInfo{
+      width:100%!important;
+      text-align: left!important;
+      margin-left: 0!important;
+      line-height: 23px!important;
+    }
+  }
+
+  @media screen and (max-width:366px){
+    .formCon #trninfo .row #price{
+      height:74px;
+    }
+    .formCon .inputCon section .row #price .ilabel{
+      width:100%;
+      text-align: left;
+    }
+    .formCon #trninfo .row #price .iwrapper{
+      width:100%;
+      margin-left: 0;
+    }
+  }

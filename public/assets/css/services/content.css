@@ -1,0 +1,2046 @@
+/* CSS Document */
+@keyframes bounce{
+	from {
+		bottom: 4px;
+	}
+    to {
+		bottom: 15px;
+	}
+
+}
+@keyframes fade{
+	from {
+		opacity: 1;
+	}
+    to {
+		opacity: .8;
+	}
+
+}
+@keyframes spin{
+	from {
+		transform: rotate(0deg);
+	}
+    to {
+		transform: rotate(360deg);
+	}
+
+}
+html{
+	height:100%;
+}
+body{
+	height: 100%;
+}
+.page{
+	position: absolute;
+	top:0;
+	z-index: 1;
+	opacity: 1;
+	display: block;
+	transition: opacity 3s linear;
+}
+.page #content #pID{
+	width: 100%;
+	height: 100vh;
+	top: 0px;
+	border-bottom: 1px solid #BA26C7;
+	position: relative;
+	z-index: 10;
+	background-image: url(../../../../images/content/ourServices.jpg);
+	box-sizing: border-box;
+	background-size:cover;
+	background-position: center;
+	background-attachment: fixed;
+}
+.page #content #pID::before{
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	background-image: -webkit-linear-gradient(bottom, hsla(0,0%,0%,0.98) 0%, hsla(0,0%,21%,0.95) 100%);
+	background-image: -o-linear-gradient(bottom, hsla(0,0%,0%,0.98) 0%, hsla(0,0%,21%,0.95) 100%);
+	background-image: linear-gradient(to top, hsla(0,0%,0%,0.98) 0%, hsla(0,0%,21%,0.95) 100%);
+	position: absolute;
+	content: "";
+}
+.page #content #pID #contentCon{
+	width: 100%;
+	/*height: 253px;*/
+	top: 50%;
+	transform:translateY(-50%);
+	background-color: transparent;
+	position: absolute;
+}
+.page #content #pID #contentCon #summary{
+	width: 97%;
+	height: 100%;
+	background-color: transparent;
+	margin: 0 auto;
+}
+.page #content #pID #contentCon #summary h1{
+	width: 443px;
+	min-width: 443px;
+	text-align: center;
+	background-color: transparent;
+	font-family: BebasNeue;
+	font-size: 110px;
+	position: relative;
+	padding: 0px;
+	color: white;
+}
+.page #content #pID #contentCon #summary h1::before{
+	width: 75%;
+	height: 50%;
+	left: -79%;
+	position: absolute;
+	border-bottom: 1px solid white;
+	content: "";
+}
+.page #content #pID #contentCon #summary h1::after{
+	width: 75%;
+	height: 50%;
+	right: -79%;
+	position: absolute;
+	border-bottom: 1px solid white;
+	content: "";
+}
+.page #content #pID #contentCon #summary #serCon{
+	width: 850px;
+	height: auto;
+	text-align: justify;
+	line-height: normal;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.page #content #pID #contentCon #summary #serCon .sCon{
+	text-align: center;
+	font-family:OpenSans;
+	letter-spacing: 5px;
+	font-size: 0.7rem;
+	position: relative;
+	color:#70DD00;
+	flex: 25%;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:last-of-type{
+	margin-right: 0px;
+}
+.page #content #pID #contentCon #summary #serCon .sCon::before{
+	width:10px;
+	height: 10px;
+	content: "";
+	position: absolute;
+	top: 50%;
+	margin-top: -5px;
+	border-radius: 10px;
+	background-color: hsla(0,0%,100%,1.00);
+	left: -5px;
+}
+.page #content #pID #contentCon #summary #serCon .sCon:last-of-type::after{
+	width:10px;
+	height: 10px;
+	content: "";
+	position: absolute;
+	top: 50%;
+	margin-top: -5px;
+	border-radius: 10px;
+	background-color: hsla(0,0%,100%,1.00);
+	right: -5px;
+}
+
+.page #content #pID #scrollCon{
+	width: 100%;
+	height: 100px;
+	position: absolute;
+	bottom: 4px;
+	animation-direction: alternate-reverse;
+	animation-duration: .6s;
+	animation-timing-function: ease;
+	animation-iteration-count: infinite;
+	transition: opacity 2s linear;
+}
+.page #content #pID #scrollCon button{
+	width: 50px;
+	height: 100px;
+	background-color: transparent;
+	margin: 0 auto;
+	display: block;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	z-index: 2;
+	left: 50%;
+	margin-left: -25px;
+}
+.page #content #pID #scrollCon #arrowCon{
+	width: 50px;
+	height: 100px;
+	margin: 0 auto;
+	display: block;
+	border: none;
+	cursor: pointer;
+	position: absolute;
+	z-index: 1;
+	left: 50%;
+	margin-left: -25px;
+}
+.page #content #pID #scrollCon #arrowCon #leftArrowSide{
+	width: 1px;
+	height: 25px;
+	bottom: 0;
+	left: 50%;
+	background-color: transparent;
+	border-left: dashed 1px white;
+	position: absolute;
+	transform: rotate(-55deg);
+	transform-origin: bottom;
+	margin-left: -0.5px;
+	animation-direction: alternate-reverse;
+	animation-duration: .6s;
+	animation-timing-function: ease;
+	animation-iteration-count: infinite;
+}
+.page #content #pID #scrollCon #arrowCon #rightArrowSide{
+	width: 1px;
+	height: 25px;
+	bottom: 0;
+	right: 50%;
+	background-color: transparent;
+	border-left: dashed 1px white;
+	position: absolute;
+	transform: rotate(55deg);
+	transform-origin: bottom;
+	margin-right: -0.5px;
+	animation-direction: alternate-reverse;
+	animation-duration: .6s;
+	animation-timing-function: ease;
+	animation-iteration-count: infinite;
+}
+.page #content #pID #scrollCon #arrowCon #line{
+	width: 1px;
+	height: 100%;
+	bottom: 0;
+	right: 50%;
+	background-color: transparent;
+	border-left: dashed 1px white;
+	position: absolute;
+	margin-right: -1px;
+	animation-direction: alternate-reverse;
+	animation-duration: .6s;
+	animation-timing-function: ease;
+	animation-iteration-count: infinite;
+}
+.page #content #pID .Pagelink{
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	bottom: -100px;
+	right:100px;
+}
+.page #content #pID .Pagelink::before{
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: 0;
+	border-top:100px solid #BA26C7;
+	border-left:50px solid transparent;
+	border-right:50px solid transparent;
+	content:"";
+}
+.page #content .serDetailsCon{
+	width: 100%;
+	height: auto;
+	border-bottom: 1px solid #BA26C7;
+	margin-top: -1px;
+	position: relative;
+}
+.page #content .serDetailsCon .details{
+	width: 95%;
+	height: auto;
+	margin-left:auto;
+	margin-right:auto;
+	position: relative;
+}
+.page #content .serDetailsCon .details h2{
+	width: 100%;
+	height: auto;
+	position: relative;
+	color:black;
+}
+.page #content .serDetailsCon .details h2::before{
+	width: 35%;
+	height: 95%;
+	content:"";
+	position: absolute;
+	background-color:transparent;
+	top:0;
+	border-bottom: solid 1px #767676;
+
+}
+.page #content .serDetailsCon:nth-child(odd) .details h2{
+	text-align: right;
+}
+.page #content .serDetailsCon:nth-child(odd) .details h2::before{
+	width: 35%;
+	height: 95%;
+	content:"";
+	position: absolute;
+	background-color:transparent;
+	right:0;
+	top:0;
+	border-bottom: solid 1px #767676;
+
+}
+.page #content .serDetailsCon .details .detailsSummary{
+	width: 88%;
+	height: auto;
+	margin:0 auto;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon{
+	width: 100%;
+	height: auto;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con{
+	width: 70%;
+	height: auto;
+	margin:0 auto;
+	display:flex;
+	justify-content:space-around;
+	position: relative;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item{
+	flex:1;
+
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item .labelCon{
+	width: 100%;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item .labelCon .label{
+	width: 60%;
+	height: 100%;
+	margin:0 auto;
+	text-align: center;
+	text-transform:uppercase;
+	color: #767676;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item .GIDCon{
+	width: 100%;
+	position: relative;
+	z-index: 2;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item .GIDCon .GID{
+	width: 110px;
+	border-radius: 100px;
+	margin:0 auto;
+	position:relative;
+	border:dashed 1px #767676;
+	background-color:#3E3E3E;
+	/*margin-top:-2px PAdding fix*/
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item .GIDCon .GID::before{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	font-family: vicon;
+	text-align: center;
+	font-size: 70px;
+	color:#BA26C7;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item:nth-child(1) .GIDCon .GID::before{
+	content:"\e9d5";
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item:nth-child(2) .GIDCon .GID::before{
+	content:"\eb01";
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con .item:nth-child(3) .GIDCon .GID::before{
+	content:"\e963";
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con #line{
+	position: absolute;
+	width:100%;
+	height: 70px;
+	top:0;
+	right:0;
+	z-index: 1;
+	display: flex;
+	justify-content: center;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformCon .con #line #ml{
+	border-bottom: dashed 1px #767676;
+	height: 100%;
+	flex-basis: 70%;
+}
+.page #content .serDetailsCon .details .detailsSummary p{
+	color:#E9E9E9;
+	box-sizing: border-box;
+	text-align: left;
+	width:35rem;
+}
+.page #content #hireDev .details .detailsSummary p{
+	width:35rem;
+	margin: 0 auto;
+	text-align: left;
+}
+.page #content #hireDev .details .detailsSummary h3{
+	width:35rem;
+	margin: 0 auto;
+	text-align: left;
+}
+.page #content #hireDev .details .detailsSummary ul{
+	width:35rem;
+	margin: 0 auto;
+	list-style:square;
+	margin-top: 23px;
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 61px;
+	margin-bottom: 23px;
+	box-sizing: border-box;
+}
+.page #content #hireDev .details #HGid{
+	position: absolute;
+	width:300px;
+	height: 300px;
+	right: 0;
+	bottom: 0;
+}
+.page #content #hireDev .details #HGid::before{
+	position: absolute;
+	width:100%;
+	height: 100%;
+	content: "\eb03";
+	font-family: vicon;
+	text-align: center;
+	line-height: 300px;
+	font-size: 240px;
+}
+.page #content .serDetailsCon .details .detailsSummary .pc{
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails{
+	width: 100%;
+	height: auto;
+	display: flex;
+	justify-content: space-around;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon{
+	height: 575px;
+	background-color:#646464;
+	box-shadow: 0 0 7px 0 black;
+	position: relative;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon::after{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	content:"";
+	width:0;
+	height:0;
+	border-bottom: 50px solid #ba26c7;
+	border-left: 50px solid transparent;
+}
+
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon .blockHeader{
+	width:auto;
+	height: auto;
+	color:#BA26C7;
+	background-color: #272727;
+	padding-left: 23px;
+	font-family:LibreBaskerville;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon p{
+	width:100%;
+	height: auto;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon p:nth-of-type(3){
+	padding-top:0px;
+	padding-right:10px;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .pCon ul{
+	width:80%;
+	height:auto;
+	color:white;
+	font-size: 14px;
+	font-weight: bold;
+	list-style: square;
+}
+
+.page #content .serDetailsCon .details .detailsSummary .quest{
+	width: 100%;
+	height: auto;
+	margin:0 auto;
+}
+.page #content #hireDev .details .detailsSummary .quest{
+	width: 100%;
+	height: auto;
+}
+.page #content #hireDev .details .detailsSummary .quest .btCon{
+	margin-top: 23px;
+}
+.page #content #hireDev .details .detailsSummary .quest p{
+	text-align: center;
+	margin-bottom: 46px;
+}
+.page #content .serDetailsCon .details .detailsSummary .quest p{
+	width: 100%;
+	height: auto;
+	position: relative;
+	color:white;
+	font-size: 26px;
+	text-align: center;
+	font-weight: 100;
+
+}
+.page #content #sftdev .details .detailsSummary .quest p{
+	width:35rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+.page #content #sftdev .details .detailsSummary .quest p:last-of-type{
+	width:35rem;
+	margin-bottom: 46px
+}
+.page #content .serDetailsCon .details .detailsSummary .quest button{
+	width: 250px;
+	/* color:#430543; */
+	color:white;
+	text-align: center;
+	display: block;
+	border: solid 1px #DB73E4;
+	background-image: linear-gradient(to bottom, #BA26C7 0%, #CF44DB 100%);
+	cursor: pointer;
+	border-radius:8px;
+	box-shadow: 0 0 4px 0 black;
+	transition: color .3s ease , font-size .3s ease;
+	margin: 0 auto 0 auto;
+	font-size: 14px;
+	font-family: OpenSans;
+	font-weight: 300;
+	padding-left:23px;
+	padding-right:23px;
+	position: relative;
+}
+.page #content .serDetailsCon .details .detailsSummary .quest button:active{
+	background-image: linear-gradient(to top, #BA26C7 0%, #CF44DB 100%);
+}
+.page #content .serDetailsCon .details .detailsSummary .quest button:hover{
+	font-size: 13px;
+	color:white;
+}
+.page #content .serDetailsCon:nth-child(3) .details .detailsSummary .quest{
+	width: 100%;
+	height: auto;
+}
+.page #content .serDetailsCon:nth-child(3) .details .detailsSummary .quest .btCons{
+	width: 550px;
+	position: relative;
+}
+.page #content .serDetailsCon:nth-child(3) .details .detailsSummary .quest .btCons button{
+	width: 250px;
+	height: 100%;
+	position: absolute;
+	box-sizing: border-box;
+	margin:0;
+}
+.page #content .serDetailsCon:nth-child(3) .details .detailsSummary .quest .btCons .subCon{
+	width: 250px;
+	height: 100%;
+	margin:0 auto;
+	position:absolute;
+	right:0;
+}
+.page #content .serDetailsCon:nth-child(3) .details .detailsSummary .quest .btCons .subCon .overlay{
+	width: 250px;
+	height: 100%;
+	position:absolute;
+	right:0;
+	top:0;
+	z-index: 2;
+	background-color: hsla(0,0%,99%,0.67);
+	border-radius: 8px;
+	cursor: not-allowed;
+}
+.page #content .serDetailsCon:nth-child(3) .details .detailsSummary .quest .btCons .subCon button{
+	position: absolute;
+	height:100%;
+	width: 100%;
+	left:0;
+	top:0;
+	z-index: 1;
+}
+.page #content .serDetailsCon .Pagelink{
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	bottom: -100px;
+}
+.page #content .serDetailsCon .Pagelink::before{
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: 0;
+	content:"";
+}.page #content .serDetailsCon .Pagelink::after{
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: -2px;
+	content:"";
+}
+.page #content .serDetailsCon:last-of-type .Pagelink::before{
+	content:none;
+}.page #content .serDetailsCon:last-of-type .Pagelink::after{
+	content:none;
+}
+
+
+
+/*************************************Modal Style****************************************/
+.formCon{
+	width: 500px;
+	height: auto;
+	min-height:500px;
+	position: absolute;
+	z-index: 4;
+	background-color:rgb(105, 105, 105);
+	border-radius:7px;
+	right:0;
+	top:0;
+	display:none;
+	box-shadow: 0px 0 7px 0 black;
+	padding-bottom: 23px;
+}
+.formCon .formHeaderCon{
+	width: 100%;
+	height: 69px;
+	background-color: #252527;
+	background-image: linear-gradient(to bottom, #171718 0%, #252527 30%);
+	position: relative;
+	box-shadow: 0 2px 6px black;
+}
+.formCon .formHeaderCon .closeButtonCon{
+	width: 70px;
+	height: 70px;
+	border-bottom-left-radius: 70px;
+	border-bottom-right-radius: 70px;
+	background-color: #252527;
+	position: absolute;
+	right:23px;
+	bottom:-30px;
+	z-index: 1;
+	box-shadow: 0 2px 6px black;
+}
+.formCon .formHeaderCon .closeButtonCon::before{
+	width: 80px;
+	height: 50px;
+	content:"";
+	top:-10px;
+	left:-5px;
+	position:absolute;
+	z-index: 1;
+	background-color: #252527;
+}
+.formCon .formHeaderCon .closeButtonCon button{
+	width: 40px;
+	height: 40px;
+	border-radius: 70px;
+	background-color: red;
+	position: absolute;
+	z-index: 3;
+	border: none;
+	top:50%;
+	left:50%;
+	cursor: pointer;
+	transform: translateY(-50%) translateX(-50%);
+}
+.formCon .formHeaderCon .closeButtonCon button::before{
+	width: 100%;
+	height: 100%;
+	border-radius: 100%;
+	background-color: purple;
+	background-image: linear-gradient(to bottom, #BA26C7 0%, #73157B 100%);
+	position: absolute;
+	left:0;
+	top:0px;
+	content:"\e014";
+	z-index: 2;
+	box-shadow:inset 0 0 1px 1px black;
+	font-family: vicon;
+	text-align: center;
+	line-height: 40px;
+	font-size: 20px;
+	color: rgba(0, 0, 0, 0.3);
+	transition: all .1s linear;
+}
+.formCon .formHeaderCon .closeButtonCon button:hover::before{
+	color: rgba(0, 0, 0, 0.6);
+}
+.formCon .formHeaderCon .closeButtonCon button:active::before{
+	background-image: linear-gradient(to top, #BA26C7 0%, #73157B 100%);
+	color: rgba(0, 0, 0, 0.8);
+}
+.formCon .formHeaderCon span{
+	display: inline-block;
+	width: 100%;
+	height: 46px;
+	margin-top: 13px;
+	line-height: 46px;
+	padding-left: 75px;
+	font-family: LibreBaskerville;
+	color: #BA26C7;
+	position: relative;
+	box-sizing: border-box;
+}
+.formCon .formHeaderCon span::before{
+	width:46px;
+	height:46px;
+	content:"\eafa";
+	position: absolute;
+	color:#BA26C7;
+	text-align: center;;
+	line-height: 46px;
+	left:23px;
+	font-family: vicon;
+	font-size: 40px;
+}
+.formCon .inputCon{
+	width: 85%;
+	height: auto;
+	margin: 46px auto 0 auto;
+
+}
+.formCon .action{
+	width: 85%;
+	min-height: 46px;
+	margin: 23px auto 0 auto;
+}
+.formCon .info{
+	width: 80%;
+	margin: 0 auto;
+	display: block;
+	font-size: 13px;
+	text-align: center;
+	color: #bfc0bb;
+}
+
+.formCon .action button{
+	width: 100%;
+	height: 69px;
+	cursor: pointer;
+	border-radius: 5px;
+	border: solid 1px #DB73E4;
+	background-image: linear-gradient(to bottom, #BA26C7 0%, #CF44DB 100%);
+	box-shadow: 0 0 4px 0 black;
+	font-size: 14px;
+	font-family: OpenSans;
+	font-weight: 300;
+	color:white;
+}
+.formCon .action button:active{
+	background-image: linear-gradient(to top, #BA26C7 0%, #CF44DB 100%);
+}
+.formCon .inputCon .title{
+	width: 100%;
+	height: 21px;
+	display: inline-block;
+	font-size: 12px;
+	color: whitesmoke;
+	font-family: LibreBaskerville;
+	line-height: 12px;
+	display: block;
+}
+.formCon .inputCon section{
+	width: 100%;
+	background-color: #6e6e6e;
+	border: 1px solid #787878;
+	padding: 23px 0 23px 0;
+	border-radius: 5px;
+	margin-bottom: 46px;
+	box-shadow: 0 0 7px 0px #504a4a;
+}
+.formCon .inputCon #trninfo{
+	margin-bottom: 23px;
+}
+.formCon .inputCon #tinfo .selRow{
+	margin-bottom: 0;
+}
+.formCon .inputCon #tinfo .selRow #ttype .select{
+	z-index:601;
+}
+.formCon .inputCon section .row{
+	width: 100%;
+	height: auto;
+	margin-bottom: 23px;
+}
+.formCon .inputCon section .trow {
+    margin-bottom: 12px !important;
+}
+.formCon .inputCon section .selRow {
+    min-height: 46px;
+}
+.formCon .inputCon section .oneline{
+    min-height: 36px;
+}
+.formCon .inputCon section .oneline-text{
+    margin-bottom: 0;
+}
+.formCon .inputCon section .row:last-of-type, .formCon .inputCon section .trow:last-child {
+	margin-bottom: 0!important;
+}
+.formCon .inputCon section .row .inputField{
+	width: 80%;
+	height: auto;
+	margin:0 auto;
+	position: relative;
+	min-height: 69px;
+	padding-top: 1px;
+	margin-top: -1px;
+}
+.formCon .inputCon section .row .no-placeholder{
+	min-height: 38px;
+}
+.formCon .inputCon section .row .groupInput{
+	width: 80%;
+	height: auto;
+	margin:0 auto;
+	position: relative;
+	padding-top: 1px;
+	margin-top: -1px;
+}
+.formCon .inputCon section .row .groupInput fieldset{
+  border: solid 1px #635f5f;
+  border-radius: 5px;
+	padding-left: 23px;
+	padding-bottom: 13px;
+	height: auto;
+	padding:0 23px 13px 23px;
+}
+.formCon .inputCon section .row .groupInput fieldset legend{
+	width: auto;
+	height: 23px;
+	padding-left: 10px;
+	padding-right: 10px;
+	color:#47084e;
+	font-size: 13px;
+	font-weight: 400;
+}
+.formCon .inputCon section .row .groupInput .gInputField{
+	width: 100%;
+	height: auto;
+	margin:0 auto;
+	position: relative;
+	min-height: 36px;
+	padding: 2px 0 5px 0;
+	margin-top: -1px;
+	border-top:solid 1px  #868181;
+}
+.formCon .inputCon section .row .groupInput .gInputField:first-of-type{
+	border-top:none;
+	padding-top: 0;
+}
+.formCon .inputCon section .row .groupInput .gInputField .chkBox{
+	min-width: 30%;
+	height: 36px;
+	float: left;
+	width:auto;
+
+}
+.formCon .inputCon section .row .groupInput .gInputField .singleText{
+	width: 58%;
+	float: right;
+}
+.formCon .inputCon section .row .groupInput .gInputField .singleText input[type="text"]{
+	padding-left:10px!important;
+}
+.formCon .inputCon section .selRow .inputField{
+    min-height: 46px;
+}
+.formCon .inputCon section .row .inputField .iwrapper, .formCon .inputCon section .row .groupInput .iwrapper{
+	width: 100%;
+	height: auto;
+	position: relative;
+	background-color: rgba(177, 176, 176, 0.35);
+	border: solid 1px #635f5f;
+	left: 0;
+	z-index: 2;
+	border-radius: 5px;
+	box-sizing: border-box;
+	box-shadow: inset 0 0px 8px 0px #6c6c6c;
+}
+.formCon .inputCon section .row #domainDet .iwrapper {
+	overflow: hidden;
+}
+ .formCon .iwrapper .disabled{
+	 background-color: #5a5a5a!important;
+	 color:#4d4b4b!important;
+ }
+.formCon #trninfo .iwrapper.select{
+	box-shadow: none;
+}
+.formCon #trninfo #ptype{
+	z-index: 20;
+}
+.formCon #trninfo #pkgtype{
+	z-index: 10;
+}
+.formCon #trninfo #pkgtype .iwrapper.select{
+	width:25%;
+	float:left;
+	margin-left: 14px;
+}
+.formCon #trninfo #pkgtype .pkgInfo{
+	width:40%;
+	height:36px;
+	float:left;
+	margin-left: 5px;
+	font-size: 12px;
+	text-align: center;
+	line-height: 53px;
+}
+
+.formCon .inputCon section .row .inputField .txt{
+	margin-top:33px;
+}
+.formCon .inputCon section .row #price {
+	height:36px;
+	min-height: 36px;
+}
+.formCon .inputCon section .row #price .txt{
+	width:140px;
+	float:left;
+	margin-top: 0px;
+	margin-left: 13px;
+	border-radius:0;
+	box-shadow: none;
+	border: dashed 1px #635f5f;
+}
+.formCon .inputCon section .row #price .txt input{
+	padding-left:5px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.formCon .inputCon section .row .inputField .oneline-txt{
+	margin-top:0;
+}
+.formCon .inputCon section .row .inputField .oneline-txt>input[type='text']{
+	padding-left:10px!important;
+}
+.formCon .inputCon section .row .inputField .label-txt{
+	width:69%;
+	float:right;
+}
+.formCon .inputCon section .row #tlocation .select{
+	z-index: 600;
+}
+.formCon .inputCon section .row .inputField .select{
+	width: 69%;
+	height: 36px;
+	float: right;
+	background-color:transparent!important;
+	border: none!important;
+	z-index: 3;
+}
+.formCon .inputCon section .row .inputField .select::before{
+	content:none!important;
+}
+.formCon .inputCon section .row .inputField .txt::before{
+	width:46px;
+	height:36px;
+	background-color:rgb(122, 122, 122);
+	border-right: solid 1px #635f5f;
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index: 3;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius:5px;
+	box-sizing: border-box;
+	font-family: vicon;
+	text-align: center;
+	line-height: 36px;
+	font-size: 18px;
+	color:#c3c1bf;
+}
+.formCon .inputCon section .row #pnameICOn .txt::before{
+	content:"\e93b";
+}
+.formCon .inputCon section .row #fname .txt::before{
+	content:"\e008";
+}
+.formCon .inputCon section .row #email .txt::before{
+	content:"\ea90";
+}
+.formCon .inputCon section .row #phone .txt::before{
+	content:"\e94e";
+}
+.formCon .inputCon section .row #pbnpd{
+	height: 92px;
+	padding-bottom: 0;
+}
+.formCon .inputCon section .row #pPltfm{
+	padding-bottom: 0px;
+}
+.placeholder{
+	width:100%;
+	height:69px;
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index: 1;
+	line-height: 100px;
+	padding-left: 54px;
+	color: #bfbcbc;
+	box-sizing: border-box;
+	font-style: italic;
+	font-size: 14px;
+	transition: all .3s linear;
+}
+.formCon .inputCon section .row #pDesc .placeholder, .formCon .inputCon section .row #tDesc .placeholder{
+	padding-left: 10px;
+	line-height: 100px;
+	top:0px;
+}
+.formCon .inputCon section .row .inputField .ilabel{
+	width:27%;
+	height:36px;
+	float: left;
+	text-align: right;
+	line-height: 36px;
+	font-style: normal;
+	font-size: 13px;
+	font-weight: 400;
+	color:#47084e;
+
+}
+.formCon .inputCon section .row .inputField .iwrapper>input[type="text"], .formCon .inputCon section .row .groupInput .iwrapper>input[type="text"], .formCon .inputCon section .row .inputField .iwrapper>textarea{
+	background-color: transparent;
+	border: none;
+	height: 36px;
+	padding-left: 54px;
+	width: 100%;
+	box-sizing: border-box;
+	color:white;
+}
+.formCon .inputCon section .row .inputField .tarea{
+	margin-top:33px;
+}
+.formCon .inputCon section .row #pbnpd .txt{
+	top: 3px;
+	width:30%!important;
+	position: absolute;
+	left:5px;
+	margin-top: 0;
+}
+.formCon .inputCon section .row #pbnpd .iwrapper input[type="text"]{
+		width:100%;
+		text-align: center;
+		padding-left: 3px;
+		padding-right: 3px;
+}
+.formCon .inputCon section .row .groupInput #cmesenger .iwrapper input[type="text"]{
+	padding-left: 10px;
+
+}
+.formCon .inputCon section .row #pbnpd select{
+		position: absolute;
+		top:3px;
+		background-color: rgba(177, 176, 176, 0.35);
+		border: solid 1px #635f5f;
+		color: white;
+		height:46px;
+		text-align: center;
+}
+.formCon .inputCon section .row #pbnpd fieldset:nth-child(2) .txt{
+	right:5px;
+	left:auto;
+	width:50%!important;
+	margin-top: 0;
+}
+.formCon .inputCon section .row #pbnpd fieldset:nth-child(1) select{
+	right:13px;
+	width:40%!important;
+}
+.formCon .inputCon section .row #pbnpd fieldset:nth-child(2) select{
+	left:13px;
+	width:30%!important;
+}
+.formCon .inputCon section .row .inputField  .iwrapper textarea{
+	height:auto;
+	min-height: 92px;
+	padding:7px 10px 10px 10px;
+	resize: vertical;
+	min-height:46px;
+	top:23px;
+}
+.formCon .inputCon section:nth-child(4) .row #email .iwrapper::before{
+	content:"\ea8f";
+}
+.formCon .inputCon section:nth-child(4) .row #phone .iwrapper::before{
+	content:"\e94e";
+}
+.formCon .inputCon section .row .inputField fieldset{
+  border: solid 1px #635f5f;
+  border-radius: 5px;
+	padding-left: 23px;
+	padding-bottom: 13px;
+	height: 46px;
+}
+.formCon .inputCon section .row #pbnpd fieldset{
+	padding-left: 10px;
+	padding-right: 10px;
+	box-sizing: border-box;
+}
+.formCon .inputCon section .row .inputField fieldset legend{
+	width: auto;
+	height: 23px;
+	padding-left: 10px;
+	padding-right: 10px;
+	color:#47084e;
+	font-size: 13px;
+	font-weight: 400;
+}
+.formCon .inputCon section .row .inputField fieldset input[type="radio"]{
+	cursor:pointer;
+}
+.formCon .inputCon section .row .inputField fieldset label{
+	margin-right: 23px;
+	font-size: 14px;
+	padding-left: 5px;
+	color:white;
+}
+.formCon .inputCon section .row .inputField #pduration{
+	width:45%;
+	left:0;
+	top:0;
+	position: absolute;
+	height:69px;
+}
+.formCon .inputCon section .row .inputField #pbudget{
+	width:40%;
+	right:0;
+	top:0;
+	position: absolute;
+	height:69px;
+}
+/*****************************************************************************************/
+
+.emphasy{
+	font-style: italic;
+	font-weight: 500;
+	/*color:#70DD00;*/
+	color: white;
+}
+.page #content .serDetailsCon:nth-child(2){
+	z-index: 7;
+}
+.page #content .serDetailsCon:nth-child(3){
+	z-index: 6;
+}
+.page #content .serDetailsCon:nth-child(4){
+	z-index: 5;
+}
+.page #content .serDetailsCon:nth-child(5){
+	z-index: 4;
+}
+.page #content .serDetailsCon:nth-child(6){
+	z-index: 3;
+}
+.page #content .serDetailsCon:nth-child(7){
+	z-index: 2;
+}
+.page #content .serDetailsCon:nth-child(even){
+	background-color:#3E3E3E;
+}
+.page #content .serDetailsCon:nth-child(even) .Pagelink{
+	left:100px;
+
+}
+.page #content .serDetailsCon:nth-child(even) .Pagelink::before{
+	border-top:100px solid #BA26C7;
+	border-left:50px solid transparent;
+	border-right:50px solid transparent;
+}
+.page #content .serDetailsCon:nth-child(even) .Pagelink::after{
+	border-top:100px solid #3E3E3E;
+	border-left:50px solid transparent;
+	border-right:50px solid transparent;
+}
+.page #content .serDetailsCon:nth-child(odd){
+	background-color:#5B5B5B;
+}
+.page #content .serDetailsCon:nth-child(odd) .Pagelink{
+	right:100px;
+}
+.page #content .serDetailsCon:nth-child(odd) .Pagelink::before{
+	border-top:100px solid #BA26C7;
+	border-left:50px solid transparent;
+	border-right:50px solid transparent;
+}
+.page #content .serDetailsCon:nth-child(odd) .Pagelink::after{
+	border-top:100px solid #5B5B5B;
+	border-left:50px solid transparent;
+	border-right:50px solid transparent;
+}
+.page #content .serDetailsCon .details .detailsSummary h3{
+	color:white;
+	text-align: center;
+	width:auto;
+	height: auto;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon{
+	width:100%;
+	height:auto;
+	display: flex;
+
+}
+/* .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon{
+	flex-basis: 25%;
+	position:relative;
+	height:auto;
+} */
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon{
+	flex-basis: 25%;
+	position:relative;
+	height:auto;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon{
+	width:100%;
+	position: absolute;
+	box-sizing: border-box;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #actDomain{
+	width:100%;
+	height:23px;
+	display: block;
+	text-align: center;
+	font-weight:normal;
+	background-color:#323232;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #up{
+	width:100%;
+	background-color: #272727;
+	z-index: 6;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList{
+	width:100%;
+	background-color: #272727;
+	overflow: hidden;
+	position: relative;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul{
+	width:86%;
+	height:auto;
+	top: 0;
+	list-style: none;
+	display: block;
+	right: 0;
+	position: absolute;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul li{
+	width:100%;
+	background-color:#000000;
+	border-top-left-radius: 7px;
+	border-bottom-left-radius: 7px;
+	color:#949494;
+	padding-left: 40px;
+	text-align: left;
+	box-sizing: border-box;
+	cursor: pointer;
+	position: relative;
+	font-weight: normal;
+	border: 1px solid #535353;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul .Dselected{
+	background-color: #888888;
+	color: white;
+	z-index: 5;
+	cursor: auto;
+	border: none;
+}
+.vicon-terminal{
+	width: 40px;
+	height:40px;
+	position: absolute;
+	left: 0;
+	text-align: center;
+	line-height: 44px;
+	font-size: 20px;
+}
+.vicon-SystemAdmin{
+	width: 40px;
+	height:40px;
+	position: absolute;
+	left: 0;
+	text-align: center;
+	line-height: 44px;
+	font-size: 40px;
+}
+.loading::before{
+	width: 45px;
+	height:45px;
+	position: absolute;
+	right: -5px;
+	top: 0;
+	content: "\e98b";
+	background-color: transparent;
+	text-align:center;
+	line-height: 220%;
+	font-size: 20px;
+	font-family: vicon;
+	animation-iteration-count: infinite;
+	animation-duration: 1.6s;
+	animation-timing-function: linear;
+	animation-name: spin;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul .Dselected::before{
+	width:30px;
+	height:30px;
+	background-color: transparent;
+	position: absolute;
+	content:"\eb0b";
+	top:-30px;
+	right:-10px;
+	color:#888;
+	font-size: 20px;
+	text-align: center;
+	font-family: vicon;
+
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul .Dselected::after{
+	width:30px;
+	height:30px;
+	background-color: transparent;
+	position: absolute;
+	content:"\eb0b";
+	bottom:-20px;
+	right:0px;
+	color:#888;
+	font-size: 20px;
+	text-align: center;
+	font-family: vicon;
+	transform: rotate(-90deg);
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul li:first-of-type{
+	margin-top: 0;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #domainList ul li:last-of-type{
+	margin-bottom: 0;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #down{
+	width:100%;
+	background-color: #272727;
+	z-index: 1;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent{
+	flex-basis: 75%;
+	background-color:#888888;
+	height:auto;
+	position: relative;
+	padding-bottom: 23px;
+
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content{
+	width: 100%;
+	height: auto;
+	position: relative;
+	box-sizing: border-box;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .mainContent,.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .mainContent .subContent .det,.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .mainContent .subContent .chnl{
+	transition: opacity .4s linear;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .mainContent .subContent .chnl{
+	display:none;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .sectionLabel{
+	width: 100%;
+	height: auto;
+	text-align: center;
+	color:white;
+	font-size: 26px;
+	position: static;
+	text-shadow: 0 0 5px black;
+	box-sizing: border-box;
+	display:block;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content p{
+	width: auto;
+	text-align: center;
+	font-size: 14px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon,.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon{
+	width: 85%;
+	display: flex;
+	height: auto;
+	justify-content: space-around;
+	margin: 0 auto;
+	flex-wrap: wrap;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os:nth-child(1){
+	border:solid 1px #01cfff;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os:nth-child(2){
+	border:solid 1px black;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang,.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os{
+	border-radius: 10px;
+	position: relative;
+	box-sizing: border-box;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:first-of-type,.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os:first-of-type{
+	margin-left: 0px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang .langName, .page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os .OSName{
+	width: 100%;
+	position: absolute;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 12px;
+	font-weight: bold;
+	color:#111111;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os .OSName{
+	text-transform: none;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os:nth-child(1)::before{
+	background-color:#01cfff;
+	content:"87%";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os:nth-child(2)::before{
+	background-color:black;
+	content:"59%";
+	color:white;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os:nth-child(1)::after{
+	color:#01cfff;
+	content:"\eace";
+	font-size: 50px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os:nth-child(2)::after{
+	color:black;
+	content:"\eac9";
+	font-size:50px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(3) .langName, .page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(6) .langName, .page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(9) .langName{
+	text-transform: none;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(1){
+	border:solid 1px #e54f27;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(2){
+	border:solid 1px #1e63ad;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(3){
+	border:solid 1px #63a92f;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(4){
+	border:solid 1px #e6c900;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(5){
+	border:solid 1px #9b488d;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(6){
+	border:solid 1px #41cd52;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(7){
+	border:solid 1px #65d0b6;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(8){
+	border:solid 1px #1f6aa4;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(9){
+	border:solid 1px #3765af;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang::before, .page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os::before{
+	position: absolute;
+	width:30px;
+	height: 30px;
+	border-radius: 30px;
+	text-align: center;
+	line-height: 30px;
+	left:50%;
+	margin-left: -15px;
+	font-size: 12px;
+	color:black;
+	bottom: -15px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(1)::before{
+	background-color:#e54f27;
+	content:"84%";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(2)::before{
+	background-color:#1e63ad;
+	content:"88%";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(3)::before{
+	background-color:#63a92f;
+	content:"77%";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(4)::before{
+	background-color:#e6c900;
+	content:"80%";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(5)::before{
+	background-color:#9b488d;
+	content:"94%";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(6)::before{
+	background-color:#41cd52;
+	content:"60%";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(7)::before{
+	background-color:#65d0b6;
+	content:"52%";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(8)::before{
+	background-color:#1f6aa4;
+	content:"83%";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(9)::before{
+	background-color:#3765af;
+	content:"80%";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang::after, .page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os::after{
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	font-family: vicon;
+	text-align: center;
+	line-height: 130px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(1)::after{
+	content:"\eb0f";
+	font-size: 100px;
+	color:#e54f27;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(2)::after{
+	content:"\eb0e";
+	font-size: 100px;
+	color:#1e63ad;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(3)::after{
+	content:"\eb10";
+	font-size: 100px;
+	color:#63a92f;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(4)::after{
+	content:"\eb11";
+	font-size: 100px;
+	color:#e6c900;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(5)::after{
+	content:"\eb13";
+	font-size: 100px;
+	color:#9b488d;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(6)::after{
+	content:"\eb12";
+	font-size: 70px;
+	color:#41cd52;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(7)::after{
+	content:"\eb14";
+	font-size: 80px;
+	color:#65d0b6;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(8)::after{
+	content:"\eb0d";
+	font-size: 85px;
+	color:#1f6aa4;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .langCon .lang:nth-child(9)::after{
+	content:"\eb15";
+	font-size: 85px;
+	color:#3765af;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .OSCon .os{
+	border-radius: 10px;
+	position: relative;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon{
+	width: 85%;
+	display: flex;
+	height: auto;
+	justify-content: space-around;
+	margin: 0 auto;
+	flex-wrap: wrap;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel{
+	flex-basis: 200px;
+	height: auto;
+	position: relative;
+	box-sizing: border-box;
+	border: solid 1px hsla(0,0%,100%,0.30);
+	background-color: #646464;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link{
+	width:  80%;
+	border-bottom: dashed 1px #ccc;
+	box-sizing: border-box;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link:last-of-type{
+	border-bottom:none;
+	padding-bottom: 0;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .numCon{
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 13px;
+	text-align: center;
+	border-radius: 5px;
+	border:dashed 1px #9E9E9E;
+	box-sizing: border-box;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon{
+	width:  100%;
+	height: auto;
+	margin: 0 auto;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table{
+	width:  100%;
+	height: auto;
+	font-size: 12px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td {
+	display: inline-block;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td:nth-child(1) {
+	text-align: right;
+	color:#E4E4E4;
+	width:100px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td:nth-child(2) {
+	padding-left: 13px;
+	position: relative;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td span{
+	font-family: arial;
+	font-size: 11px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td div{
+	width: 10px;
+	height: 10px;
+	border-radius: 10px;
+	position: absolute;
+	left: 0;
+	top: 8px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr:nth-child(2) td div{
+	border-radius: 3px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td .onlineGID{
+	background-color:#40AC14;
+	box-shadow: 0 0 3px 0 #40AC14;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td .offlineGID{
+	background-color:#2A2A2A;
+	box-shadow: 0 0 3px 0 #ccc;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td .online{
+	color:#0BEC2C;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td .offline{
+	color:#373737;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td .free{
+	/*color:#003CFC;*/
+	color: #F5E508;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td .notfree{
+	color:#FFED00;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td .freeGID{
+	background-color:#D0C30D;
+	box-shadow: 0 0 3px 0 #F5E508;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td .notfreeGID{
+	background-color:#D0851B;
+	box-shadow: 0 0 3px 0 #F79100;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cNameCon{
+	width:100%;
+	position: relative;
+	background-color: #272727;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cNameCon .cGID{
+	width:25%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: transparent;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cNameCon .cGID::before{
+	width:100%;
+	height: 100%;
+	position: absolute;
+	background-color: transparent;
+	font-family: vicon;
+	text-align: center;
+	line-height: 46px;
+	font-size: 30px;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cNameCon #whatappp::before{
+	content: "\ea9f";
+	color: white;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cNameCon #telegram::before{
+	content: "\eaa1";
+	color: white;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cNameCon #phone::before{
+	content: "\e94e";
+	color: white;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cNameCon #messenger::before{
+	content: "\eb16";
+	color: white;
+	font-size: 50px;
+}
+
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cNameCon .cName{
+	width:75%;
+	height: 100%;
+	position: absolute;
+	background-color: transparent;
+	right: 0;
+	top: 0;
+	text-align: left;
+	color: #BA26C7;
+	padding-left: 5px;
+	box-sizing: border-box;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails{
+	width:100%;
+	height: auto;
+	position: relative;
+	background-color: #646464;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav{
+	width: 100%;
+	position: absolute;
+	bottom: -46px;
+	left: 0;
+	border-top:1px solid white;
+	box-sizing: border-box;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon{
+	width: 319px;
+	height: 100%;
+	margin: 0 auto;
+	position: relative;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon button{
+	width: 150px;
+	height: 85%;
+	background-image:linear-gradient(to bottom, #272727 0%, black 100%);
+	display: block;
+	color:white;
+	border:none;
+	top:0;
+	position: absolute;
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+	cursor: pointer;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon button:hover{
+	color:#C4C4C4;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon button:active{
+	background-image:linear-gradient(to top, #272727 0%, black 100%);
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon .Bselected{
+	/* background-image:linear-gradient(to top, #5B5B5B 0%, #272727 100%);#888888 */
+	background-image:linear-gradient(to top, #5B5B5B 0%, #888888 100%);
+	z-index: 2;
+	border: solid 1px white;
+	border-top: none;
+	color:#C4C4C4;
+	top: -1px;
+	font-size: 1rem;
+	cursor: auto;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon .Bselected:hover{
+	color:#C4C4C4;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon .Bselected:active{
+	background-image:linear-gradient(to top, red 0%, #272727 100%);
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon button:nth-child(1){
+	left: 5px;
+
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .subNav .Btcon button:nth-child(2){
+	left: 163px;
+
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #down button, .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #up button{
+	width:50px;
+	margin:0 auto;
+	display: block;
+	border:none;
+	cursor: pointer;
+	position: relative;
+	padding: 0;
+	background-color:transparent;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon * .deactivate{
+	cursor: not-allowed!important;
+	color:hsla(0, 0%, 56.5%, 0.3);
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon * .deactivate:hover, .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon * .deactivate:active{
+	color:hsla(0, 0%, 56.5%, 0.3);
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon button{
+	 color: #9920cf;
+	 transition: color 0.2s linear;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon button:hover{
+	 color: #6d1595;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon button:active{
+	 color: #9664ad;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #down button::before, .page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #up button::before{
+	width:100%;
+	height:100%;
+	position: absolute;
+	left:0;
+	top: 0;
+	font-family: vicon;
+	text-align: center;
+	font-size: 20px;
+	/* color: #9920cf; */
+	color:inherit;
+	background-color: transparent;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #down button::before{
+	content: "\e902";
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #DomNavCon #NavCon #up button::before{
+	content: "\e903";
+}
+.page #content .serDetailsCon .details .detailsSummary .stepsCon{
+	display:flex;
+	width:100%;
+	height:auto;
+	justify-content: space-around;
+}
+.page #content .serDetailsCon .details .detailsSummary .stepsCon .step{
+	flex-basis: 28%;
+	position: relative;
+}
+.page #content .serDetailsCon .details .detailsSummary .stepsCon .step .ledgen{
+	width:80%;
+	position: absolute;
+	border-radius:7px;
+	background-color: #272727;
+	left:50%;
+	margin-left:-39.99844824%;
+	z-index: 2;
+	text-align:left;
+	box-sizing: border-box;
+	color:#BA26C7;
+	border:dashed 1px #767676;
+	font-size: 16px;
+	font-weight: bold;
+}
+.page #content .serDetailsCon .details .detailsSummary .stepsCon .step .ledgen::before{
+	width:23px;
+	position: absolute;
+	border-radius:35px;
+	background-color: #767676;
+	left:7px;
+	top:50%;
+	transform:translateY(-50%);
+	text-align:center;
+	color:#CDEF00;
+	content:"1";
+	box-shadow: inset 0 0 4px 0 #323232;
+	font-weight: normal;
+}
+.page #content .serDetailsCon .details .detailsSummary .stepsCon:nth-child(3) .step:nth-child(2) .ledgen::before{
+	content: "2";
+	color: #EB2A6E;
+}
+.page #content .serDetailsCon .details .detailsSummary .stepsCon:nth-child(3) .step:nth-child(3) .ledgen::before{
+	content: "3";
+	color: #8EEF2B;
+}
+.page #content .serDetailsCon .details .detailsSummary .stepsCon .step .content{
+	width:100%;
+	position: absolute;
+	height:100%;
+	border-top-right-radius:12px;
+	border-top-left-radius:12px;
+	z-index: 1;
+	background-image: linear-gradient(to bottom,  #2F2F2F 0%, hsla(0,0%,46%,0.00) 80%);
+	border:dashed 1px #767676;
+	border-bottom:none;
+	font-weight: normal;
+	box-sizing: border-box;
+}
+.page #content .serDetailsCon .details .detailsSummary .stepsCon .step .content p{
+	width:90%;
+	height:auto;
+	font-size: 12px;
+	margin: 0 auto;
+	text-align: left;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td {
+	position: relative;
+}
+.page #content .serDetailsCon .details .detailsSummary .domainCon #domContent .content .chnCon .channel .cDetails .link .onlineStatusCon table tr td span{
+	position: absolute;
+	height:23px;
+	top:0;
+	display:block;
+	line-height: 23px;
+}
+.page #content #sdtrn .details .detailsSummary .platformCon .con .item .labelCon .label{
+	color:#C1C1C1;
+}
+.page #content #sdtrn .details .detailsSummary .platformConDetails{
+	flex-direction: column;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon{
+	flex-basis: 300px;
+	background-color: #646464;
+	box-shadow: 0 0 4px 2px #434343;
+	position: relative;
+	margin-bottom: 23px;
+	display:flex;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkDOWN{
+	width:140px;
+	height:120px;
+	position: absolute;
+	bottom: 0;
+	right:0;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkDOWN .linkGid{
+	width:100px;
+	height:120px;
+	position: absolute;
+	right: 23px;
+	bottom:-55px;
+	border-radius: 60px;
+	background-color: #5b5b5b;
+	box-shadow:inset 0 0 4px 2px #434343;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkDOWN .linkGid::after{
+	width:100%;
+	height:51px;
+	position: absolute;
+	bottom:0;
+	background-color: #5b5b5b;
+	content: "";
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkUP{
+	width:140px;
+	height:120px;
+	position: absolute;
+	top: 0;
+	right:0;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon:first-of-type .trnlinkUP, .page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon:last-of-type .trnlinkDOWN{
+	display: none;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkUP .linkGid{
+	width:70px;
+	height:90px;
+	position: absolute;
+	right: 37px;
+	top:-73px;
+	border-top-left-radius: 60px;
+	border-top-right-radius: 60px;
+	background-color: #646464;
+	box-shadow:0 0 4px 2px #434343;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .trnlinkUP .linkGid::after{
+	width:130%;
+	height:31px;
+	position: absolute;
+	bottom:-15px;
+	background-color: #646464;
+	left:-10px;
+	content: "";
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .lft{
+	flex-basis: 30%;
+	height:auto;
+	background-color: #3e3e3e;
+	position: relative;
+	overflow: hidden;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .rgt{
+	flex-basis: 70%;
+	height:100%;
+
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .lft span{
+	display:block;
+	width:100%;
+	height:42px;
+	font-size:42px;
+	line-height: 42px;
+	color:white;
+	font-weight: 300;
+	text-align: center;
+	position: absolute;
+	top:50%;
+	margin-top:-69px;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails .trnCon .lft::after{
+	height:100px;
+	width:100px;
+	font-family: vicon;
+	position: absolute;
+	bottom:46px;
+	left:50%;
+	text-align: center;
+	line-height: 100px;
+	color:#ba26c7;
+	margin-left:-50px;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails #web .lft::after{
+	content:"\e9d5";
+	font-size: 90px;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails #pc .lft::after{
+	content:"\e963";
+	font-size: 90px;
+}
+.page #content .serDetailsCon .details .detailsSummary .platformConDetails #ebd .lft::after{
+	content:"\eb01";
+	font-size: 90px;
+}
+.page #content #sdtrn .details .detailsSummary p{
+	height: auto;
+	width: 35rem;
+}
+.page #content #sdtrn .details .detailsSummary .slist:nth-child(2) {
+	margin-top:0;
+}
+.page #content #sdtrn .details .detailsSummary .slist {
+	margin:0 auto 23px auto;
+}
+.page #content #sdtrn .details .detailsSummary .slist .hd{
+	font-weight: bold;
+	width:70px;
+	display:inline-block;
+	color:#A7A4A4;
+}
+.page #content #sdtrn .details .detailsSummary #awr{
+	display: block;
+	margin: 0 auto;
+	color:#A7A4A4;
+	text-align: center;
+	font-size: 11px;
+}

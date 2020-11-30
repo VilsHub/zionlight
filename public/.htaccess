@@ -1,0 +1,41 @@
+#Options +FollowSymlinks
+Options -Indexes
+RewriteEngine on
+
+
+# Send Requests To Front Controller...
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+
+##_________________________________________Custom error pages________________________________________##
+ErrorDocument 404 /error/404
+ErrorDocument 403 /error/403
+#ErrorDocument 500 "Internal Error"
+##____________________________________________________________________________________________##
+
+##_________________________________________Cache control________________________________________##
+# Declare fonts content-type
+AddType application/vnd.ms-fontobject .eot
+AddType application/x-font-ttf .ttf
+AddType application/x-font-opentype .otf
+AddType application/x-font-woff .woff
+AddType image/svg+xml .svg
+
+<filesmatch "\.(jpg|svg|png|jpeg|ico|JPG)$">
+  	Header set Cache-Control "max-age=86400, public"
+	Header set MyHeader "targetted file matched"
+</filesmatch>
+
+<filesmatch "\.(ttf)$">
+    Header unset Cache-Control
+  	Header set Cache-Control "max-age=86400, public"
+	Header unset Expires
+	Header set Expires "Tue, 01 Jan 2021 02:00:00 GMT"
+	Header set MyHeader "Font file matched"
+</filesmatch>
+
+<IfModule mod_expires.c>
+    ExpiresActive on
+	ExpiresByType application/x-font-ttf "access plus 216000 seconds"
+</IfModule>
