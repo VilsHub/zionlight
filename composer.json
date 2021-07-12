@@ -1,0 +1,48 @@
+{
+    "require": {
+      "vilshub/validator": "dev-master",
+      "vilshub/helpers": "dev-master",
+      "vilshub/dbant": "dev-master",
+      "vilshub/router": "dev-master",
+      "vilshub/http": "dev-master"
+    },
+    "repositories": [
+      {
+          "type": "path",
+          "url": "app/lib/vendor/vilshub/validator/"
+      },
+      {
+          "type": "path",
+          "url": "app/lib/vendor/vilshub/helpers/"
+      },
+      {
+          "type": "path",
+          "url": "app/lib/vendor/vilshub/dbant/"
+      },
+      {
+        "type": "path",
+        "url": "app/lib/vendor/vilshub/router/"
+      },
+      {
+        "type": "path",
+        "url": "app/lib/vendor/vilshub/http/"
+      }
+    ],
+    "autoload": {
+        "classmap": [
+          "app/lib/classes/system/helpers/",
+          "app/lib/classes/system/core/",
+          "app/lib/classes/application/controllers/",
+          "app/lib/classes/application/middleWares/",
+          "app/lib/classes/application/models/"
+        ],
+        "files": [
+          "app/lib/functions/system/navigator.php",
+          "app/lib/functions/system/output.php"
+        ]
+    },
+    "minimum-stability":"dev",
+    "config": {
+      "vendor-dir": "app/lib/vendor"
+    }
+}

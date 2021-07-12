@@ -1,0 +1,178 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "12db96a5e5e1b1bfbf463833936c8d42",
+    "packages": [
+        {
+            "name": "vilshub/dbant",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "app/lib/vendor/vilshub/dbant",
+                "reference": "fcad47eafb1b84918c1c2bcf768e433a2d3d43b2"
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "vilshub/helpers": "*"
+            },
+            "type": "library for database io",
+            "autoload": {
+                "psr-4": {
+                    "vilshub\\dbant\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Starlyvil",
+                    "email": "stalyvil@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "vilshub/helpers",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "app/lib/vendor/vilshub/helpers",
+                "reference": "dd16dcd11b65cd3e2c20cafd73ab340cd4dee39b"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "vilshub\\helpers\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Starlyvil",
+                    "email": "stalyvil@gmail.com"
+                }
+            ],
+            "description": "Helper static methods, for all vilshub packages",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "vilshub/http",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "app/lib/vendor/vilshub/http",
+                "reference": "d00ea440afe110849f4a1fa7deca5751b94aaaad"
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "vilshub/helpers": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "vilshub\\http\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Starlyvil",
+                    "email": "stalyvil@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "vilshub/router",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "app/lib/vendor/vilshub/router",
+                "reference": "8cbd5c961c24afe1a027413e921bf052ab3ea2a9"
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "vilshub/helpers": "*"
+            },
+            "type": "library http routing",
+            "autoload": {
+                "psr-4": {
+                    "vilshub\\router\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Starlyvil",
+                    "email": "stalyvil@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
+            "name": "vilshub/validator",
+            "version": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "app/lib/vendor/vilshub/validator",
+                "reference": "700eac1ff92182458ff1915e566dc0de06c2f8e4"
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "vilshub/helpers": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "vilshub\\validator\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Starlyvil",
+                    "email": "stalyvil@gmail.com"
+                }
+            ],
+            "description": "Library for data validation",
+            "transport-options": {
+                "relative": true
+            }
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "vilshub/validator": 20,
+        "vilshub/helpers": 20,
+        "vilshub/dbant": 20,
+        "vilshub/router": 20,
+        "vilshub/http": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}

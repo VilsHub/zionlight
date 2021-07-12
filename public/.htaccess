@@ -1,6 +1,6 @@
-#Options +FollowSymlinks
 Options -Indexes
 RewriteEngine on
+
 
 
 # Send Requests To Front Controller...
@@ -8,11 +8,13 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [L]
 
-##_________________________________________Custom error pages________________________________________##
-ErrorDocument 404 /error/404
-ErrorDocument 403 /error/403
-#ErrorDocument 500 "Internal Error"
-##____________________________________________________________________________________________##
+
+## Error ErrorDocument  ##
+## Replace yourdomain with your domain
+
+ErrorDocument 403 http://yourdomain/error/403 
+ErrorDocument 404 http://yourdomain/error/404
+ErrorDocument 500 "Oopsss...... Internal server error"
 
 ##_________________________________________Cache control________________________________________##
 # Declare fonts content-type

@@ -1,0 +1,174 @@
+{
+    "packages": [
+        {
+            "name": "vilshub/dbant",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../zionlight/lib/vendor/vilshub/dbant",
+                "reference": "fcad47eafb1b84918c1c2bcf768e433a2d3d43b2"
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "vilshub/helpers": "*"
+            },
+            "type": "library for database io",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "vilshub\\dbant\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Starlyvil",
+                    "email": "stalyvil@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            },
+            "install-path": "../vilshub/dbant"
+        },
+        {
+            "name": "vilshub/helpers",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../zionlight/lib/vendor/vilshub/helpers",
+                "reference": "dd16dcd11b65cd3e2c20cafd73ab340cd4dee39b"
+            },
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "vilshub\\helpers\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Starlyvil",
+                    "email": "stalyvil@gmail.com"
+                }
+            ],
+            "description": "Helper static methods, for all vilshub packages",
+            "transport-options": {
+                "relative": true
+            },
+            "install-path": "../vilshub/helpers"
+        },
+        {
+            "name": "vilshub/http",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../zionlight/lib/vendor/vilshub/http",
+                "reference": "d00ea440afe110849f4a1fa7deca5751b94aaaad"
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "vilshub/helpers": "*"
+            },
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "vilshub\\http\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Starlyvil",
+                    "email": "stalyvil@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            },
+            "install-path": "../vilshub/http"
+        },
+        {
+            "name": "vilshub/router",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../zionlight/lib/vendor/vilshub/router",
+                "reference": "8cbd5c961c24afe1a027413e921bf052ab3ea2a9"
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "vilshub/helpers": "*"
+            },
+            "type": "library http routing",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "vilshub\\router\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Starlyvil",
+                    "email": "stalyvil@gmail.com"
+                }
+            ],
+            "transport-options": {
+                "relative": true
+            },
+            "install-path": "../vilshub/router"
+        },
+        {
+            "name": "vilshub/validator",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "dist": {
+                "type": "path",
+                "url": "../zionlight/lib/vendor/vilshub/validator",
+                "reference": "700eac1ff92182458ff1915e566dc0de06c2f8e4"
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "vilshub/helpers": "*"
+            },
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "vilshub\\validator\\": "src"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Starlyvil",
+                    "email": "stalyvil@gmail.com"
+                }
+            ],
+            "description": "Library for data validation",
+            "transport-options": {
+                "relative": true
+            },
+            "install-path": "../vilshub/validator"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

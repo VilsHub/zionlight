@@ -1,0 +1,4 @@
+<?php
+echo "\033[31m Welcome to Zion Light CLI version 1.0.0 \033[0m \n ";
+
+?>

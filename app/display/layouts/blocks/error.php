@@ -1,0 +1,1 @@
+<?php $router->showContent;?>
