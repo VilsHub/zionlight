@@ -76,10 +76,8 @@ class Route{
             $methodName = $controllerInfo[1];
             call_user_func_array(array($classInstance, $methodName), $data); 
           }catch (\Throwable $th) { 
-            trigger_error($th);
-            // trigger_error(Message::write("error", " The controller class ".Style::color($className , "black")." does not exist"));
-          }
-                     
+            trigger_error(Message::write("error", $th->getMessage()));
+          }        
         }else if(is_callable($callBack)){ //execute function
           call_user_func_array($callBack, $data);
         }

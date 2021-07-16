@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'ee8ea0f6143cab030e846ace376c6a5640e9a7ea',
+    'reference' => '5bf30546525fe68e4b62e63eecabbbefad783f0b',
     'name' => '__root__',
   ),
   'versions' => 
@@ -41,7 +41,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'ee8ea0f6143cab030e846ace376c6a5640e9a7ea',
+      'reference' => '5bf30546525fe68e4b62e63eecabbbefad783f0b',
     ),
     'vilshub/dbant' => 
     array (
@@ -50,7 +50,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'fcad47eafb1b84918c1c2bcf768e433a2d3d43b2',
+      'reference' => '9a48b9e4197fd0c86c37fc0ed67cb0fb607eb53c',
     ),
     'vilshub/helpers' => 
     array (
@@ -59,7 +59,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'dd16dcd11b65cd3e2c20cafd73ab340cd4dee39b',
+      'reference' => 'adbb2cd448bd60a32e886ec93198694ae8dd503c',
     ),
     'vilshub/http' => 
     array (
@@ -68,7 +68,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'd00ea440afe110849f4a1fa7deca5751b94aaaad',
+      'reference' => '735c631b868614fb2d2cbdd3e33df6fa3889865e',
     ),
     'vilshub/router' => 
     array (
@@ -77,7 +77,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '8cbd5c961c24afe1a027413e921bf052ab3ea2a9',
+      'reference' => '45b639c0aeef2112a2450e15b0020810f6805638',
     ),
     'vilshub/validator' => 
     array (
@@ -86,7 +86,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '700eac1ff92182458ff1915e566dc0de06c2f8e4',
+      'reference' => '239b3306249d736953900961494fbbf9b6a21408',
     ),
   ),
 );

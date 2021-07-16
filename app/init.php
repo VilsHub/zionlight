@@ -1,4 +1,5 @@
 <?php
+//$Config and $pdo variable names should not be change to avoid system failure
 
 $config = require_once(__DIR__."/../config/app.php");
 $pdo = require_once(__DIR__."/../config/connect.php");

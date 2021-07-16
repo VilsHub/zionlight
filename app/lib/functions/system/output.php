@@ -7,7 +7,6 @@ use vilshub\helpers\Message;
 use vilshub\helpers\Style;
 use vilshub\validator\Validator;
 
-
 /**
   *
   */
@@ -25,5 +24,12 @@ function dd($value){
 function json_encode_with_csrf($array, $token){
   $array["csrf"] = $token;
   return json_encode($array);
+}
+
+function dump_if($value, $content){
+  /*@value The value set by Session::set('xid', value)*/ 
+  if(Session::get("xid") == $value){
+    echo $content;
+  }
 }
 ?>

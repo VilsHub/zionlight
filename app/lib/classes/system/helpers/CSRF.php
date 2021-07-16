@@ -15,9 +15,8 @@ class CSRF
         if($type == "session"){            
             if(!Session::exist($name)){
                 $uniqueID = md5(uniqid());
-                $expire   = time()+ 60*60*24*3;
                 Session::set($name, $uniqueID);
-                Cookie::set($name, $uniqueID, ["httponly" => true, "expires" => $expire, "path" => "/"]);
+                Cookie::set($name, $uniqueID, ["httponly" => true, "path" => "/"]);
             }
         }else{//generate for node
             $uniqueID = md5(uniqid());

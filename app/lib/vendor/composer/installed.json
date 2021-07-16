@@ -6,8 +6,8 @@
             "version_normalized": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../zionlight/lib/vendor/vilshub/dbant",
-                "reference": "fcad47eafb1b84918c1c2bcf768e433a2d3d43b2"
+                "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/dbant",
+                "reference": "9a48b9e4197fd0c86c37fc0ed67cb0fb607eb53c"
             },
             "require": {
                 "php": ">=5.3.0",
@@ -30,7 +30,7 @@
                 }
             ],
             "transport-options": {
-                "relative": true
+                "relative": false
             },
             "install-path": "../vilshub/dbant"
         },
@@ -40,8 +40,8 @@
             "version_normalized": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../zionlight/lib/vendor/vilshub/helpers",
-                "reference": "dd16dcd11b65cd3e2c20cafd73ab340cd4dee39b"
+                "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/helpers",
+                "reference": "adbb2cd448bd60a32e886ec93198694ae8dd503c"
             },
             "type": "library",
             "installation-source": "dist",
@@ -61,7 +61,7 @@
             ],
             "description": "Helper static methods, for all vilshub packages",
             "transport-options": {
-                "relative": true
+                "relative": false
             },
             "install-path": "../vilshub/helpers"
         },
@@ -71,11 +71,11 @@
             "version_normalized": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../zionlight/lib/vendor/vilshub/http",
-                "reference": "d00ea440afe110849f4a1fa7deca5751b94aaaad"
+                "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/http",
+                "reference": "735c631b868614fb2d2cbdd3e33df6fa3889865e"
             },
             "require": {
-                "php": ">=5.3.0",
+                "php": ">=7.0.0",
                 "vilshub/helpers": "*"
             },
             "type": "library",
@@ -95,7 +95,7 @@
                 }
             ],
             "transport-options": {
-                "relative": true
+                "relative": false
             },
             "install-path": "../vilshub/http"
         },
@@ -105,8 +105,8 @@
             "version_normalized": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../zionlight/lib/vendor/vilshub/router",
-                "reference": "8cbd5c961c24afe1a027413e921bf052ab3ea2a9"
+                "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/router",
+                "reference": "45b639c0aeef2112a2450e15b0020810f6805638"
             },
             "require": {
                 "php": ">=5.3.0",
@@ -129,7 +129,7 @@
                 }
             ],
             "transport-options": {
-                "relative": true
+                "relative": false
             },
             "install-path": "../vilshub/router"
         },
@@ -139,8 +139,8 @@
             "version_normalized": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "../zionlight/lib/vendor/vilshub/validator",
-                "reference": "700eac1ff92182458ff1915e566dc0de06c2f8e4"
+                "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/validator",
+                "reference": "239b3306249d736953900961494fbbf9b6a21408"
             },
             "require": {
                 "php": ">=5.3.0",
@@ -164,7 +164,7 @@
             ],
             "description": "Library for data validation",
             "transport-options": {
-                "relative": true
+                "relative": false
             },
             "install-path": "../vilshub/validator"
         }

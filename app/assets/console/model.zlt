@@ -1,0 +1,13 @@
+<?php
+/**
+* This model handles.......
+* @author Your name
+*/
+
+class className extends Model
+{
+    function __construct(){
+        //constructor content here
+    }
+}
+?>

@@ -11,4 +11,4 @@
 <link rel="stylesheet" media = "screen and (max-width:599px)" href="/assets/css/blocks/home/small.css">
 <!--_____________________________________-->
 
-<link rel="icon" href="/assets/imgs/IconLogo.svg" type="image/x-icon">
+<link rel="icon" href="/assets/imgs/favicon.svg" type="image/x-icon">

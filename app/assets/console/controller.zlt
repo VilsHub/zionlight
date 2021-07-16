@@ -1,0 +1,13 @@
+<?php
+/**
+* This controller handles.......
+* @author Your name
+*/
+
+class className extends Controller
+{
+    function __construct(){
+        //constructor content here
+    }
+}
+?>
