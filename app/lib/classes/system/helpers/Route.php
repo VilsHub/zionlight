@@ -71,12 +71,12 @@ class Route{
           $className      = $controllerInfo[0];
           $class          = "className";
 
-          try {         
+          try {   
             $classInstance  = new $$class;
             $methodName = $controllerInfo[1];
             call_user_func_array(array($classInstance, $methodName), $data); 
           }catch (\Throwable $th) { 
-            trigger_error(Message::write("error", $th->getMessage()));
+            trigger_error("");
           }        
         }else if(is_callable($callBack)){ //execute function
           call_user_func_array($callBack, $data);

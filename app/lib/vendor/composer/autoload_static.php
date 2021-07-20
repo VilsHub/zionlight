@@ -20,6 +20,10 @@ class ComposerStaticInit01291a4741376af5afe27525bf3e6abb
             'vilshub\\helpers\\' => 16,
             'vilshub\\dbant\\' => 14,
         ),
+        'D' => 
+        array (
+            'Dice\\' => 5,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -42,6 +46,10 @@ class ComposerStaticInit01291a4741376af5afe27525bf3e6abb
         'vilshub\\dbant\\' => 
         array (
             0 => __DIR__ . '/..' . '/vilshub/dbant/src',
+        ),
+        'Dice\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/level-2/dice',
         ),
     );
 

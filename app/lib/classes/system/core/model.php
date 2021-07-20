@@ -1,11 +1,10 @@
 <?php
-use vilshub\dbant\DBAnt;
 class Model
 {
-    function __construct(){
-        global $pdo;
-        $this->db = new DBAnt($pdo);
-        $this->loader = new Loader();
+    function __construct(Loader $loader){
+        global $config;
+        $this->db = $config->db;
+        $this->loader = $loader;
     }
 }
 ?>

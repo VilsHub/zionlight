@@ -1,19 +1,17 @@
 <?php
-//$Config and $pdo variable names should not be change to avoid system failure
+//Load required files
+require_once(__DIR__."/../app/lib/vendor/autoload.php");
+ErrorHandler::listenForErrors();
 
+//$Config variable name should not be change to avoid system failure
 $config = require_once(__DIR__."/../config/app.php");
-$pdo = require_once(__DIR__."/../config/connect.php");
 $routes = require_once(__DIR__."/../http/routes/content.php");
 $socketFiles = require_once(__DIR__."/../http/routes/socket.php");
 
-//Load required files
-require_once(__DIR__."/../app/lib/vendor/autoload.php");
 
 //Others settings
 Session::start($config->appName);
 CSRF::generateSessionToken("CSRF_Token");
-ErrorHandler::listenForErrors();
-
 
 
 //Configure router
@@ -26,6 +24,7 @@ $router->error404File     = $config->displayDir."/contents/error/root/404.php";
 $router->maintenanceURL   = "/maintenance";
 $router->maintenanceMode  = false;
 $router->dynamicRoute     = true;
+$router->maskExtension    = ".php";
 $router->config           = $config;
 $router->routes           = $routes;
 $router->socketFiles      = $socketFiles;

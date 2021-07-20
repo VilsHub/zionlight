@@ -26,7 +26,6 @@ AddType image/svg+xml .svg
 
 <filesmatch "\.(jpg|svg|png|jpeg|ico|JPG)$">
   	Header set Cache-Control "max-age=86400, public"
-	Header set MyHeader "targetted file matched"
 </filesmatch>
 
 <filesmatch "\.(ttf)$">

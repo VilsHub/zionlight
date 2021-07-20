@@ -4,7 +4,8 @@
       "vilshub/helpers": "dev-master",
       "vilshub/dbant": "dev-master",
       "vilshub/router": "dev-master",
-      "vilshub/http": "dev-master"
+      "vilshub/http": "dev-master",
+      "level-2/dice": "dev-master"
     },
     "repositories": [
       {

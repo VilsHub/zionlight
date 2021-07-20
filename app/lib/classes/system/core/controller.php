@@ -6,14 +6,13 @@ use vilshub\helpers\Style;
 
 class Controller
 {
-    function __construct(){
+    function __construct(Loader $loader, Request $request, Session $session, Validator $validator){
         global $config;
-        
         $this->appConfig    = $config;
-        $this->loader       = new Loader();
-        $this->xhr          = new Request();
-        $this->session      = new Session();
-        $this->validator    = new Validator();
+        $this->loader       = $loader;
+        $this->xhr          = $request;
+        $this->session      = $session;
+        $this->validator    = $validator;
     }
     public function middleWare($middleWareName, $data=null){
    

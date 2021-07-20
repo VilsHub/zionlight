@@ -1,6 +1,60 @@
 {
     "packages": [
         {
+            "name": "level-2/dice",
+            "version": "dev-master",
+            "version_normalized": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Level-2/Dice.git",
+                "reference": "3e9a8548398c01e2527110c916a93f6efa17ac9c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Level-2/Dice/zipball/3e9a8548398c01e2527110c916a93f6efa17ac9c",
+                "reference": "3e9a8548398c01e2527110c916a93f6efa17ac9c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.5"
+            },
+            "time": "2021-04-20T14:06:06+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "Dice\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tom Butler",
+                    "email": "tom@r.je"
+                }
+            ],
+            "description": "A minimalist Dependency injection container (DIC) for PHP. Please note: 3.0+ is only compatible with PHP 7.0. The 2.0 branch is compatbile with PHP 5.6.",
+            "homepage": "http://r.je/dice.html",
+            "keywords": [
+                "dependency injection",
+                "dependency injection container",
+                "di",
+                "ioc"
+            ],
+            "support": {
+                "issues": "https://github.com/Level-2/Dice/issues",
+                "source": "https://github.com/Level-2/Dice/tree/4.0.3"
+            },
+            "install-path": "../level-2/dice"
+        },
+        {
             "name": "vilshub/dbant",
             "version": "dev-master",
             "version_normalized": "dev-master",

@@ -11,4 +11,5 @@ return array(
     'vilshub\\http\\' => array($vendorDir . '/vilshub/http/src'),
     'vilshub\\helpers\\' => array($vendorDir . '/vilshub/helpers/src'),
     'vilshub\\dbant\\' => array($vendorDir . '/vilshub/dbant/src'),
+    'Dice\\' => array($vendorDir . '/level-2/dice'),
 );

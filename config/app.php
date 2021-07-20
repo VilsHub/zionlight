@@ -4,6 +4,7 @@
 /**********************************************************************/ 
 
 $root           = dirname($_SERVER["DOCUMENT_ROOT"]);
+$connectionInfo = require_once(__DIR__."/connect.php");
 $mainDir        = "/app";
 $libDir         = $mainDir."/lib/classes/application";
 
@@ -53,7 +54,11 @@ return (object) array (
     "sessionExpiry"     => 60*60, // in seconds
 
     //Engine
-    "database"          => "mysql"
+    "database"          => "mysql",
+
+    //connection   
+    "pdo"               => $connectionInfo["pdo"],
+    "db"                => $connectionInfo["db"],
 )
 
 ?>

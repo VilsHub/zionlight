@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '5bf30546525fe68e4b62e63eecabbbefad783f0b',
+    'reference' => '24c362c6b3fede50281553d64e1437bc9e7650a4',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,17 @@
       'aliases' => 
       array (
       ),
-      'reference' => '5bf30546525fe68e4b62e63eecabbbefad783f0b',
+      'reference' => '24c362c6b3fede50281553d64e1437bc9e7650a4',
+    ),
+    'level-2/dice' => 
+    array (
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
+      'aliases' => 
+      array (
+        0 => '9999999-dev',
+      ),
+      'reference' => '3e9a8548398c01e2527110c916a93f6efa17ac9c',
     ),
     'vilshub/dbant' => 
     array (
