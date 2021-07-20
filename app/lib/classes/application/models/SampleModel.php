@@ -2,7 +2,7 @@
 class SampleModel extends Model
 {
     function __construct(){
-        parent::__construct();
+        parent::__construct(new Loader);
         // $this->FileNameQueries = $this->loader->loadQueryBank("queryFileName"); //Without the suffix
     }
 
