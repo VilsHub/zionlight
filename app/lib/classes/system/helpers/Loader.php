@@ -6,7 +6,7 @@
 use vilshub\helpers\Message;
 use vilshub\helpers\Style;
 use vilshub\validator\Validator;
-
+use Dice\Dice;
 
 /**
   *
@@ -30,11 +30,12 @@ class Loader
 
         $msg2 = "The specified model file:".Style::color($targetFile, "black").", does not exist";
         Validator::validateFile($targetFile, Message::write("error", $msg2));
-        
-        $classNameVariable  = "className";
-        
+                
         require_once($targetFile);
-        return new $$classNameVariable();
+        $dice = new Dice;
+        $buildClass = $dice->create($className);
+
+        return  $buildClass;
     }
     public function loadQueryBank($target){
         $target  = rtrim($target, ".php");

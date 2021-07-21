@@ -7,6 +7,7 @@ $opt = [
 	PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 	PDO::ATTR_EMULATE_PREPARES   => false
 ];
-// $pdo = new PDO($dsn, $user, $pass, $opt);
-return //["pdo" => $pdo, "db" => new DBAnt($pdo)];
+// $pdo = new PDO($dsn, $user, $pass, $opt);		//unComment this line if connecttion details are supplied
+// return ["pdo" => $pdo, "db" => new DBAnt($pdo)];	//unComment this line if connecttion details are supplied
+return ["pdo" => null, "db" => null]; 				//Comment this line if connecttion details are supplied
 ?>

@@ -1,5 +1,6 @@
 <?php
 use vilshub\http\Request;
+use Dice\Dice;
 
 Request::post("/api/sample", "Campaign@subscribe");
 

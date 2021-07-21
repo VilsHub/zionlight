@@ -4,10 +4,20 @@
 * @author Your name
 */
 
+<?php
 class className extends Model
 {
     function __construct(){
-        //constructor content here
+        parent::__construct(new Loader);
+        // $this->FileNameQueries = $this->loader->loadQueryBank("queryFileName"); //Without the Model suffix
+    }
+
+    public function sampleGetUsers($data){
+        // $preparedSql = $this->FileNameQueries::query1();
+        // return $this->db->run($preparedSql, $data);
+    }
+    public function sampleAddUsers($email){
+        // $preparedSql = $this->FileNameQueries::query2($email);
+        // return $this->db->exist($preparedSql, $email);
     }
 }
-?>
