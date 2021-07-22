@@ -1,5 +1,6 @@
 {
   "name": "vilshub/zionlight",
+  "description": "An MRD (Model Route Display) based model for creating fast and light web apps",
   "type": "PHP Framework",
   "license": "MIT",
   "authors": [
