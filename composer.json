@@ -1,4 +1,13 @@
 {
+  "name": "Zion Light",
+  "type": "PHP Framework",
+  "license": "MIT",
+  "authors": [
+        {
+            "name": "Starlyvil",
+            "email": "stalyvil@gmail.com"
+        }
+    ],
     "require": {
       "vilshub/validator": "dev-master",
       "vilshub/helpers": "dev-master",
