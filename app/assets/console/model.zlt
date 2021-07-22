@@ -4,7 +4,6 @@
 * @author Your name
 */
 
-<?php
 class className extends Model
 {
     function __construct(){

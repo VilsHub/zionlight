@@ -4,7 +4,7 @@
 * @author Your name
 */
 
-class className extends Model
+class SampleModel extends Model
 {
     function __construct(){
         parent::__construct(new Loader);

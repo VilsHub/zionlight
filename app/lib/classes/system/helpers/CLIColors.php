@@ -6,6 +6,7 @@
 		public function __construct() {
 			// Set up shell colors
 			$this->fontColors['black'] = '0;30';
+			$this->fontColors['black_bold'] = '1;30';
 			$this->fontColors['dark_gray'] = '1;30';
 			$this->fontColors['blue'] = '0;34';
 			$this->fontColors['light_blue'] = '1;34';

@@ -118,10 +118,22 @@ class console extends CLIColors{
         die("\n\n");
     }
 
+    private function warning($details){  
+        $chars = strlen(implode("", $details));
+        echo "\n";
+        $text = "  ".$details[0].$this->color($details[1], "blue", "yellow").$this->color($details[2]."   ", "black", "yellow");
+        $margin = $this->getMargin($chars+5)."\n";
+
+        $this->write($margin, "black", "yellow");
+        $this->write($text."\n", "black", "yellow");
+        $this->write($margin, "black", "yellow");
+        die("\n\n");
+    }
+
     private function getMargin($n){
         $space = "";
         for ($x=0; $x<$n; $x++){
-            $space .= " ";
+            $space .= html_entity_decode("&nbsp;");
         }
         return $space;
     }
@@ -169,10 +181,8 @@ class console extends CLIColors{
         //write to new controller file
         $newControllerFile = ROOT.$dir."/".$name.".php";
 
-        if($this->writeTemplate($newControllerFile, $controllerContent)){
+        if($this->writeTemplate($newControllerFile, $controllerContent, "Controller")){
             $this->success(["The controller: ",$name, " has been created successfully in the directory: ".ROOT.$dir]);
-        }else{
-            die("error");
         }
     }
 
@@ -183,21 +193,39 @@ class console extends CLIColors{
 
         //write to new model file
         $newModelFile = ROOT.$dir."/".$name.$this->appConfig->modelFileSuffix.".php";
-        if($this->writeTemplate($newModelFile, $modelContent)){
+        if($this->writeTemplate($newModelFile, $modelContent, "Model")){
             $this->success(["The Model: ",$name.$this->appConfig->modelFileSuffix, " has been created successfully in the directory: ".ROOT.$dir]);
-        }else{
-            die("error");
         }
     }
 
-    private function writeTemplate($fileName, $content){
+    private function executeWrite($fileName, $content){
         $fileHandler = fopen($fileName, "w");
         if (fwrite($fileHandler, $content) > 0){
             return true;
         }else{
             return false;
         };
+    }
 
+    private function writeTemplate($fileName, $content, $type){
+        // check if file exist
+        if(!file_exists($fileName)){
+           return $this->executeWrite($fileName, $content);
+        }else{
+            $prompt = $this->color(" The ".$type." file: ", "black", "yellow"). $this->color($fileName, "blue", "yellow").  $this->color(" exist, do you want to override? Y or N ", "blue", "yellow");
+            $input =  $this->readLine($prompt);
+            if(strtolower($input) == "y"){
+                return $this->executeWrite($fileName, $content);
+            }
+        }
+    }
+
+    private function readLine($prompt){
+        echo $prompt." : ";
+        $callForInput = fopen("php://stdin", "r");
+        $response = trim(fgets($callForInput));
+        fclose($callForInput);
+        return $response;
     }
 
     private function getTemplate($type, $className=null){
@@ -252,6 +280,5 @@ class console extends CLIColors{
             shell_exec($command);
         }
     }
-
 }
 ?>

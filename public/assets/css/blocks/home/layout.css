@@ -43,8 +43,7 @@ h3{
   box-shadow: 0 4px 5px 2px #0000004d;
 }
 #contentBoundary{
-  min-height:CALC(100vh - (46px + 23px)); /*Header height and footer height*/
-  height:auto;
+  height:CALC(100vh - (70px + 23px)); /*Header height and footer height*/
   Background-color:transparent;
   margin-top: -1px;
   padding-top: 1px;
