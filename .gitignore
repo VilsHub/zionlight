@@ -1,2 +1,2 @@
-.env
 app/lib/vendor/
+composer.lock
