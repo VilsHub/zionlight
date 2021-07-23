@@ -155,10 +155,10 @@ class console extends CLIColors{
 
         switch ($action) {
             case 'controller':
-                $this->createController(ucwords($this->argv[2]));
+                $this->buildTemplate("controller", ucwords($this->argv[2]));
                 break;
             case 'model':
-                $this->createModel(ucwords($this->argv[2]));
+                $this->buildTemplate("model", ucwords($this->argv[2]));
                 break;
             default:
                 # code...
@@ -169,7 +169,7 @@ class console extends CLIColors{
     private function cleanInstall(){
         @rmdir("../vendor");
         //update composer file
-        @buildTemplate("composer");
+        $this->buildTemplate("composer");
     }
 
     private function validate($type, $value){
@@ -184,7 +184,7 @@ class console extends CLIColors{
         }
     }
 
-    private function buildTemplate($type){
+    private function buildTemplate($type, $name=null){
         switch ($type) {
             case 'controller':
                 $dir = $this->appConfig->controllersDir;
@@ -212,7 +212,7 @@ class console extends CLIColors{
                 $composerContent =  $this->getTemplate("composer");
 
                 //write to new composer file
-                $newComposerFile = ROOT."composer.json";
+                $newComposerFile = ROOT."/composer.json";
                 $this->executeWrite($newComposerFile, $composerContent);
                 break;
             default:
