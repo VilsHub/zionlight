@@ -12,8 +12,7 @@ class console extends CLIColors{
             "model",
             "querybank",
         ],
-        "start" => 1,
-        "cleaninstall" => 1,
+        "start" => 1
     ];
     private $argv;
     function __construct($argv, $argc)
@@ -67,9 +66,6 @@ class console extends CLIColors{
                 break;
             case 'start':
                 $this->startServer();
-                break;
-            case 'cleaninstall':
-                $this->cleanInstall();
                 break;
             default:
                 # code...
@@ -166,12 +162,6 @@ class console extends CLIColors{
         }
     }
 
-    private function cleanInstall(){
-        @rmdir("../vendor");
-        //update composer file
-        $this->buildTemplate("composer");
-    }
-
     private function validate($type, $value){
         switch ($type) {
             case 'alpha':
@@ -207,17 +197,6 @@ class console extends CLIColors{
                 if($this->writeTemplate($newModelFile, $modelContent, "Model")){
                     $this->success(["The Model: ",$name.$this->appConfig->modelFileSuffix, " has been created successfully in the directory: ".ROOT.$dir]);
                 }
-                break;
-            case 'composer':
-                $composerContent =  $this->getTemplate("composer");
-
-                //write to new composer file
-                $newComposerFile = ROOT."/composer.json";
-                if($this->executeWrite($newComposerFile, $composerContent)){
-                    die("cccc");
-                }else{
-                    die("dddd");
-                };
                 break;
             default:
                 # code...
