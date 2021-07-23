@@ -212,7 +212,7 @@ class console extends CLIColors{
                 $composerContent =  $this->getTemplate("composer");
 
                 //write to new composer file
-                $newComposerFile = ROOT."/composer.json";
+                $newComposerFile = "composer.json";
                 $this->executeWrite($newComposerFile, $composerContent);
                 break;
             default:
