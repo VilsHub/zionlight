@@ -17,28 +17,6 @@
     "vilshub/http": "dev-master",
     "level-2/dice": "dev-master"
   },
-  "repositories": [
-    {
-        "type": "path",
-        "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/validator/"
-    },
-    {
-        "type": "path",
-        "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/helpers/"
-    },
-    {
-        "type": "path",
-        "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/dbant/"
-    },
-    {
-      "type": "path",
-      "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/router/"
-    },
-    {
-      "type": "path",
-      "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/http/"
-    }
-  ],
   "autoload": {
       "classmap": [
         "app/lib/classes/system/helpers/",
@@ -60,11 +38,4 @@
   "config": {
     "vendor-dir": "app/lib/vendor"
   },
-  "script":{
-    "post-create-project-cmd": [
-      "@php zlight cleaninstall",
-      "composer install"
-    ]
-
-  }
 }

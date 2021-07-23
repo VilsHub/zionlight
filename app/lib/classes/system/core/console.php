@@ -168,6 +168,8 @@ class console extends CLIColors{
 
     private function cleanInstall(){
         @rmdir("../vendor");
+        //update composer file
+
     }
 
     private function validate($type, $value){
@@ -182,27 +184,40 @@ class console extends CLIColors{
         }
     }
 
-    private function createController($name){
-        $dir = $this->appConfig->controllersDir;
-        $controllerContent =  $this->getTemplate("controller", $name);
+    private function buildTemplate($type){
+        switch ($type) {
+            case 'controller':
+                $dir = $this->appConfig->controllersDir;
+                $controllerContent =  $this->getTemplate("controller", $name);
 
-        //write to new controller file
-        $newControllerFile = ROOT.$dir."/".$name.".php";
+                //write to new controller file
+                $newControllerFile = ROOT.$dir."/".$name.".php";
 
-        if($this->writeTemplate($newControllerFile, $controllerContent, "Controller")){
-            $this->success(["The controller: ",$name, " has been created successfully in the directory: ".ROOT.$dir]);
-        }
-    }
+                if($this->writeTemplate($newControllerFile, $controllerContent, "Controller")){
+                    $this->success(["The controller: ",$name, " has been created successfully in the directory: ".ROOT.$dir]);
+                }
+                break;
+            case 'model':
+                $dir = $this->appConfig->modelsDir;
 
-    private function createModel($name){
-        $dir = $this->appConfig->modelsDir;
+                $modelContent =  $this->getTemplate("model", $name.$this->appConfig->modelFileSuffix);
 
-        $modelContent =  $this->getTemplate("model", $name.$this->appConfig->modelFileSuffix);
+                //write to new model file
+                $newModelFile = ROOT.$dir."/".$name.$this->appConfig->modelFileSuffix.".php";
+                if($this->writeTemplate($newModelFile, $modelContent, "Model")){
+                    $this->success(["The Model: ",$name.$this->appConfig->modelFileSuffix, " has been created successfully in the directory: ".ROOT.$dir]);
+                }
+                break;
+            case 'composer':
+                $composerContent =  $this->getTemplate("composer", "composer");
 
-        //write to new model file
-        $newModelFile = ROOT.$dir."/".$name.$this->appConfig->modelFileSuffix.".php";
-        if($this->writeTemplate($newModelFile, $modelContent, "Model")){
-            $this->success(["The Model: ",$name.$this->appConfig->modelFileSuffix, " has been created successfully in the directory: ".ROOT.$dir]);
+                //write to new composer file
+                $newComposerFile = ROOT."composer.json";
+                @$this->executeWrite($newComposerFile, $composerContent);
+                break;
+            default:
+                # code...
+                break;
         }
     }
 
