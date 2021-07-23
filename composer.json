@@ -1,63 +1,63 @@
 {
   "name": "vilshub/zionlight",
   "description": "An MRD (Model Route Display) based model for creating fast and light web apps",
-  "type": "PHP-Framework",
+  "type": "project",
   "license": "MIT",
   "authors": [
         {
             "name": "Starlyvil",
             "email": "stalyvil@gmail.com"
         }
-    ],
-    "require": {
-      "vilshub/validator": "dev-master",
-      "vilshub/helpers": "dev-master",
-      "vilshub/dbant": "dev-master",
-      "vilshub/router": "dev-master",
-      "vilshub/http": "dev-master",
-      "level-2/dice": "dev-master"
-    },
-    "repositories": [
-      {
-          "type": "path",
-          "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/validator/"
-      },
-      {
-          "type": "path",
-          "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/helpers/"
-      },
-      {
-          "type": "path",
-          "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/dbant/"
-      },
-      {
+  ],
+  "require": {
+    "vilshub/validator": "dev-master",
+    "vilshub/helpers": "dev-master",
+    "vilshub/dbant": "dev-master",
+    "vilshub/router": "dev-master",
+    "vilshub/http": "dev-master",
+    "level-2/dice": "dev-master"
+  },
+  "repositories": [
+    {
         "type": "path",
-        "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/router/"
-      },
-      {
-        "type": "path",
-        "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/http/"
-      }
-    ],
-    "autoload": {
-        "classmap": [
-          "app/lib/classes/system/helpers/",
-          "app/lib/classes/system/core/",
-          "app/lib/classes/application/controllers/",
-          "app/lib/classes/application/middleWares/",
-          "app/lib/classes/application/models/"
-        ],
-        "files": [
-          "app/lib/functions/system/navigator.php",
-          "app/lib/functions/system/output.php"
-        ],
-        "exclude-from-classmap":[
-          "app/lib/classes/system/core/console.php",
-          "app/lib/classes/system/helpers/CLIColors.php"
-        ]
+        "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/validator/"
     },
-    "minimum-stability":"dev",
-    "config": {
-      "vendor-dir": "app/lib/vendor"
+    {
+        "type": "path",
+        "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/helpers/"
+    },
+    {
+        "type": "path",
+        "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/dbant/"
+    },
+    {
+      "type": "path",
+      "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/router/"
+    },
+    {
+      "type": "path",
+      "url": "C:/Users/Starlyvil/DevSpace/Libraries/php/http/"
     }
+  ],
+  "autoload": {
+      "classmap": [
+        "app/lib/classes/system/helpers/",
+        "app/lib/classes/system/core/",
+        "app/lib/classes/application/controllers/",
+        "app/lib/classes/application/middleWares/",
+        "app/lib/classes/application/models/"
+      ],
+      "files": [
+        "app/lib/functions/system/navigator.php",
+        "app/lib/functions/system/output.php"
+      ],
+      "exclude-from-classmap":[
+        "app/lib/classes/system/core/console.php",
+        "app/lib/classes/system/helpers/CLIColors.php"
+      ]
+  },
+  "minimum-stability":"dev",
+  "config": {
+    "vendor-dir": "app/lib/vendor"
+  }
 }
