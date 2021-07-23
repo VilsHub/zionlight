@@ -15,6 +15,7 @@ composer create-project --prefer-dist vilshub/zionlight yourProjectName dev-mast
   php zlight start:@3000
   ```
 - For more of CLI command, execute:
+  
   ```
   php zlight
   ```
