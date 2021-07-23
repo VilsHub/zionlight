@@ -1,4 +1,5 @@
 <?php
+require_once(dirname(__DIR__,3)."/vendor/vilshub/dbant/src/DBAnt.php");
 require_once(__DIR__."/../helpers/CLIColors.php");
 $config = require_once(__DIR__."/../../../../../config/app.php");
 define("ROOT", dirname(__DIR__,5));

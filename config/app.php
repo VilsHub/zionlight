@@ -25,7 +25,7 @@ $assetLinks     = [
     "libraryDomain" => "http://library.vilshub.com"
 ];
 
-return (object) array (
+return (object)  [
     // Directories
     "mainDir"           => $mainDir,
     "appRootDir"        => $root,
@@ -59,6 +59,6 @@ return (object) array (
     //connection   
     "pdo"               => $connectionInfo["pdo"],
     "db"                => $connectionInfo["db"],
-)
+]
 
 ?>
