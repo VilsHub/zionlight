@@ -12,7 +12,8 @@ class console extends CLIColors{
             "model",
             "querybank",
         ],
-        "start" => 1
+        "start" => 1,
+        "cleaninstall" => 1,
     ];
     private $argv;
     function __construct($argv, $argc)
@@ -66,6 +67,9 @@ class console extends CLIColors{
                 break;
             case 'start':
                 $this->startServer();
+                break;
+            case 'cleaninstall':
+                $this->cleanInstall();
                 break;
             default:
                 # code...
@@ -160,6 +164,10 @@ class console extends CLIColors{
                 # code...
                 break;
         }
+    }
+
+    private function cleanInstall(){
+        @rmdir("../vendor");
     }
 
     private function validate($type, $value){

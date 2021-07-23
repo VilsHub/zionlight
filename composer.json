@@ -62,7 +62,8 @@
   },
   "script":{
     "post-create-project-cmd": [
-      "composer install"
+      "composer install",
+      "@php zlight cleaninstall"
     ]
 
   }
