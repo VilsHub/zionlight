@@ -62,7 +62,7 @@
   },
   "script":{
     "post-create-project-cmd": [
-      "php zlight cleaninstall"
+    
     ]
 
   }
