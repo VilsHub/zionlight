@@ -169,7 +169,7 @@ class console extends CLIColors{
     private function cleanInstall(){
         @rmdir("../vendor");
         //update composer file
-
+        @buildTemplate("composer");
     }
 
     private function validate($type, $value){
@@ -209,7 +209,7 @@ class console extends CLIColors{
                 }
                 break;
             case 'composer':
-                $composerContent =  $this->getTemplate("composer", "composer");
+                $composerContent =  $this->getTemplate("composer");
 
                 //write to new composer file
                 $newComposerFile = ROOT."composer.json";
