@@ -15,7 +15,8 @@
     "vilshub/dbant": "dev-master",
     "vilshub/router": "dev-master",
     "vilshub/http": "dev-master",
-    "level-2/dice": "dev-master"
+    "level-2/dice": "dev-master",
+    "phpunit/phpunit": "9.5.x-dev"
   },
   "autoload": {
       "classmap": [
@@ -35,6 +36,11 @@
       ]
   },
   "minimum-stability":"dev",
+  "scripts": {
+    "post-create-project-cmd": [
+        "composer install"
+    ]
+  },
   "config": {
     "vendor-dir": "app/lib/vendor"
   }
