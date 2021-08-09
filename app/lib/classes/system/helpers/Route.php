@@ -16,7 +16,7 @@ class Route{
       }
     }
     private static function dynamicRouteType($dynamicSegment){
-      if(strpos($dynamicSegment, "[") !== FALSE){
+      if(preg_match('/[^a-zA-Z0-9]/', $dynamicSegment)){
         return "regex";
       }else{
         return "data";
@@ -36,12 +36,16 @@ class Route{
 
       if($totalURISegment == $totalRouteSegment){
         $matched = 0;
-        foreach ($routeSegments as $key => $value) {
+        foreach ($routeSegments as $key => $value) { 
+                 
           if(strpos($value, "{") !== FALSE){ ////dynamic type (it could be data or regEx)
-            if($status === false) $status = true;
             if(self::dynamicRouteType($value) === "data"){
               $data[] = $uriSegments[$key];
+              if($routeSegments[0] != "services" and $routeSegments[0] != "user"){
+                dd($value);
+              } 
             }else{//regex type, check for match
+               
               $regEx++;
               $parsedPattern = "/".self::parsedData($value)."/";
               if(preg_match($parsedPattern, $uriSegments[$key])){
@@ -52,7 +56,12 @@ class Route{
               };
             }
           }else{
-            continue;
+            if($value != $uriSegments[$key]){
+              $matched++;
+              break;
+            }else{
+              continue;
+            }
           }
         }
       }else{
@@ -62,12 +71,10 @@ class Route{
 
       return [
         "data"        => $data,
-        "status"      => (bool) $status,
         "matched"     => (bool) $matched == $regEx,
         "urlSegments" => $uriSegments
       ];
     }
-
     private static function executeCallBack($callBack, $data){
       if(is_string($callBack)){//create class and call method
         $controllerInfo = explode("@", $callBack);
@@ -89,7 +96,6 @@ class Route{
     public static function validateRoute($route, $handlerOrCm){
       $routeType  = self::checkRouteType($route);
       $url        = $_SERVER["REQUEST_URI"];
-
       if($routeType == "dynamic"){ 
         $dynamicRouteInfo = self::dynamicRouteQuery($route, $url);
         if($dynamicRouteInfo["matched"] === true){
