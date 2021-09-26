@@ -8,7 +8,7 @@ class className extends Model
 {
     function __construct(){
         parent::__construct(new Loader);
-        // $this->FileNameQueries = $this->loader->loadQueryBank("queryFileName"); //Without the Model suffix
+        // $this->FileNameQueries = $this->loader->loadQueriesBank("queryFileName"); //Without the Model suffix
     }
 
     public function sampleGetUsers($data){

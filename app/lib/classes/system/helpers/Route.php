@@ -34,18 +34,14 @@ class Route{
       $totalRouteSegment  = count($routeSegments);
       $totalURISegment    = count($uriSegments);
 
-      if($totalURISegment == $totalRouteSegment){
+      if($totalURISegment >= $totalRouteSegment){
         $matched = 0;
-        foreach ($routeSegments as $key => $value) { 
-                 
+        foreach ($routeSegments as $key => $value) {  
           if(strpos($value, "{") !== FALSE){ ////dynamic type (it could be data or regEx)
             if(self::dynamicRouteType($value) === "data"){
               $data[] = $uriSegments[$key];
-              if($routeSegments[0] != "services" and $routeSegments[0] != "user"){
-                dd($value);
-              } 
-            }else{//regex type, check for match
-               
+            }else{
+              //regex type, check for match
               $regEx++;
               $parsedPattern = "/".self::parsedData($value)."/";
               if(preg_match($parsedPattern, $uriSegments[$key])){
@@ -68,11 +64,11 @@ class Route{
         $data[] = $data;
         $data[] = $uri;
       }
-
       return [
-        "data"        => $data,
-        "matched"     => (bool) $matched == $regEx,
-        "urlSegments" => $uriSegments
+        "data"          => $data,
+        "matched"       => (bool) $matched == $regEx,
+        "urlSegments"   => $uriSegments,
+        "routeSegments" => $routeSegments 
       ];
     }
     private static function executeCallBack($callBack, $data){
@@ -113,7 +109,36 @@ class Route{
     }
 
     public static function block($route, $uri){
-      return preg_match("/".str_replace("/", "\/", $route)."[a-zA-Z0-9\?\.\-\_\/]{0,}$/", $uri);
+      $route              = trim($route, "/");
+      $uri                = trim($uri, "/");
+      $routeBlock         = explode("/", $route);
+      $uriBlock           = explode("/", $uri);
+      $totalBlockSegments = count($routeBlock);
+      $totalURISegments   = count($uriBlock);
+
+      if($totalBlockSegments <= $totalURISegments){
+        $status = true;
+        foreach ($routeBlock as $key => $value) {
+          $blockType  = self::checkRouteType($value);
+          if($blockType == "dynamic"){//dynamic block
+              $pattern  = self::parsedData(self::parseRegex($value));
+              $parsedPattern = "/".$pattern."/";
+              
+              if(!preg_match($parsedPattern, $uriBlock[$key])){
+                $status = false;
+                break;
+              }else{
+                $status = true;
+              }
+          }else{
+            if($uriBlock[$key] != $value){
+              $status = false;
+              break;
+            }
+          }
+        }
+        return $status;
+      }
     }
     
     public static function for($type, $apiId){
@@ -131,6 +156,51 @@ class Route{
 
     public static function parseRegex($route){
       return str_replace(["{/", "/}"], ["{", "}"], $route);
+    }
+
+    public static function validateTrail($routeSegments, $uriSegments){
+      $totalRouteSegments  = count($routeSegments);
+      $totalURISegments    = count($uriSegments);
+      $data = [];
+      $matched = true;
+      $file = null;
+      
+      if($totalURISegments >= $totalRouteSegments && $totalRouteSegments >= 2){
+        
+        $strippedURISegments  = $uriSegments;
+        $trailSegments        = array_splice($strippedURISegments, $totalRouteSegments);
+        $trailUri             = implode("/", $trailSegments);
+        
+        if(strpos($routeSegments[$totalRouteSegments-1], "{") !== FALSE){
+          if(self::dynamicRouteType($routeSegments[$totalRouteSegments-1]) !== "data"){
+            $parsedPattern = "/".self::parsedData($routeSegments[$totalRouteSegments-1])."/";
+            if(strlen($trailUri)){
+              if(preg_match($parsedPattern, $trailUri)){
+                $data[] = $trailUri;
+              }else{
+                $matched = false;
+              }
+            }
+          }
+        }else{
+          $totalTrailSegment = count($trailSegments);
+          
+          if($totalTrailSegment > 2){
+            $matched = false;
+          }else if($totalTrailSegment <= 2 && $totalTrailSegment > 1){
+            $file   = $trailSegments[0];
+            if(isset($trailSegments[1])) $data[] = $trailSegments[1];
+          }
+        }
+       
+      }else{
+        $matched = false;
+      }
+      return [
+        "data"    => $data,
+        "matched" => $matched,
+        "file"    => $file
+      ];
     }
 }
 ?>

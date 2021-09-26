@@ -1,0 +1,1 @@
+// JS codes for index block

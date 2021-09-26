@@ -15,8 +15,7 @@
     "vilshub/dbant": "dev-master",
     "vilshub/router": "dev-master",
     "vilshub/http": "dev-master",
-    "level-2/dice": "dev-master",
-    "phpunit/phpunit": "9.5.x-dev"
+    "level-2/dice": "dev-master"
   },
   "autoload": {
       "classmap": [

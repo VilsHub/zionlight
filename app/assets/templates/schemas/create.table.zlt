@@ -1,0 +1,11 @@
+-- Table name:tableName
+CREATE TABLE IF NOT EXISTS `tableName` (
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  -- definition here
+  -- definition here
+  -- definition here
+  -- definition here
+  --
+  --
+  --
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

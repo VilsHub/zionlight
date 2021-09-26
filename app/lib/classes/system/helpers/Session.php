@@ -10,13 +10,10 @@ use vilshub\helpers\Style;
 use vilshub\validator\Validator;
 class Session
 {
-    public static function start($prependName = null, $config = null){
+    public static function start(){
         if(session_status() === PHP_SESSION_NONE){
             global $config;
-            $msg1 = "Invalid argument value, ".Style::color(__CLASS__."::", "black").Style::color("start(x)", "black")." method argument must be a string";
-            if($prependName != null) Validator::validateString($prependName, Message::write("error", $msg1));
-            $sessionID = $prependName == null?"ZLight":"ZLight_".$prependName;
-            session_name($sessionID);
+            session_name("ZLight_".$config->appName);
             session_start(["cookie_lifetime" => $config->sessionExpiry]);
         }
        
@@ -44,5 +41,9 @@ class Session
 
     public static function id(){
         return session_id();
+    }
+
+    public static function clean(){
+        session_destroy();
     }
 }

@@ -19,7 +19,9 @@ composer create-project --prefer-dist vilshub/zionlight yourProjectName dev-mast
   ```
   php zlight
   ```
-  
+
+## Features ##
+
 ## Documentation ##
 
 The documentation for this framework will be provided soon, you may **Watch**, this repo for further updates.
