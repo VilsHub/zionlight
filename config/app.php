@@ -13,7 +13,7 @@ $div = $root == ""?"":"/";
 
 $appMainDir     = $root.$div.$mainDir;
 $appLibDir      = $root.$div.$libDir;
-$displayDir     = $appMainDir."/display";
+$displayDir     = $root."/display";
 $XHRContentDir  = $displayDir."/XHRContent";
 $modelsDir      = $appLibDir."/models";
 $controllersDir = $appLibDir."/controllers";

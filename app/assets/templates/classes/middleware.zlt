@@ -3,9 +3,10 @@
 * This middleware handles.......
 * @author Your name
 */ 
-class className
+class className extends Middleware
 {
-    function __construct(){
+    function __construct(Loader $loader){
+        parent::__construct($loader);
 
     }
 }

@@ -79,17 +79,29 @@ class Boot extends CLIColors{
     }
     public function databaseInitCheck(){
         if($this->env != "cli"){//web
-            //check for database initialization
+            if(!Session::exist("dCheck")){ //To check for database setup only once
+                //check for database initialization
+                if(!$this->databaseExist($this->dbInfo["db"])){
+                    $this->executeCheck();
+                }else{
+                    Session::set("dCheck", true);
+                } 
+            }
+        }else{//cli
             if(!$this->databaseExist($this->dbInfo["db"])){
-                $wMsg = "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>Application setup failure</span><br/>";
-                $wMsg .= "<br/>No database initialization has been done.<br/>";
-                $wMsg .= "<br/><span style='color:black;'>Run the command to initial database: '<span style='font-weight: bold;'>php zlight initialize:database</span>'. This will guide you through a quick DB initialization</span>";
-                try {
-                    throw new Error($wMsg);
-                } catch (\Throwable $th) {
-                    trigger_error($wMsg);
-                }
-                die();
+                $this->executeCheck();
+            }
+        }
+    }
+    private function executeCheck(){
+        if(!$this->databaseExist($this->dbInfo["db"])){
+            $wMsg = "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>Application setup failure</span><br/>";
+            $wMsg .= "<br/>No database initialization has been done.<br/>";
+            $wMsg .= "<br/><span style='color:black;'>Run the command to initial database: '<span style='font-weight: bold;'>php zlight initialize:database</span>'. This will guide you through a quick DB initialization</span>";
+            try {
+                throw new Error($wMsg);
+            } catch (\Throwable $th) {
+                trigger_error($wMsg);
             }
         }
     }

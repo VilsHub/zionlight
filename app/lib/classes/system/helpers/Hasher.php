@@ -9,6 +9,10 @@ use vilshub\helpers\Style;
 use vilshub\validator\Validator;
 class Hasher
 {
+    /**
+     * Supported hashing APIs
+     * - Password hashing 
+     */
     public static function passwordHashing(){
         $body = new class{
             public function hash($data, $algorithm=PASSWORD_BCRYPT, $options=[]){
@@ -22,5 +26,4 @@ class Hasher
         };
         return $body;
     }
-
 }

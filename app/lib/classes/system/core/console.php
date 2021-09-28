@@ -512,6 +512,7 @@ class Console extends CLIColors{
             }
             array_push($values, $rowData);
         }
+
         $contents = implode(",\n", $values);
         // die($contents);
         return [
@@ -545,11 +546,10 @@ class Console extends CLIColors{
                     $line = "   [";
                     $parsedData = array_map(function($cell){
                         if(strlen($cell) > 0){
-                           return "'".$cell."'"; 
+                           return "\"".addSlashes($cell)."\""; 
                         }else{
                             return "NULL";
-                        }
-                        
+                        }   
                     }, $tableRow);
                     $line .= implode(", ", $parsedData)."],\n";
                     $contents .= $line;
@@ -559,7 +559,7 @@ class Console extends CLIColors{
                 $line = "   [";
                 $parsedData = array_map(function($cell){
                     if(strlen($cell) > 0){
-                        return "'".$cell."'"; 
+                        return "\"".$cell."\""; 
                      }else{
                          return "NULL";
                      }
@@ -576,6 +576,7 @@ class Console extends CLIColors{
 
             //write content to file
             $this->executeWrite($dataFile, $contents);
+            
             return [
                 "status"=> true,
                 "exported"=>$records,
@@ -619,8 +620,8 @@ class Console extends CLIColors{
     
                 //build values
                 $data = $this->getDataFileContents($tableName);
+               
                 $insertQuery = $insertSQL.$data["content"];
-                
                 //get schema name
                 $schemaName = $this->getTableSchemaName($tableName)["data"]["schema_name"];
                 
@@ -1930,7 +1931,7 @@ class Console extends CLIColors{
                     $exportData = $this->exportData($name);
                     $file = $this->appConfig->dataDir."/".$name.$this->appConfig->dataFileSuffix.".zld";
                     if($exportData["status"]){
-                        $this->success([$exportData["total"]."/".$exportData["total"] . pluralizer(" record", "s:-1",$exportData["total"])." ".pluralizer("has", "been", $exportData["total"])." exported to the data file ", $file, ""]);
+                        $this->success([$exportData["total"]."/".$exportData["total"] . pluralizer(" record", "s:-1",$exportData["total"])." ".pluralizer("has", "have", $exportData["total"])." been exported to the data file ", $file, ""]);
                     }else{
                         $this->warning(["The table '{$name}' is empty, no data to export", "", ""]);
                     }
