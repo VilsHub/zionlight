@@ -3,23 +3,29 @@ use vilshub\http\Request;
 
 //Set blocks
 if(Request::$uri == $root){
-    $block = $config->displayDir."/layouts/blocks/mainPublic.php";
-    $baseDir = $config->displayDir."/contents/home";
-    $router->listen($block, $baseDir);
+
+    $block = $config->blocksDir."/mainPublic.php";
+    $baseDir = $config->contentsDir."/home/".$config->contentsFolder["static"];
+    $app->router->listen($block, $baseDir);
+
 }else if(Route::block($maintenance, Request::$uri)){
-    $block = $config->displayDir."/layouts/blocks/maintenance.php";
-    $baseDir = $config->displayDir."/contents/maintenance";
-    $router->listen($block, $baseDir);
+
+    $block = $config->blocksDir."/maintenance.php";
+    $baseDir = $config->contentsDir."/maintenance/".$config->contentsFolder["static"];
+    $app->router->listen($block, $baseDir);
+
 }else if(Route::block($error, Request::$uri)){
-    $block = $config->displayDir."/layouts/blocks/error.php";
-    $baseDir = $config->displayDir."/contents/error";
-    $router->listen($block, $baseDir);
+
+    $block = $config->blocksDir."/error.php";
+    $baseDir = $config->contentsDir."/error/".$config->contentsFolder["static"];
+    $app->router->listen($block, $baseDir);
+
 }else{//any other route
-    $block = $config->displayDir."/layouts/blocks/mainPublic.php";
-    $baseDir = $config->displayDir."/contents/home";
-    $router->listen($block, $baseDir);
+    $block = $config->blocksDir."/mainPublic.php";
+    $baseDir = $config->contentsDir."/home/".$config->contentsFolder["static"];
+    $app->router->listen($block, $baseDir);
 }
 
 //Error handler
-$router->error();
+$app->router->error();
 ?>

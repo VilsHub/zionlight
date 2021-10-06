@@ -8,7 +8,8 @@ class Auth extends Middleware
     function __construct(Loader $loader){
         parent::__construct($loader);
     }
-    public function user($schemaData, $values){ //user athentication
+    
+    public function verify($schemaData, $values){ //user athentication
         /**
          * @ 
          */
@@ -39,8 +40,23 @@ class Auth extends Middleware
             if($urls[0] != null) redirect($urls[0]);
         }
     }
-    public function logUser($sessionKey, $value){
-        Session::set($sessionKey, $value);
+    public function allow($properties){
+        foreach ($properties as $name => $value) {
+            Session::set($name, $value);
+        }
+    }
+    public static function authorize($permissions, $action, $role, $redirectUrl=null){
+        if(isset($permissions[$action])){
+            if(!in_array($role, $permissions[$action])){
+                if($redirectUrl != null){
+                    redirect($redirectUrl);
+                }else{
+                    die("Not authourized");
+                }
+            }
+        }else{
+            trigger_error("The permission {$action} is not defined");
+        }
     }
 }
 ?>

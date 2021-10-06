@@ -15,7 +15,9 @@ function pluralizer($word, $plural, $count){
     }else{//no plural
         return $word;
     }
-  
+}
+function articlize(){
+    
 }
 ?>
 

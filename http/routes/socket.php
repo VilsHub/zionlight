@@ -1,12 +1,26 @@
 <?php
   return array(
-    "publicLinks"     => [
-      "/"             =>$config->displayDir."/layouts/plugs/index/indexLinks.php",
-      "users"         =>$config->displayDir."/layouts/plugs/index/usersLink.php",
-      "product"       =>$config->displayDir."/layouts/plugs/index/productLinks.php"
+    "publicLinks"         => [
+      "/"                 => $config->plugsDir."/index/indexLinks.php",
+      "cbt"               => $config->plugsDir."/index/cbtLinks.php",
+      "login"             => $config->plugsDir."/index/LoginLinks.php",
     ],
-    "maintenaceLinks"        =>[
-      "maintenance|task"     => $config->displayDir."/layouts/plugs/maintenance/task.php"
+    "publicMiddleware"         => [
+      "cbt"               => $config->plugsDir."/index/cbtMiddleware.php",
+    ],
+    "login"               => [
+      "login"             => $config->plugsDir."/login/LoginLinks.php",
+    ],
+    "dashboardLinks"      => [
+      "add-questions"     => $config->plugsDir."/dashboard/addQuestionsLinks.php",
+      "dashboard"         => $config->plugsDir."/dashboard/dashboardLinks.php",
+    ],
+    "dashboardMiddleware" => [
+      "*"                 => $config->plugsDir."/dashboard/globalMiddleware.php",
+      "add-questions"     => $config->plugsDir."/dashboard/addQuestMiddleware.php",
+    ],
+    "maintenaceLinks"     => [
+      "maintenance|task"  => $config->plugsDir."/maintenance/task.php"
     ]
   )
 ?>

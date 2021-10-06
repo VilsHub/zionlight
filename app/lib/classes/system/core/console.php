@@ -105,9 +105,12 @@ class Console extends CLIColors{
         
         $list .= "\n".$this->color(" IMPORT", "light_purple", "black");       
         $list .= "\n\t".$this->color(" - Import  data", "yellow", "black")." \t".$this->color("import:data", "green", "black")." dataFileName";
+
+        $list .= "\n".$this->color(" EXPORT", "light_purple", "black");       
+        $list .= "\n\t".$this->color(" - Export  data", "yellow", "black")." \t".$this->color("export:data", "green", "black")." tableName";
         
         $list .= "\n".$this->color(" CURRENT", "light_purple", "black");       
-        $list .= "\n\t".$this->color(" - View current database", "yellow", "black")." \t".$this->color("current:database", "green", "black")."";
+        $list .= "\n\t".$this->color(" - View current DB", "yellow", "black")." \t".$this->color("current:database", "green", "black");
 
         echo $list;
         echo "\n\n";

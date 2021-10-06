@@ -3,7 +3,7 @@ $env = "cli";
 require_once("app/lib/vendor/vilshub/helpers/src/Get.php");
 require_once("app/lib/vendor/vilshub/helpers/src/Message.php");
 require_once("app/lib/classes/system/core/Boot.php");
-require_once("app/lib/functions/system/others.php");
+require_once("app/lib/functions/system/lexical.php");
 require_once("app/lib/vendor/vilshub/dbant/src/DBAnt.php");
 require_once("app/lib/classes/system/core/console.php");
 $console = new Console($argv, $argc);

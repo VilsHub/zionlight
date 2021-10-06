@@ -1,1 +1,1 @@
-<?php $router->showContent;?>
+<?php $app->router->showContent;?>

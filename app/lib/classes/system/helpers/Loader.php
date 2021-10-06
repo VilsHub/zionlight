@@ -58,8 +58,19 @@ class Loader
     public function loadPage($targetPage, $data=null){
         if ($data != null) extract($data);
         if(substr_count($targetPage, ".php") > 0) $targetPage  = rtrim($targetPage, ".php");
+        $targetFile = $this->appConfig->XHRContentDir.$targetPage.".php";
         
-        $content = require_once($this->appConfig->XHRContentDir.$targetPage.".php");
+        $msg2 = "The specified display file:".Style::color($targetFile, "black").", does not exist";
+        Validator::validateFile($targetFile, Message::write("error", $msg2));
+        
+        $content = require_once( $targetFile);
+        return rtrim($content, "1");
+    }
+    public function loadResource($targetPage){
+        $msg2 = "The specified resource file:".Style::color($targetFile, "black").", does not exist";
+        Validator::validateFile($targetFile, Message::write("error", $msg2));
+
+        $content = require_once($targetPage);
         return rtrim($content, "1");
     }
     public function loadMiddleware($middlewareName){

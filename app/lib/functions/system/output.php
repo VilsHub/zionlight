@@ -10,15 +10,22 @@ use vilshub\validator\Validator;
 /**
   *
   */
-function pretty_print($array){
+function pretty_print($array, $kill=true){
     //Validate argument
     $msg1 = "Invalid argument value, ".Style::color("prettyPrint(x)", "black")." function argument must be an array";
     Validator::validateArray($array, Message::write("error", $msg1));
     foreach ($array as $key => $value) {
-      echo $key ." => ".$value;
-      echo "<br/>";
+      if(is_array($value)){
+        print_r($value);
+        echo "<br/>";
+      }else{
+        echo $key ." => ".$value."<br/>";
+      }
     }
-    die;
+    if($kill) die;
+}
+function pp($array, $kill=true){
+  pretty_print($array, $kill);
 }
 function dd($mixData){
   if(is_string($mixData)){

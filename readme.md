@@ -21,6 +21,15 @@ composer create-project --prefer-dist vilshub/zionlight yourProjectName dev-mast
   ```
 
 ## Features ##
+Aside from the conventional features which backend frameworks have, zlight has the following features:
+
+- Partial routing definition for contents (Not API)
+- Plug and socket algorithm for extending layout. (No templating, just plain HTML)
+- Plain SQL Schema builder, and plain SQL query executor. (No ORM, only SQL skills required)
+- Queries Bank. All queries for a particular model gets stored in a single bank file for easy management
+- Table data export and import, via CLI
+- Project initialization wizard (Via CLI). Used when creating project, or when setting up a cloned project
+- And more....
 
 ## Documentation ##
 

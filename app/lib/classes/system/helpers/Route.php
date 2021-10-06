@@ -26,47 +26,66 @@ class Route{
       $parsedPattern = trim($pattern, "{}");
       return $parsedPattern;
     }
-    private static function dynamicRouteQuery($route, $uri){
-      $status=false;$data=[];$matched=1;$regEx=0;
-      $route              = self::parseRegex($route);
-      $routeSegments      = explode("/",trim($route, "/"));
-      $uriSegments        = explode("/",trim($uri, "/"));
-      $totalRouteSegment  = count($routeSegments);
-      $totalURISegment    = count($uriSegments);
+    public static function segments($path){
+      return explode("/",trim($path, "/"));
+    }
+    private static function dynamicRouteQuery($route, $uri, $for="web"){
+      $status=false;$data=[];$matched=null;
+      $routeSegments      = self::segments($route);
+      $uriSegments        = self::segments($uri);
+      $totalURISegment    = count($uriSegments );
+      $totalRouteSegment  = count($routeSegments );
+      if($for == "web"){
+        $validRange = $totalURISegment > 0; //url segments may be more than the route definition segments
+      }else{
+        $validRange = $totalURISegment == $totalRouteSegment;//url segments must be equal to the route definition segments
+      }
 
-      if($totalURISegment >= $totalRouteSegment){
-        $matched = 0;
+      if($validRange){
+        //loop through the routes, to test for each segment on the url
         foreach ($routeSegments as $key => $value) {  
+          $matched = 0;
           if(strpos($value, "{") !== FALSE){ ////dynamic type (it could be data or regEx)
-            if(self::dynamicRouteType($value) === "data"){
-              $data[] = $uriSegments[$key];
-            }else{
+            $parsedData = self::parsedData($value);
+            if(self::dynamicRouteType($parsedData) == "regex"){
               //regex type, check for match
-              $regEx++;
-              $parsedPattern = "/".self::parsedData($value)."/";
-              if(preg_match($parsedPattern, $uriSegments[$key])){
-                $data[] = $uriSegments[$key];
-                $matched++;
+              $parsedPattern = "/".$parsedData."/";
+
+              if(isset($uriSegments[$key])){
+                if(preg_match($parsedPattern, $uriSegments[$key])){
+                  $data[] = $uriSegments[$key];
+                  $matched=true;
+                }else{
+                  $matched=false;
+                  break;
+                };
               }else{
-                break;
-              };
+                $matched=true;// for web route validation
+              }
+            }else{
+              if(isset($uriSegments[$key])){
+                $matched=true;
+                $data[] = DataParser::inText($uriSegments[$key]);
+              }else{
+                $matched=true;// for web route validation
+              }
             }
           }else{
-            if($value != $uriSegments[$key]){
-              $matched++;
-              break;
-            }else{
-              continue;
+            if(isset($uriSegments[$key])){
+              if($value != $uriSegments[$key]){
+                $matched=false;
+                break;
+              }else{
+                $matched=true;
+                continue;
+              }
             }
           }
         }
-      }else{
-        $data[] = $data;
-        $data[] = $uri;
       }
       return [
         "data"          => $data,
-        "matched"       => (bool) $matched == $regEx,
+        "matched"       => (bool) $matched,
         "urlSegments"   => $uriSegments,
         "routeSegments" => $routeSegments 
       ];
@@ -89,11 +108,11 @@ class Route{
       }
     }
     
-    public static function validateRoute($route, $handlerOrCm){
+    public static function validateRoute($route, $handlerOrCm, $for){
       $routeType  = self::checkRouteType($route);
       $url        = $_SERVER["REQUEST_URI"];
       if($routeType == "dynamic"){ 
-        $dynamicRouteInfo = self::dynamicRouteQuery($route, $url);
+        $dynamicRouteInfo = self::dynamicRouteQuery($route, $url, $for);
         if($dynamicRouteInfo["matched"] === true){
           self::executeCallBack($handlerOrCm, $dynamicRouteInfo["data"]);
         }
@@ -109,33 +128,36 @@ class Route{
     }
 
     public static function block($route, $uri){
-      $route              = trim($route, "/");
-      $uri                = trim($uri, "/");
-      $routeBlock         = explode("/", $route);
-      $uriBlock           = explode("/", $uri);
-      $totalBlockSegments = count($routeBlock);
+      $routeBlock         = self::segments($route);
+      $uriBlock           = self::segments($uri);
       $totalURISegments   = count($uriBlock);
 
-      if($totalBlockSegments <= $totalURISegments){
+      if($totalURISegments > 0 ){
         $status = true;
         foreach ($routeBlock as $key => $value) {
           $blockType  = self::checkRouteType($value);
           if($blockType == "dynamic"){//dynamic block
-              $pattern  = self::parsedData(self::parseRegex($value));
-              $parsedPattern = "/".$pattern."/";
-              
-              if(!preg_match($parsedPattern, $uriBlock[$key])){
-                $status = false;
-                break;
-              }else{
-                $status = true;
+              //check if data or regex
+              $type = self::dynamicRouteType($value);
+              if($type == "regex"){
+                $pattern  = self::parsedData(self::parseRegex($value));
+                $parsedPattern = "/".$pattern."/";
+                if(!preg_match($parsedPattern, $uriBlock[$key])){
+                  $status = false;
+                  break;
+                }else{
+                  $status = true;
+                }
               }
           }else{
-            if($uriBlock[$key] != $value){
-              $status = false;
-              break;
+            if(isset($uriBlock[$key])){
+              if($uriBlock[$key] != $value){
+                $status = false;
+                break;
+              }
             }
           }
+          if($key == 1) break;
         }
         return $status;
       }
@@ -156,51 +178,6 @@ class Route{
 
     public static function parseRegex($route){
       return str_replace(["{/", "/}"], ["{", "}"], $route);
-    }
-
-    public static function validateTrail($routeSegments, $uriSegments){
-      $totalRouteSegments  = count($routeSegments);
-      $totalURISegments    = count($uriSegments);
-      $data = [];
-      $matched = true;
-      $file = null;
-      
-      if($totalURISegments >= $totalRouteSegments && $totalRouteSegments >= 2){
-        
-        $strippedURISegments  = $uriSegments;
-        $trailSegments        = array_splice($strippedURISegments, $totalRouteSegments);
-        $trailUri             = implode("/", $trailSegments);
-        
-        if(strpos($routeSegments[$totalRouteSegments-1], "{") !== FALSE){
-          if(self::dynamicRouteType($routeSegments[$totalRouteSegments-1]) !== "data"){
-            $parsedPattern = "/".self::parsedData($routeSegments[$totalRouteSegments-1])."/";
-            if(strlen($trailUri)){
-              if(preg_match($parsedPattern, $trailUri)){
-                $data[] = $trailUri;
-              }else{
-                $matched = false;
-              }
-            }
-          }
-        }else{
-          $totalTrailSegment = count($trailSegments);
-          
-          if($totalTrailSegment > 2){
-            $matched = false;
-          }else if($totalTrailSegment <= 2 && $totalTrailSegment > 1){
-            $file   = $trailSegments[0];
-            if(isset($trailSegments[1])) $data[] = $trailSegments[1];
-          }
-        }
-       
-      }else{
-        $matched = false;
-      }
-      return [
-        "data"    => $data,
-        "matched" => $matched,
-        "file"    => $file
-      ];
     }
 }
 ?>
