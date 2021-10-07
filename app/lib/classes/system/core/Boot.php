@@ -1,5 +1,6 @@
 <?php
-require_once(dirname(__DIR__)."../helpers/CLIColors.php");
+require_once(dirname(__DIR__)."/helpers/CLIColors.php");
+
 class Boot extends CLIColors{
     function __construct($dbInfo){
         parent::__construct();
@@ -27,31 +28,44 @@ class Boot extends CLIColors{
             }
         }catch (\Throwable $th) {
             //2002 => No connection to database, 1045 => invalid credentials
-            $errorNumber = $th->errorInfo[1];
-            if($errorNumber == 1045){//Invalid user credential
-                //Web message
-                $wMsg = "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>Invalid Database Credentials</span><br/>";
-                $wMsg .= "<br/>Database User = {$dbInfo["user"]}<br/>";
-                $wMsg .= "Database Password  = {$dbInfo["pass"]}<br/>";
-                $wMsg .= "<br/><span style='color:black;'>Please go the config file '<span style='font-weight: bold;'>config/dbDetails.php</span>' and supply the database details for the current environment</span>";
-                $wMsg .= "<br/><span style='color:black;'>Run the command when done: '<span style='font-weight: bold;'>php zlight initialize:database</span>'. This will guide you through a quick DB initialization</span>";
+            if(isset($th->errorInfo[1])){
+                $errorNumber = $th->errorInfo[1];
+                if($errorNumber == 1045){//Invalid user credential
+                    //Web message
+                    $wMsg = "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>Invalid Database Credentials</span><br/>";
+                    $wMsg .= "<br/>Database User = {$dbInfo["user"]}<br/>";
+                    $wMsg .= "Database Password  = {$dbInfo["pass"]}<br/>";
+                    $wMsg .= "<br/><span style='color:black;'>Please go the config file '<span style='font-weight: bold;'>config/dbDetails.php</span>' and supply the database details for the current environment</span>";
+                    $wMsg .= "<br/><span style='color:black;'>Run the command when done: '<span style='font-weight: bold;'>php zlight initialize:database</span>'. This will guide you through a quick DB initialization</span>";
 
-                //CLi message
-                $cMsg = "INVALID DATABASE CREDENTIALS\n\n";
-                $cMsg .= "\tDatabase User \t\t = {$dbInfo["user"]}\n";
-                $cMsg .= "\tDatabase Password\t = {$dbInfo["pass"]}\n";
-                $cMsg .= "\nPlease go the config file '".$this->color("config/dbDetails.php", "yellow","black").$this->color("' and supply the database details for the current environment\nRun the command when done: '", "light_red","black").$this->color("php zlight initialize:database", "yellow", "black").$this->color("'. This will guide you through a quick DB initialization", "light_red", "black");
-            }else if($errorNumber == 2002){
-                //Web message
-                $wMsg = "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>Database connection error</span><br/>";
-                $wMsg .= "<br/>Cannot connect to Database server<br/>";
-                $wMsg .= "<br/><span style='color:black;'>Please try restarting the database server</span>";
+                    //CLi message
+                    $cMsg = "INVALID DATABASE CREDENTIALS\n\n";
+                    $cMsg .= "\tDatabase User \t\t = {$dbInfo["user"]}\n";
+                    $cMsg .= "\tDatabase Password\t = {$dbInfo["pass"]}\n";
+                    $cMsg .= "\nPlease go the config file '".$this->color("config/dbDetails.php", "yellow","black").$this->color("' and supply the database details for the current environment\nRun the command when done: '", "light_red","black").$this->color("php zlight initialize:database", "yellow", "black").$this->color("'. This will guide you through a quick DB initialization", "light_red", "black");
+                }else if($errorNumber == 2002){
+                    //Web message
+                    $wMsg = "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>Database connection error</span><br/>";
+                    $wMsg .= "<br/>Cannot connect to Database server<br/>";
+                    $wMsg .= "<br/><span style='color:black;'>Please try restarting the database server</span>";
 
-                //CLi message
-                $cMsg = "DATABASE CONNECTION ERROR\n\n";
-                $cMsg .= "Cannot connect to Database server\n";
-                $cMsg .= "Please try restarting the database server";
+                    //CLi message
+                    $cMsg = "DATABASE CONNECTION ERROR\n\n";
+                    $cMsg .= "Cannot connect to Database server\n";
+                    $cMsg .= "Please try restarting the database server";
+                }
+            }else{
+                $errorNumber = 1;
+                 //Web message
+                 $wMsg = "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>DATABASE ENGINE NOT FOUND</span><br/>";
+                 $wMsg .= "<br/><span style='color:black;'>Please try installing a database engine, like MySQL";
+
+
+                 //CLi message
+                 $cMsg = "DATABASE ENGINE NOT FOUND\n";
+                 $cMsg .= "Please try installing a database engine, like MySQL\n";
             }
+            
        
             try {
                 $msg = $cMsg;
@@ -61,17 +75,10 @@ class Boot extends CLIColors{
                 if($env != "cli"){
                     trigger_error($th);
                 }else{
-                    if($errorNumber == 1045){//Invalid user credential
-                        echo "\n";
-                        $this->write($cMsg, "light_red", "black");
-                        echo "\n";
-                        die();
-                    }else{
-                        echo "\n";
-                        $this->write($cMsg, "light_red", "black");
-                        echo "\n";
-                        die();
-                    }
+                    echo "\n";
+                    $this->write($cMsg, "light_red", "black");
+                    echo "\n";
+                    die();
                 }
                 die();
             }

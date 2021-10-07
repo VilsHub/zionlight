@@ -66,7 +66,7 @@ class Loader
         $content = require_once( $targetFile);
         return rtrim($content, "1");
     }
-    public function loadResource($targetPage){
+    public function loadResource($targetFile){
         $msg2 = "The specified resource file:".Style::color($targetFile, "black").", does not exist";
         Validator::validateFile($targetFile, Message::write("error", $msg2));
 

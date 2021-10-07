@@ -2,15 +2,15 @@
 use vilshub\router\Router;
 
 //Load required files
-require_once(__DIR__."/../app/lib/vendor/autoload.php");
+require_once(dirname(__DIR__)."/app/lib/vendor/autoload.php");
 
 //register error handler
 ErrorHandler::listenForErrors();
 
 //$Load config files
-$config       = require_once(__DIR__."/../config/app.php");
-$routes       = require_once(__DIR__."/../http/routes/content.php");
-$socketFiles  = require_once(__DIR__."/../http/routes/socket.php");
+$config       = require_once(dirname(__DIR__)."/config/app.php");
+$routes       = require_once(dirname(__DIR__)."/http/routes/content.php");
+$socketFiles  = require_once(dirname(__DIR__)."/http/routes/socket.php");
 
 
 //Instantiate App
@@ -29,8 +29,8 @@ $app->router->maskExtension    = ".java";
 $app->boot();
 
 if($app->router->route("web")){
-  require_once(__DIR__."/../http/handlers/web.php");
+  require_once(dirname(__DIR__)."/http/handlers/web.php");
 }else{
-  require_once(__DIR__."/../http/handlers/api.php");
+  require_once(dirname(__DIR__)."/http/handlers/api.php");
 }
 ?>

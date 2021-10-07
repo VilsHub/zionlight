@@ -7,7 +7,7 @@
  * - Host and user must be set
  * - user name and password must be correct
  */
-require_once(__DIR__."../../.env");
+require_once(dirname(__DIR__, 1)."/.env");
 $charset	= 'utf8';
 switch (ENVIRONMENT)
 {
