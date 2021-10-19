@@ -22,7 +22,7 @@
         "app/lib/classes/system/helpers/",
         "app/lib/classes/system/core/",
         "app/lib/classes/application/controllers/",
-        "app/lib/classes/application/middleWares/",
+        "app/lib/classes/application/middlewares/",
         "app/lib/classes/application/models/"
       ],
       "files": [

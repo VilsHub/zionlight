@@ -12,7 +12,7 @@ class Console extends CLIColors{
             "schema",
             "database"
         ],
-        "start" => 1,
+        "shine" => 1,
         "build" => [
             "schema",
         ],
@@ -82,8 +82,8 @@ class Console extends CLIColors{
         $list .= "\n\t".$this->color(" - Create database", "yellow", "black")." \t".$this->color("create:database", "green", "black")." databaseName";
         echo "\n\n";
         
-        $list .= "\n".$this->color(" START", "light_purple", "black");
-        $list .= "\n\t".$this->color(" - Start server", "yellow", "black")." \t".$this->color("start:@", "green", "black")."portNumber";
+        $list .= "\n".$this->color(" SHINE", "light_purple", "black");
+        $list .= "\n\t".$this->color(" - Start server", "yellow", "black")." \t".$this->color("shine:@", "green", "black")."portNumber";
 
         $list .= "\n".$this->color(" DELETE", "light_purple", "black");
         $list .= "\n\t".$this->color(" - Delete schema", "yellow", "black")." \t".$this->color("delete:schema", "green", "black")." schemaName";
@@ -126,7 +126,7 @@ class Console extends CLIColors{
                 $this->validateCommandAction($exec, $action);
                 $this->create($action);
                 break;
-            case 'start':
+            case 'shine':
                 $this->startServer();
                 break;
             case 'build':
@@ -1227,7 +1227,7 @@ class Console extends CLIColors{
             $port = explode("@", $serverCommand["action"]);
             $total = count($port);
             if($total < 2 || $total > 2 ){
-                $this->error(["Specify server port using : " ,"@portNumber"," example: start:@3000"]);
+                $this->error(["Specify server port using : " ,"@portNumber"," example: shine:@3000"]);
             }
 
             //validate port number
@@ -1240,7 +1240,7 @@ class Console extends CLIColors{
             }
             
         }else{
-            $this->error(["Specify server port using : " ,"@portNumber ","example: start:@3000"]);
+            $this->error(["Specify server port using : " ,"@portNumber ","example: shine:@3000"]);
         }
         
 

@@ -22,7 +22,7 @@ class Boot extends CLIColors{
                 if($databaseInit){
                     //reset database init
                     $this->resetDatabaseInit();
-                    header("location: {$_REQUEST["url"]}");
+                    header("location: {$_REQUEST["uri"]}");
                 }
                 
             }
