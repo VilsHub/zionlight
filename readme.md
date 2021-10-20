@@ -1,5 +1,5 @@
 # Zion Light
-An MRD (Model Route Display) framework 
+A PHP framework, based on MRD (Model Route Display), an extension of MVC Model
 
 
 ## Installation
