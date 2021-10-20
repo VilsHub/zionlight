@@ -12,7 +12,7 @@ composer create-project --prefer-dist vilshub/zionlight yourProjectName dev-mast
 - After installation, you can start server from CLI with (CD into the project root directory):
   
   ```
-  php zlight start:@3000
+  php zlight shine:@3000
   ```
 - For more of CLI command, execute:
   
