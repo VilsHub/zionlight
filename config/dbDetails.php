@@ -9,35 +9,43 @@
  */
 require_once(dirname(__DIR__, 1)."/.env");
 $charset	= 'utf8';
-switch (ENVIRONMENT)
-{
-	case 'development':
-		ini_set('display_errors', 1);
-		$host = '127.0.0.1';
-		$user = 'root';
-		$db   = '';
-		$pass = '';
-		break;
-	case 'testing':
-		error_reporting(-1);
-		ini_set('display_errors', 1);
-		$host = '';
-		$db   = '';
-		$user = '';
-		$pass = '';
-		break;
-	case 'production':
-		ini_set('display_errors', 0);
-		if (version_compare(PHP_VERSION, '5.3', '>=')){
-			error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
-		}else{
-			error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
-		}
-		$host = '';
-		$db   = '';
-		$user = '';
-		$pass = '';
-		break;
+$appType 	= strtolower($isDatabaseApp);
+if($isDatabaseApp){
+	switch (ENVIRONMENT)
+	{
+		case 'development':
+			ini_set('display_errors', 1);
+			$host = '127.0.0.1';
+			$user = 'root';
+			$db   = '';
+			$pass = '';
+			break;
+		case 'testing':
+			error_reporting(-1);
+			ini_set('display_errors', 1);
+			$host = '';
+			$db   = '';
+			$user = '';
+			$pass = '';
+			break;
+		case 'production':
+			ini_set('display_errors', 0);
+			if (version_compare(PHP_VERSION, '5.3', '>=')){
+				error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
+			}else{
+				error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
+			}
+			$host = '';
+			$db   = '';
+			$user = '';
+			$pass = '';
+			break;
+	}
+}else{
+	$host = '';
+	$db   = '';
+	$user = '';
+	$pass = '';
 }
 
 return[
@@ -45,6 +53,7 @@ return[
 	"db"=>$db,
 	"user" => $user,
 	"pass"=>$pass,
-	"charset"=>$charset
+	"charset"=>$charset,
+	"isDatabaseApp" => $isDatabaseApp
 ]
 ?>

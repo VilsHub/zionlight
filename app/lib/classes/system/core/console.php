@@ -1023,15 +1023,17 @@ class Console extends CLIColors{
         return $this->executeWrite(".env", $updateEnvFileContent);
     }
     private function databaseInitCheck($name){
-        if(!$this->databaseExist($name)){
-            $msg = $this->getMargin(105)."\n";
-            $msg .= "  Database initialization has not been executed. Please run the command: ";
-            $this->write($msg, "white", "red");
-            $msg = "php zlight initialize:database  \n";
-            $this->write($msg, "yellow", "red");
-            $msg = $msg = $this->getMargin(105)."\n";
-            $this->write($msg, "white", "red");
-            die;
+        if($this->dbInfo["isDatabaseApp"]){
+            if(!$this->databaseExist($name)){
+                $msg = $this->getMargin(105)."\n";
+                $msg .= "  Database initialization has not been executed. Please run the command: ";
+                $this->write($msg, "white", "red");
+                $msg = "php zlight initialize:database  \n";
+                $this->write($msg, "yellow", "red");
+                $msg = $msg = $this->getMargin(105)."\n";
+                $this->write($msg, "white", "red");
+                die;
+            }
         }
     }
     private function databaseExist($name){

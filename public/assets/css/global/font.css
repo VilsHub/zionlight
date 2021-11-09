@@ -1,0 +1,53 @@
+/* CSS Document */
+/**************Font definations***************/
+html{
+	font-synthesis: none;
+}
+/*H1*/
+@font-face{
+	font-family:"BebasNeue";
+	src:url(/assets/fonts/BebasNeue-Thin.ttf) format('truetype');
+	font-weight: 100;
+	font-style: normal;
+}
+
+/*H2-H6*/
+@font-face{
+	font-family:"LibreBaskerville";
+	src:url(/assets/fonts/LibreBaskerville-Regular.otf);
+	font-weight:normal;
+	font-style: normal;
+}
+@font-face{
+	font-family:"LibreBaskerville";
+	src:url(/assets/fonts/LibreBaskerville-Italic.otf);
+	font-weight:normal;
+	font-style: italic;
+}
+
+/*body and tags*/
+@font-face{
+	font-family:"OpenSans";
+	src:url(/assets/fonts/OpenSans-Italic.ttf) format('truetype');
+	font-style: italic;
+	font-weight: normal;
+}
+@font-face{
+	font-family:"OpenSans";
+	src:url(/assets/fonts/OpenSans-Regular.ttf) format('truetype');
+	font-style: normal;
+	font-weight: normal;
+}
+@font-face{
+	font-family:"OpenSans";
+	src:url(/assets/fonts/OpenSansLight.ttf) format('truetype');
+	font-style: normal;
+	font-weight: 300;
+}
+@font-face{
+	font-family:"OpenSans";
+	src:url(/assets/fonts/OpenSans-Bold.ttf) format('truetype');
+	font-style: normal;
+	font-weight: bold;
+}
+/**************Font definations***************/

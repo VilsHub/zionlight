@@ -5,6 +5,7 @@
 
 $root               = dirname($_SERVER["DOCUMENT_ROOT"]);
 $connectionInfo     = require_once("connect.php");
+$isStatic           = count($connectionInfo) == 0;
 $permissions        = require_once("authorization.php");
 $mainDir            = "app";
 $libDir             = $mainDir."/lib/classes/application";
@@ -84,9 +85,9 @@ return (object)  [
     "database"          => "mysql",
 
     //connection   
-    "pdo"               => $connectionInfo["pdo"],
-    "db"                => $connectionInfo["db"],
-    "xDB"               => $connectionInfo["xDB"],
+    "pdo"               => $isStatic? null : $connectionInfo["pdo"],
+    "db"                => $isStatic? null : $connectionInfo["db"],
+    "xDB"               => $isStatic? null : $connectionInfo["xDB"],
 
     //permissions   
     "permissions"       => $permissions,
