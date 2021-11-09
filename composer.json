@@ -30,7 +30,7 @@
         "app/lib/functions/system/output.php"
       ],
       "exclude-from-classmap":[
-        "app/lib/classes/system/core/console.php",
+        "app/lib/classes/system/core/Console.php",
         "app/lib/classes/system/helpers/CLIColors.php"
       ]
   },
