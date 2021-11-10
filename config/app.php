@@ -3,7 +3,7 @@
 /****** No array keys should be changes to avoid system failure *******/ 
 /**********************************************************************/ 
 
-$root               = dirname($_SERVER["DOCUMENT_ROOT"]);
+$root               = dirname(__DIR__);
 $connectionInfo     = require_once("connect.php");
 $isStatic           = count($connectionInfo) == 0;
 $permissions        = require_once("authorization.php");
