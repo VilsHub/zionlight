@@ -41,7 +41,12 @@ $dataDir            = $setupDir."/data";
 
 //assets links
 $assetLinks     = [ 
-    "libraryDomain" => "http://library.vilshub.com"
+    "dev"   => [
+        "vUx" => "http://library.vilshub.com/lib/vUX/4.0.0/vUX-4.0.0.beta.js",
+    ],
+    "live"  => [
+        "vUx" => "/library/vUx/vUX-4.0.0.beta.js",
+    ]
 ];
 
 return (object)  [
