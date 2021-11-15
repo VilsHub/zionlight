@@ -9,7 +9,7 @@
  */
 require_once(dirname(__DIR__, 1)."/.env");
 $charset	= 'utf8';
-$appType 	= strtolower($isDatabaseApp);
+$appType 	= $isDatabaseApp;
 if($isDatabaseApp){
 	switch (ENVIRONMENT)
 	{
