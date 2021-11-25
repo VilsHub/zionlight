@@ -162,15 +162,6 @@ class Route{
         return $status;
       }
     }
-    
-    public static function for($type, $apiId){
-      $apiID = strtolower(explode("/",$_SERVER["REQUEST_URI"])[1]);
-      if(strtolower($type) == "api"){
-          return $apiID == $apiId ? true : false;
-      }else{
-          return $apiID != $apiId ? true : false;
-      }
-    }
 
     public static function dynamicInfo($route, $uri){
       return self::dynamicRouteQuery($route, $uri);

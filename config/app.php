@@ -39,6 +39,10 @@ $servicesDir        = $appLibDir."/services";
 $schemaDir          = $setupDir."/schemas";
 $dataDir            = $setupDir."/data";
 
+//Vendor
+$vendorDir          = $appMainDir."/lib/vendor";
+$applicationDataDir = $appMainDir."/data";
+
 //assets links
 $assetLinks     = [ 
     "dev"   => [
@@ -66,6 +70,8 @@ return (object)  [
     "servicesDir"       => $servicesDir,
     "schemaDir"         => $schemaDir,
     "dataDir"           => $dataDir,
+    "vendorDir"         => $vendorDir,
+    "applicationDataDir"=> $applicationDataDir,
 
     // Suffixes
     "modelFileSuffix"   => "Model",
