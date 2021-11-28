@@ -53,7 +53,7 @@ $assetLinks     = [
     ]
 ];
 
-return (object)  [
+return array_to_object([
     // Directories
     "mainDir"           => $mainDir,
     "appRootDir"        => $root,
@@ -102,6 +102,5 @@ return (object)  [
 
     //permissions   
     "permissions"       => $permissions,
-]
-
+]);
 ?>

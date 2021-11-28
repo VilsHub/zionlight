@@ -27,7 +27,7 @@ $app          = new App(new Loader, new Router($routes, $socketFiles, $config), 
 
 //Configure application router
 $app->router->defaultBaseFile  = "index.php";
-$app->router->error404File     = $config->contentsDir."/error/".$config->contentsFolder["static"]."/root/404.php";
+$app->router->error404File     = $config->contentsDir."/error/".$config->contentsFolder->static."/root/404.php";
 $app->router->error404URL      = "/error/404";
 $app->router->maintenanceURL   = "/maintenance";
 $app->router->maintenanceMode  = false;
