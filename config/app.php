@@ -53,13 +53,13 @@ $assetLinks     = [
     ]
 ];
 
-return array_to_object([
+return (object) [
     // Directories
     "mainDir"           => $mainDir,
     "appRootDir"        => $root,
     "appMainDir"        => $appMainDir,
     "contentsDir"       => $contentsDir,
-    "contentsFolder"    => ["static"=>$staticDirName, "dynamic"=>$dynamicDirname],
+    "contentsFolder"    => (object) ["static"=>$staticDirName, "dynamic"=>$dynamicDirname],
     "plugsDir"          => $plugsDir,
     "blocksDir"         => $blocksDir,
     "fragmentsDir"      => $fragmentsDir,
@@ -96,11 +96,11 @@ return array_to_object([
     "database"          => "mysql",
 
     //connection   
-    "pdo"               => $isStatic? null : $connectionInfo["pdo"],
-    "db"                => $isStatic? null : $connectionInfo["db"],
-    "xDB"               => $isStatic? null : $connectionInfo["xDB"],
+    "pdo"               => $isStatic? null : (object) $connectionInfo["pdo"],
+    "db"                => $isStatic? null : (object) $connectionInfo["db"],
+    "xDB"               => $isStatic? null : (object) $connectionInfo["xDB"],
 
     //permissions   
     "permissions"       => $permissions,
-]);
+];
 ?>
