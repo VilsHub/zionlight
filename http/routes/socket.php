@@ -1,26 +1,26 @@
 <?php
   return array(
     "publicLinks"         => [
-      "/"                 => $config->plugsDir."/index/indexLinks.php",
-      // "cbt"               => $config->plugsDir."/index/cbtLinks.php",
-      // "login"             => $config->plugsDir."/index/LoginLinks.php",
+      "/"                 => $config->displayDir."/home/".$config->plugsDir."/indexLinks.php",
+      // "cbt"               => $config->displayDir."/home/".$config->plugsDir."/cbtLinks.php",
+      // "login"             => $config->displayDir."/home/".$config->plugsDir."/LoginLinks.php",
     ],
     "publicMiddleware"         => [
-      // "cbt"               => $config->plugsDir."/index/cbtMiddleware.php",
+      // "cbt"               => $config->displayDir."/cbt/".$config->plugsDir."/cbtMiddleware.php",
     ],
     "login"               => [
-      // "login"             => $config->plugsDir."/login/LoginLinks.php",
+      // "login"             => $config->displayDir."/login/".$config->plugsDir."/LoginLinks.php",
     ],
     "dashboardLinks"      => [
-      // "add-questions"     => $config->plugsDir."/dashboard/addQuestionsLinks.php",
-      // "dashboard"         => $config->plugsDir."/dashboard/dashboardLinks.php",
+      // "add-questions"     => $config->displayDir."/dashboard/".$config->plugsDir."/addQuestionsLinks.php",
+      // "dashboard"         => $config->displayDir."/dashboard/".$config->plugsDir."/dashboardLinks.php",
     ],
     "dashboardMiddleware" => [
-      // "*"                 => $config->plugsDir."/dashboard/globalMiddleware.php",
-      // "add-questions"     => $config->plugsDir."/dashboard/addQuestMiddleware.php",
+      // "*"                 => $config->displayDir."/dashboard/".$config->plugsDir."/globalMiddleware.php",
+      // "add-questions"     => $config->displayDir."/dashboard/".$config->plugsDir."/addQuestMiddleware.php",
     ],
     "maintenaceLinks"     => [
-      "maintenance|task"  => $config->plugsDir."/maintenance/task.php"
+      "maintenance|task"  => $config->displayDir."/maintenance/".$config->plugsDir."/task.php"
     ]
   )
 ?>

@@ -17,16 +17,12 @@ $appMainDir         = $root.$div.$mainDir;
 $appLibDir          = $root.$div.$libDir;
 
 // Display Directories
-$staticDirName      = "static";
-$dynamicDirname     = "dynamic";
 $displayDir         = $root."/display";
-
-$contentsDir        = $displayDir."/contents";
-$layoutsDir         = $displayDir."/layouts";
-$plugsDir           = $displayDir."/plugs";
-
-$blocksDir          = $layoutsDir."/blocks";
-$fragmentsDir       = $layoutsDir."/fragments";
+$contentsDir        = "contents";
+$loadDirName        = $contentsDir."/load";
+$xhrDirName         = $contentsDir."/xhr";
+$plugsDir           = "plugs";
+$fragmentsDir       = "fragments";
 
 //Classses Directories
 $modelsDir          = $appLibDir."/models";
@@ -46,7 +42,7 @@ $applicationDataDir = $appMainDir."/data";
 //assets links
 $assetLinks     = [ 
     "dev"   => [
-        "vUx" => "http://library.vilshub.com/lib/vUX/4.0.0/vUX-4.0.0.beta.js",
+        "vUx" => "http://library.vilshub.com/lib/vUX/4.0.0/",
     ],
     "live"  => [
         "vUx" => "/library/vUx/vUX-4.0.0.beta.js",
@@ -58,10 +54,9 @@ return (object) [
     "mainDir"           => $mainDir,
     "appRootDir"        => $root,
     "appMainDir"        => $appMainDir,
-    "contentsDir"       => $contentsDir,
-    "contentsFolder"    => (object) ["static"=>$staticDirName, "dynamic"=>$dynamicDirname],
+    "displayDir"        => $displayDir , 
+    "contentsFolder"    => (object) ["load"=>$loadDirName, "xhr"=>$xhrDirName],
     "plugsDir"          => $plugsDir,
-    "blocksDir"         => $blocksDir,
     "fragmentsDir"      => $fragmentsDir,
     "modelsDir"         => $modelsDir,
     "controllersDir"    => $controllersDir,

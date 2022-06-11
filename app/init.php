@@ -16,7 +16,6 @@ $config       = require_once(dirname(__DIR__)."/config/app.php");
 $routes       = require_once(dirname(__DIR__)."/http/routes/content.php");
 $socketFiles  = require_once(dirname(__DIR__)."/http/routes/socket.php");
 
-
 //System applications
 $applications = require_once(dirname(__DIR__)."/config/applications.php");
 
@@ -27,7 +26,7 @@ $app          = new App(new Loader, new Router($routes, $socketFiles, $config), 
 
 //Configure application router
 $app->router->defaultBaseFile  = "index.php";
-$app->router->error404File     = $config->contentsDir."/error/".$config->contentsFolder->static."/root/404.php";
+$app->router->error404File     = $config->displayDir."/error/".$config->contentsFolder->load."/root/404.php";
 $app->router->error404URL      = "/error/404";
 $app->router->maintenanceURL   = "/maintenance";
 $app->router->maintenanceMode  = false;
