@@ -20,6 +20,8 @@ composer create-project --prefer-dist vilshub/zionlight yourProjectName dev-mast
   php zlight
   ```
 
+  ![animated grid border](https://imgur.com/a/siXUgXQ)
+
 ## Features ##
 Aside from the conventional features which backend frameworks have, zlight has the following features:
 

@@ -3,6 +3,7 @@ $env = "cli";
 
 //Autoload depencies files
 require_once("./app/lib/vendor/autoload.php");
+require_once("./app/lib/classes/system/core/Console.php");
 
 //Load app config 
 $config = require_once("./config/app.php");
