@@ -1,1 +1,1 @@
--- Table name:admins
+-- Table name:samples

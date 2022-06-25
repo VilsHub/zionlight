@@ -4,12 +4,11 @@
 /**********************************************************************/ 
 
 $root               = dirname(__DIR__);
-$connectionInfo     = require_once("connect.php");
-$isStatic           = count($connectionInfo) == 0;
 $permissions        = require_once("authorization.php");
+$envFile            = $root."/host.env";
 $mainDir            = "app";
 $libDir             = $mainDir."/lib/classes/application";
-$setupDir           = $root."setup";
+$setupDir           = $root."/setup";
 
 $div                = $root == ""?"":"/";
 
@@ -50,6 +49,9 @@ $assetLinks     = [
 ];
 
 return (object) [
+    //Env file
+    "envFile"           => $envFile,
+
     // Directories
     "mainDir"           => $mainDir,
     "appRootDir"        => $root,
@@ -86,14 +88,6 @@ return (object) [
 
     //Session Expiry
     "sessionExpiry"     => (60*60)*12, // in seconds 
-
-    //Engine
-    "database"          => "mysql",
-
-    //connection   
-    "pdo"               => $isStatic? null : (object) $connectionInfo["pdo"],
-    "db"                => $isStatic? null : (object) $connectionInfo["db"],
-    "xDB"               => $isStatic? null : (object) $connectionInfo["xDB"],
 
     //permissions   
     "permissions"       => $permissions,

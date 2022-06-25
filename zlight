@@ -1,11 +1,12 @@
 <?php
 $env = "cli";
-require_once("app/lib/vendor/vilshub/helpers/src/Get.php");
-require_once("app/lib/vendor/vilshub/helpers/src/Message.php");
-require_once("app/lib/classes/system/core/Boot.php");
-require_once("app/lib/functions/system/lexical.php");
-require_once("app/lib/functions/system/output.php");
-require_once("app/lib/vendor/vilshub/dbant/src/DBAnt.php");
-require_once("app/lib/classes/system/core/console.php");
-$console = new Console($argv, $argc);
+
+//Autoload depencies files
+require_once("./app/lib/vendor/autoload.php");
+
+//Load app config 
+$config = require_once("./config/app.php");
+
+//inialize Console 
+$console = new Console($argv, $argc, new App(null, null, $config));
 ?>

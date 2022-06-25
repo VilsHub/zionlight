@@ -11,17 +11,20 @@ require_once(dirname(__DIR__)."/app/lib/vendor/autoload.php");
 //register error handler
 ErrorHandler::listenForErrors();
 
-//$Load config files
+//Load config files
 $config       = require_once(dirname(__DIR__)."/config/app.php");
 $routes       = require_once(dirname(__DIR__)."/http/routes/content.php");
 $socketFiles  = require_once(dirname(__DIR__)."/http/routes/socket.php");
+
+//set platform
+$env          = "web";
+
 
 //System applications
 $applications = require_once(dirname(__DIR__)."/config/applications.php");
 
 
 //Instantiate App
-
 $app          = new App(new Loader, new Router($routes, $socketFiles, $config), $config);
 
 //Configure application router

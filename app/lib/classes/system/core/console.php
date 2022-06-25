@@ -1,7 +1,7 @@
 <?php
+require_once("./app/lib/classes/system/helpers/CLIColors.php");
 class Console extends CLIColors{
     private $version  = "1.0.0.beta";
-    private $appConfig;
     private $commands =[
         "create" => [
             "middleware",
@@ -10,7 +10,7 @@ class Console extends CLIColors{
             "queriesbank",
             "service",
             "schema",
-            "database"
+            "db"
         ],
         "shine" => 1,
         "build" => [
@@ -32,13 +32,13 @@ class Console extends CLIColors{
             "schema"
         ],
         "initialize" => [
-            "database"
+            "db"
         ],
         "use" => [
-            "database"
+            "db"
         ],
         "current" => [
-            "database"
+            "db"
         ],
         "export" =>[
             "data"
@@ -47,13 +47,22 @@ class Console extends CLIColors{
             "data"
         ]
     ];
+
     private $argv;
-    function __construct($argv, $argc){
-        $this->appConfig    = require("config/app.php");
-        $this->argv         = $argv;
-        $this->dbInfo       = require("config/dbDetails.php");
-        
+    function __construct($argv, $argc, $app){
         parent::__construct();
+        $app->boot();
+        $this->app      = $app;
+        $this->configs  = $app->config;
+        $this->argv     = $argv;
+        $this->dbInfo   = [
+            "db"            => env("DB_DATABASE"),
+            "isDBApp"       => env("DB_APP"),
+            "user"          => env("DB_USER"),
+            "host"          => env("DB_HOST"),
+            "pass"          => env("DB_PASSWORD"),
+            "charset"       => env("DB_CHARSET")
+        ]; 
 
         if($argc <= 1){
             $this->showAllOptions();
@@ -62,6 +71,7 @@ class Console extends CLIColors{
             $this->commandManager($argv[1]);
         }
     }
+
 
     // CLI
     private function showAllOptions(){
@@ -72,14 +82,14 @@ class Console extends CLIColors{
         $this->write($header."\n", "white", "blue");
         $this->write($margin, "white", "blue");
         echo "\n\n";
-        echo "Here are the things your can do:";
+        echo "Here are the things you can do:";
         $list = "\n".$this->color(" CREATE", "light_purple", "black");
         $list .= "\n\t".$this->color(" - Create controller", "yellow", "black")."\t".$this->color("create:controller", "green", "black")." controllerName";
         $list .= "\n\t".$this->color(" - Create model", "yellow", "black")." \t".$this->color("create:model", "green", "black")." ModelName";
-        $list .= "\n\t".$this->color(" - Create query bank", "yellow", "black")." \t".$this->color("create:queryBank", "green", "black")." querybankName";
+        $list .= "\n\t".$this->color(" - Create queries bank", "yellow", "black")." \t".$this->color("create:queriesBank", "green", "black")." queriesbankName";
         $list .= "\n\t".$this->color(" - Create middleware", "yellow", "black")." \t".$this->color("create:middleware", "green", "black")." middlewareName";
         $list .= "\n\t".$this->color(" - Create schema", "yellow", "black")." \t".$this->color("create:schema", "green", "black")." schemaName";
-        $list .= "\n\t".$this->color(" - Create database", "yellow", "black")." \t".$this->color("create:database", "green", "black")." databaseName";
+        $list .= "\n\t".$this->color(" - Create database", "yellow", "black")." \t".$this->color("create:db", "green", "black")." databaseName";
         echo "\n\n";
         
         $list .= "\n".$this->color(" SHINE", "light_purple", "black");
@@ -110,7 +120,7 @@ class Console extends CLIColors{
         $list .= "\n\t".$this->color(" - Export  data", "yellow", "black")." \t".$this->color("export:data", "green", "black")." tableName";
         
         $list .= "\n".$this->color(" CURRENT", "light_purple", "black");       
-        $list .= "\n\t".$this->color(" - View current DB", "yellow", "black")." \t".$this->color("current:database", "green", "black");
+        $list .= "\n\t".$this->color(" - View current DB", "yellow", "black")." \t".$this->color("current:db", "green", "black");
 
         echo $list;
         echo "\n\n";
@@ -119,65 +129,65 @@ class Console extends CLIColors{
         $CommandInfo = $this->getAction($command);
         $exec = $CommandInfo["command"];
         $this->validateCommand($exec);
-        if(strtolower($exec) != "initialize") $this->databaseInitCheck($this->dbInfo["db"]);
+        
         switch (strtolower($exec)){
             case 'create':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->create($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->create($object);
                 break;
             case 'shine':
                 $this->startServer();
                 break;
             case 'build':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->build($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->build($object);
                 break;
             case 'reset':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->reset($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->reset($object);
                 break;
             case 'untrack':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->untrack($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->untrack($object);
                 break;
             case 'track':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->track($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->track($object);
                 break;
             case 'delete':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->delete($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->delete($object);
                 break;
             case 'initialize':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->initialize($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->initialize($object);
                 break;
             case 'use':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->use($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->use($object);
                 break;
             case 'current':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->current($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->current($object);
                 break;
             case 'export':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->export($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->export($object);
                 break;
             case 'import':
-                $action = $CommandInfo["action"];
-                $this->validateCommandAction($exec, $action);
-                $this->import($action);
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->import($object);
                 break;
             default:
                 # code...
@@ -189,9 +199,9 @@ class Console extends CLIColors{
         $build = ["command" => $info[0]];
         
         if(isset($info[1])){
-            $build["action"] = $info[1];
+            $build["object"] = $info[1];
         }else{
-            $build["action"] = null;
+            $build["object"] = null;
         }
 
         return $build;
@@ -202,13 +212,13 @@ class Console extends CLIColors{
             $this->error(["The command: ", $command, " is not supported"]);
         }
     }
-    private function validateCommandAction($command, $action){
-        $action = strtolower($action);
+    private function validateCommandActionObject($command, $object){
+        $object = strtolower($object);
         $totalCommandAction = count($this->commands[$command]);
-        if($action == null){
-            $this->error(["No ".strtoupper($command)." command task supplied. You have not specified any task. The supported ".pluralizer("task", "s:-1", $totalCommandAction)." for ".pluralizer("this", "ese:2", $totalCommandAction)." ".pluralizer("command", "s:-1", $totalCommandAction)." ".pluralizer("is", "are", $totalCommandAction).": ". implode(", ", $this->commands[$command] ).". Example ", $command.":".$this->commands[$command][0], ""]);
-        }else if(!in_array($action, $this->commands[$command])){
-            $this->error(["The ".strtoupper($command)." command action: ", $action, " is not supported"]);
+        if($object == null){
+            $this->error(["No ".strtoupper($command)." command object supplied. You have not specified any object. The supported ".pluralizer("object", "s:-1", $totalCommandAction)." for ".pluralizer("this", "ese:2", $totalCommandAction)." ".pluralizer("command", "s:-1", $totalCommandAction)." ".pluralizer("is", "are", $totalCommandAction).": ". implode(", ", $this->commands[$command] ).". Example ", $command.":".$this->commands[$command][0], ""]);
+        }else if(!in_array($object, $this->commands[$command])){
+            $this->error(["The ".strtoupper($command)." command cannot operate on the specified object:", $object, " It is not supported"]);
         }
     }
     private function error($details, $kill=true){  
@@ -300,64 +310,73 @@ class Console extends CLIColors{
         fclose($callForInput);
         return $response;
     }
+    private function executeWrite($fileName, $content){
+        $fileHandler = fopen($fileName, "w");
+        if (fwrite($fileHandler, $content) > 0){
+            return true;
+        }else{
+            return false;
+        };
+    }
     private function buildTemplate($type){
         $name = ucwords($this->argv[2]);
         switch ($type) {
             case 'controller':
-                $dir = $this->appConfig->controllersDir;
+                $dir = $this->configs->controllersDir;
+               
                 $controllerContent =  $this->getTemplate("class", "controller", $name, [9]);
 
                 //write to new controller file
                 $newControllerFile = $dir."/".$name.".php";
 
-                if($this->writeTemplate($newControllerFile, $controllerContent, "Controller")){
+                if($this->executeWrite($newControllerFile, $controllerContent)){
                     $this->success(["The controller: ",$name, " has been created successfully in the directory: ".$dir]);
                 }
                 break;
             case 'model':
-                $dir = $this->appConfig->modelsDir;
-                $modelContent =  $this->getTemplate("class", "model", $name.$this->appConfig->modelFileSuffix, [7]);
+                $dir = $this->configs->modelsDir;
+                $modelContent =  $this->getTemplate("class", "model", $name.$this->configs->modelFileSuffix, [7]);
 
                 //write to new model file
-                $newModelFile = $dir."/".$name.$this->appConfig->modelFileSuffix.".php";
-                if($this->writeTemplate($newModelFile, $modelContent, "Model")){
-                    $this->success(["The Model: ",$name.$this->appConfig->modelFileSuffix, " has been created successfully in the directory: ".$dir]);
+                $newModelFile = $dir."/".$name.$this->configs->modelFileSuffix.".php";
+                if($this->executeWrite($newModelFile, $modelContent)){
+                    $this->success(["The Model: ",$name.$this->configs->modelFileSuffix, " has been created successfully in the directory: ".$dir]);
                 }
                 break;
             case 'middleware':
-                $dir = $this->appConfig->middlewaresDir;
+                $dir = $this->configs->middlewaresDir;
                 $middlewareContent =  $this->getTemplate("class", "middleware", $name, [6]);
 
                 //write to new middleware file
                 $newMiddlewareFile = $dir."/".$name.".php";
-                if($this->writeTemplate($newMiddlewareFile, $middlewareContent, "Middleware")){
+                if($this->executeWrite($newMiddlewareFile, $middlewareContent)){
                     $this->success(["The Middleware: ",$name, " has been created successfully in the directory: ".$dir]);
                 }
                 break;
             case 'queriesbank':
-                $dir = $this->appConfig->queriesBankDir;
-                $queryBankContent =  $this->getTemplate("class", "queriesbank", $name.$this->appConfig->queryFileSuffix, [6]);
+                $dir = $this->configs->queriesBankDir;
+                $queryBankContent =  $this->getTemplate("class", "queriesbank", $name.$this->configs->queryFileSuffix, [6]);
 
                 //write to new middleware file
-                $newQuerybankFile = $dir."/".$name.$this->appConfig->queryFileSuffix.".php";
-                if($this->writeTemplate($newQuerybankFile, $queryBankContent, "QueriesBank")){
-                    $this->success(["The QueryBank: ",$name.$this->appConfig->queryFileSuffix, " has been created successfully in the directory: ".$dir]);
+                $newQuerybankFile = $dir."/".$name.$this->configs->queryFileSuffix.".php";
+                if($this->executeWrite($newQuerybankFile, $queryBankContent)){
+                    $this->success(["The QueryBank: ",$name.$this->configs->queryFileSuffix, " has been created successfully in the directory: ".$dir]);
                 }
                 break;
             case 'service':
-                $dir = $this->appConfig->servicesDir;
-                $serviceContent =  $this->getTemplate("class", "service", $name.$this->appConfig->serviceFileSuffix, [10]);
+                $dir = $this->configs->servicesDir;
+                $serviceContent =  $this->getTemplate("class", "service", $name.$this->configs->serviceFileSuffix, [10]);
 
                 //write to new service file
-                $newServiceFile = $dir."/".$name.$this->appConfig->serviceFileSuffix.".php";
-                if($this->writeTemplate($newServiceFile, $serviceContent, "Service")){
-                    $this->success(["The Service: ", $name.$this->appConfig->serviceFileSuffix, " has been created successfully in the directory: ".$dir]);
+                $newServiceFile = $dir."/".$name.$this->configs->serviceFileSuffix.".php";
+                if($this->executeWrite($newServiceFile, $serviceContent)){
+                    $this->success(["The Service: ", $name.$this->configs->serviceFileSuffix, " has been created successfully in the directory: ".$dir]);
                 }
 
                 break;
             case 'schema':
                 $this->setupCheck();
-                $dir = $this->appConfig->schemaDir;
+                $dir = $this->configs->schemaDir;
                 $tableName = "";
                 $schemaName="";
                 
@@ -388,7 +407,7 @@ class Console extends CLIColors{
                 }else{
                     //validate object name
                     if(!$this->validate("name", $this->argv[3])){
-                        $this->error(["The supplied {$objectType} name '{$this->argv[4]}' is invalid. Please specify a valid name", "", ""]);
+                        $this->error(["The supplied object name '{$this->argv[4]}' is invalid. Please specify a valid name", "", ""]);
                     } 
                     $schemaTemplateName = "empty.table";
                     $tableName = $this->argv[3];
@@ -429,26 +448,11 @@ class Console extends CLIColors{
         }
         
     }
-    private function writeSchema($newSchemaFile, $schemaTemplateName, $schemaName, $tableName, $points){
-        $schemaContent =  $this->getTemplate("schema", $schemaTemplateName, $tableName, $points);
-        if($this->executeWrite($newSchemaFile, $schemaContent)){
-            //track schema file
-            return $trackSchema = $this->trackCreatedSchema($schemaName, $tableName);
-        }
-    }
-    private function executeWrite($fileName, $content){
-        $fileHandler = fopen($fileName, "w");
-        if (fwrite($fileHandler, $content) > 0){
-            return true;
-        }else{
-            return false;
-        };
-    }
     private function getTemplate($templateType, $templateName, $placeholderName=null, $placeholderLine){
         $file = "";
         $contents = "";
         $n = 0;
-        $dir = $this->appConfig->appRootDir."app/assets/templates/";
+        $dir = $this->configs->appRootDir."/app/assets/templates/";
         $placeholder = "";
         if($templateType == "class"){
             $dir .= "classes/";
@@ -473,198 +477,224 @@ class Console extends CLIColors{
         fclose($fileHandler);
         return $contents;
     }
-    private function getEnvFile($dbState){
-        $contents = "";
-        $fileHandler = fopen(".env", "r");
-        while(!feof($fileHandler)){
-            $line = fgets($fileHandler);
-            if(strpos($line, 'databaseInit') != false){
-                $search = $dbState == "true"?"false":"true";
-                $contents .= str_replace($search, $dbState, $line);
-            }else{
-                $contents .= $line;
-            }
-        }
-        fclose($fileHandler);
-        return $contents;
-    }
-    private function getDataFileContents($dataFileName){
-        $data = require ($this->appConfig->dataDir."/".$dataFileName.$this->appConfig->dataFileSuffix.".zld");
-        $contents = "";
-        $values = [];
-        
-        foreach ($data as $row) {
-            $totalColums = count($row);
-            $x=0;
-            $rowData = "(";
-            foreach ($row as $key => $cell) {
-                if($x == $totalColums-1){//last row
-                    if($cell != NULL){
-                        $rowData .= "'".trim($cell)."'".")";
-                    }else{
-                        $rowData .= "NULL".")";
-                    }
-                }else{
-                    if($cell != NULL){
-                        $rowData .= "'".trim($cell)."'".", ";
-                    }else{
-                        $rowData .= "NULL".", ";
-                    }
-                }
-                $x++;
-            }
-            array_push($values, $rowData);
-        }
+    // CLI ends
 
-        $contents = implode(",\n", $values);
-        // die($contents);
-        return [
-            "total" => count($values),
-            "content" => $contents
-        ];
-    }
+
+    // Data Methods
     private function insertData($schemaName, $tableName, $insertQuery){
         //check if empty
         $reset = $this->resetSchema($schemaName, $tableName, true);
         if($reset["code"] == "r2"){ //reset and built successfully
             //insert data
-            $this->appConfig->db->disableForeignKeyCheck();
-            $run = $this->appConfig->db->run($insertQuery);
-            $this->appConfig->db->enableForeignKeyCheck();
-            return $run;
+            $this->configs->db->disableForeignKeyCheck();
+            $run = $this->configs->db->run($insertQuery);
+            $this->configs->db->enableForeignKeyCheck();
+ 
+            return [
+                "status" => $run["status"],
+                "totalInserted" => $run["rowCount"]
+            ];
+        }else{
+            return false;
         }
     }
-    private function exportData($tableName){
-        $dataFile = $this->appConfig->dataDir."/".$tableName.$this->appConfig->dataFileSuffix.".zld";
-        $contents = '<?php'."\n";
-        $contents .= '$data = ['."\n";
-        $sql = "SELECT * FROM `{$tableName}`";
-        $run = $this->appConfig->db->run($sql);
-        $records = 0;
-        
-
-        if($run["rowCount"] > 0){
-            if($run["rowCount"] > 1){
-                foreach ($run["data"] as $tableRow) {
-                    $line = "   [";
-                    $parsedData = array_map(function($cell){
-                        if(strlen($cell) > 0){
-                           return "\"".addSlashes($cell)."\""; 
-                        }else{
-                            return "NULL";
-                        }   
-                    }, $tableRow);
-                    $line .= implode(", ", $parsedData)."],\n";
-                    $contents .= $line;
-                    $records++;
-                }
-            }else{
-                $line = "   [";
-                $parsedData = array_map(function($cell){
-                    if(strlen($cell) > 0){
-                        return "\"".$cell."\""; 
-                     }else{
-                         return "NULL";
-                     }
-                }, $run["data"]);
-
-                $line .= implode(", ", $parsedData)."],\n";
-                $contents .= $line;
-                $records++;
+    private function parseCellData($cell, $type){
+        $parsedCellData = null;
+        if(strlen($cell) == 0){ //null
+            $parsedCellData = "NULL";
+        }else{ //not null
+            if($type == "integer"){
+                $parsedCellData = $cell;
+            }else if ($type == "string"){
+                $cell = strpos($cell, "'") >= 0 ? str_replace("'", "\'", $cell):$cell;
+                $parsedCellData = "'".$cell."'";
             }
-            
-            $contents .= '];'."\n";
-            $contents .= 'return $data;'."\n";
-            $contents .= '?>';
+        }
+        return $parsedCellData;
+    }
+    private function exportData($tableName){
+        $dataFile           = $this->configs->dataDir."/".$tableName.$this->configs->dataFileSuffix.".zld.sql";
+        $dataEngineVersion  = $this->configs->db->link->query('select version()')->fetchColumn();
+        $tableConfig        = [];
+        $data               = "";
+        
+        //build table columns names
+        $sql                = "DESCRIBE `{$tableName}`";
+        $run                = $this->configs->db->run($sql);
+        $totalColumns       = $run["rowCount"];
+       
+        $data               .= "-- Zion Light SQL Dump\n";
+        $data               .= "-- App Name         : {$this->configs->appName}\n";
+        $data               .= "-- Generation Time  : ".date("M d, Y \a\\t h:i A")."\n"; // Jun 20, 2022 at 05:28 PM";
+        $data               .= "-- Data Engine      : ".env("DB_ENGINE")." version {$dataEngineVersion}"."\n";
+        $data               .= "-- Database Name    : ".env("DB_DATABASE")."\n";
+        $data               .= "-- Table Name       : {$tableName}"."\n\n";
+        $data               .= "--\n";
+        $data               .= "-- Dumping data for table `{$tableName}`\n";
+        $data               .= "--\n\n";
+      
+        $data               .= "INSERT INTO `{$tableName}` (";
 
-            //write content to file
-            $this->executeWrite($dataFile, $contents);
+        foreach($run["data"] as $key => $tableRow){ 
+            if($totalColumns == $key+1){
+                $data .= "`{$tableRow["Field"]}`) VALUES\n";
+            }else{
+                $data .= "`{$tableRow["Field"]}`, ";
+            }
+
+            //set table config        
+
+            if (strpos($tableRow["Type"], "int") > -1){
+                $tableConfig[$tableRow["Field"]] = "integer";
+            }else if (strpos($tableRow["Type"], "float") > -1){
+                $tableConfig[$tableRow["Field"]] = "integer";
+            }else if(strpos($tableRow["Type"], "varchar") > -1){
+                $tableConfig[$tableRow["Field"]] = "string";
+            }else{
+                $tableConfig[$tableRow["Field"]] = "string";
+            }
+        }
+
+        //build rows
+        $sql            = "SELECT * FROM `{$tableName}`";
+        $run            = $this->configs->db->run($sql);
+        $totalRecords   = $run["rowCount"];
+        
+        if($totalRecords > 0){
+            $rows=0;
             
+            foreach($run["data"] as $key => $tableRow){
+
+                $n=0;
+                $rows++;
+
+                foreach($tableRow as $key => $cell){
+                    if($totalColumns  == $n+1){//last cell of rows
+                        if($rows == $totalRecords){ //last cell of last record
+                            $data .= $this->parseCellData($cell, $tableConfig[$key]).");\n";
+                        }else{//last cell of other records
+                            $data .= $this->parseCellData($cell, $tableConfig[$key])."),\n";
+                        }
+                    }else if($n==0){
+                        $data .= "(".$this->parseCellData($cell, $tableConfig[$key]).", ";
+                    }else{
+                        $data .= $this->parseCellData($cell, $tableConfig[$key]).", ";
+                    }   
+                    $n++;
+                }
+            }
+
+            $this->executeWrite($dataFile, $data);
+
             return [
                 "status"=> true,
-                "exported"=>$records,
-                "total" => $run["rowCount"]
+                "total" => $totalRecords
             ];
         }else{
             return [
                 "status"=> false,
-                "exported"=>0,
                 "total" => 0
             ];
         }
+
     }
-    private function importData($tableName){
-        $values = "";
-        $records = 0;
-        $insertSQL = "INSERT INTO `{$tableName}` (";
+    private function importData($dataFile){
+        //build values
+        $data   = $this->readDumpContent($dataFile);
+       
+        $insertQuery    = $data["schema"];
+        $tableName      = $data["tableName"];
+        $totalInserted  = 0;
 
-        $answered = false;
-        while (!$answered) { 
-            $prompt = $this->color(" You are about to empty the table: '$tableName' and fill it with new data. Do you proceed? Y or N ", "blue", "yellow");
-            $input =  $this->readLine($prompt);  
-            if($input != "n" && $input != "y"){
-                echo "Please press 'Y' for yes and 'N' for no\n";
-                continue;
-            } 
+        //check if table exist
+        $tableExist = $this->configs->db->tableExist($tableName);
+       
+        if ($tableExist){
+            //get schema name
+            $schemaName = $this->getTableSchemaName($tableName)["schema_name"];
+           
+            $answered = false;
 
-            if(strtolower($input) == "y"){
-                //get table column names
-                $sql = "DESCRIBE `{$tableName}`";
-                $run = $this->appConfig->db->run($sql);
-                $n=0;
-                foreach ($run["data"] as $row) {
-                    $n++;
-                    if($run["rowCount"] == $n){
-                        $insertSQL .= "`".$row["Field"]."`) VALUES\n";
-                    }else{
-                        $insertSQL .= "`".$row["Field"]."`,";
-                    }
-                }
-    
-                //build values
-                $data = $this->getDataFileContents($tableName);
-               
-                $insertQuery = $insertSQL.$data["content"];
-                //get schema name
-                $schemaName = $this->getTableSchemaName($tableName)["data"]["schema_name"];
-                
-                if($data["total"] > 0){//has data to import
-                    //insert values by running the insert query
+            while (!$answered) { 
+                $prompt = $this->color("\n You are about to empty the table: '$tableName' and fill it with new data. Do you proceed? Y or N ", "blue", "yellow");
+                $input =  $this->readLine($prompt);  
+                if($input != "n" && $input != "y"){
+                    echo "Please press 'Y' for yes and 'N' for no\n";
+                    continue;
+                } 
+
+                if(strtolower($input) == "y"){
                     $insertData = $this->insertData($schemaName, $tableName, $insertQuery);
-
                     if($insertData["status"]){//imported
-                        $this->success([$insertData["rowCount"]."/".$data["total"]." ".pluralizer("record", "s:-1", $insertData["rowCount"])." ".pluralizer("has", "have", $insertData["rowCount"])." been imported succefully to the table: ","","'".$tableName."'"]);
+                        $totalInserted  = $insertData["totalInserted"];
+                        $status = "c0";
                     }else{//could not import data
-                        $this->error(["Error occured during data importation","",""]);
-                    }
-                }else{//no data to import
-                    $this->warning(["Data file is empty. Nothing to import. Try exporting to the data file, use the coomand: ","export:data",""]);
+                        $status = "c2";
+                    } 
                 }
-                $answered = true;
-            }else{
+
                 $answered = true;
             }
+        }else{
+            $status = "c1";
         }
+
+        return [
+            "code" => $status,
+            "tableName" => $tableName,
+            "totalInserted" => $totalInserted
+        ];
     }
-    // CLI ends
+    
 
     // Schema starts
     private function getSchema($name){
-        $schemaFile = $this->appConfig->schemaDir."/".$name.".sql";
-        $data = $this->readSchemaContent($schemaFile);
+        $schemaFile = $this->configs->schemaDir."/".$name.".sql";
         if(file_exists($schemaFile)){
-            return [
-                "data"      => $data["schema"],
-                "status"    => true ,
-                "tableName" => $data["tableName"]
-            ];
+            $data = $this->readSchemaContent($schemaFile);
+            $data["status"] = true;
         }else{
-            return [
-                "data"      => null,
-                "status"    => false,
-                "tableName" => null
+            $data = [
+                "schema"    => null,
+                "tableName" => null,
+                "status"    => false
             ];
         }
+        
+        return [
+            "data"      => $data["schema"],
+            "status"    => $data["status"],
+            "tableName" => $data["tableName"]
+        ];
+    }
+    private function readDumpContent($schemaFile){
+        $fileHandler = fopen($schemaFile, "r");
+        $content = "";
+        $tableName = "";
+        $setTableName = false;
+        while(!feof($fileHandler)){
+            $line = fgets($fileHandler);
+            $comment = strpos($line, "--") > -1 ?$line[0].$line[1]:null;
+
+            if($comment == "--"){
+                if(!$setTableName){
+                    if(strpos($line, "Table Name") > -1){//located file name
+                        $tableName = trim(explode(":", $line)[1]);
+                        $setTableName = true;
+                    }
+                }else{
+                    continue;
+                }
+            }            
+            $content .= $line;   
+        }
+        
+        fclose($fileHandler);
+
+        return [
+            "tableName" => $tableName,
+            "schema"    => $content
+        ];
     }
     private function readSchemaContent($file){
         $fileHandler = fopen($file, "r");
@@ -685,7 +715,7 @@ class Console extends CLIColors{
         ];
     }
     private function deleteSchemaFile($name){
-        $schemaFile = $this->appConfig->schemaDir."/".$name.".sql";
+        $schemaFile = $this->configs->schemaDir."/".$name.".sql";
         if(file_exists($schemaFile)){
             return unlink($schemaFile);
         }else{
@@ -696,44 +726,46 @@ class Console extends CLIColors{
         $sql = "CREATE TABLE `zlight_schema_track` (
             `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
             `schema_name` VARCHAR(50) NOT NULL UNIQUE,
-            `table_name` VARCHAR(50) NOT NULL UNIQUE,
+            `table_name` VARCHAR(50) NOT NULL,
             `build` ENUM ('0', '1') DEFAULT '0'
           ) ENGINE=InnoDB DEFAULT CHARSET=latin1";
-        return $run = $this->appConfig->db->run($sql);
+        return $run = $this->configs->db->run($sql);
     }
     private function buildStatus($name){
         $sql = "SELECT `id` FROM `zlight_schema_track` WHERE `schema_name` = '{$name}' AND `build` = '1'";
-        $run = $this->appConfig->db->run($sql);
+        $run = $this->configs->db->run($sql);
         return $run["rowCount"]>0;
     }
     private function resetStatus($name){
         $sql = "SELECT `id` FROM `zlight_schema_track` WHERE `schema_name` = '{$name}' AND `build` = '0'";
-        $run = $this->appConfig->db->run($sql);
+        $run = $this->configs->db->run($sql);
         return $run["rowCount"]>0;
     }
     private function trackStatus($name){
         $sql = "SELECT `id` FROM `zlight_schema_track` WHERE `schema_name` = '{$name}'";
-        $run = $this->appConfig->db->run($sql);
+        $run = $this->configs->db->run($sql);
         return $run["rowCount"]>0;
+    }
+    private function trackTableName($name){
+        $sql = "SELECT `table_name` FROM `zlight_schema_track` WHERE `schema_name` = '{$name}'";
+        $run = $this->configs->db->getRecord($sql);
+        return $run["table_name"];
     }
     private function trackedFiles(){
         $sql = "SELECT `schema_name` FROM `zlight_schema_track`";
-        $run = $this->appConfig->db->run($sql);
+        $run = $this->configs->db->run($sql);
         $names = [];
-        if($run["rowCount"] == 1){
-            foreach ($run["data"] as $key => $value) {
-                array_push($names, $value.".sql");
-            }
-        }else if($run["rowCount"] > 1){
-            foreach ($run["data"] as $key => $value) {
-                array_push($names, $value["schema_name"].".sql");
-            }
+
+        foreach ($run["data"] as $key => $value) {
+            array_push($names, $value["schema_name"].".sql");
         }
+        
         return $names;
     }
     private function trackCreatedSchema($name, $tableName){
         $trackStatus = $this->trackStatus($name);
         $tracked = false;
+
         if(!$trackStatus){// not tracked, so track
             $track = $this->trackSchema($name, $tableName);
             if($track["status"]) $tracked = true;
@@ -745,25 +777,25 @@ class Console extends CLIColors{
     }
     private function logSchema($name, $tableName){
         $sql = "SELECT `id` FROM `zlight_schema_track` WHERE `schema_name` = '{$name}'";
-        $exist = $this->appConfig->db->exist($sql, null);
+        $exist = $this->configs->db->exist($sql, null);
         
         if($exist){//update
             $sql = "UPDATE `zlight_schema_track` SET `build` = '1' WHERE `schema_name` = '{$name}'";
         }else{//insert
             $sql = "INSERT INTO `zlight_schema_track` SET `build` = '1', `schema_name` = '{$name}', `table_name` = '{$tableName}'";
         }
-        $this->appConfig->db->run($sql);
+        $this->configs->db->run($sql);
     }
     private function unlogSchema($name, $tableName){
         $sql = "SELECT `id` FROM `zlight_schema_track` WHERE `schema_name` = '{$name}'";
-        $exist = $this->appConfig->db->exist($sql, null);
+        $exist = $this->configs->db->exist($sql, null);
         
         if($exist){//update
-            $sql = "UPDATE `zlight_schema_track` SET `build` = '0' WHERE `schema_name` = '{$name}'";
+            $sql = "UPDATE `zlight_schema_track` SET `build` = '0', `table_name` = '{$tableName}' WHERE `schema_name` = '{$name}'";
         }else{//insert
             $sql = "INSERT INTO `zlight_schema_track` SET `build` = '0', `schema_name` = '{$name}', `table_name` = '{$tableName}'";
         }
-        $this->appConfig->db->run($sql);
+        $this->configs->db->run($sql);
     }
     private function buildSchema($name){
         $schemaData     = $this->getSchema($name);
@@ -779,9 +811,10 @@ class Console extends CLIColors{
                     ];
                 }else{//has data to be built
                     try {
-                        $this->appConfig->db->disableForeignKeyCheck();
-                        $run = $this->appConfig->db->run($schemaData["data"]);
-                        $this->appConfig->db->enableForeignKeyCheck();
+                        $this->configs->db->disableForeignKeyCheck();
+                        $run = $this->configs->db->run($schemaData["data"]);
+                        $this->configs->db->enableForeignKeyCheck();
+                        
                         if($run["status"]){
                             //log schema
                             $this->logSchema($name, $schemaData["tableName"]);
@@ -816,6 +849,13 @@ class Console extends CLIColors{
             ];
         }
     }
+    private function writeSchema($newSchemaFile, $schemaTemplateName, $schemaName, $tableName, $points){
+        $schemaContent =  $this->getTemplate("schema", $schemaTemplateName, $tableName, $points);
+        if($this->executeWrite($newSchemaFile, $schemaContent)){
+            //track schema file
+            return $this->trackCreatedSchema($schemaName, $tableName);
+        }
+    }
     private function deleteSchema($name, $tableName){
         //reset schema without building
         $resetSchema = $this->resetSchema($name, $tableName, false);
@@ -827,25 +867,42 @@ class Console extends CLIColors{
             return $this->deleteSchemaFile($name);
         }
     }
+    private function dropTable($tableName){
+        $this->configs->db->disableForeignKeyCheck();
+        $sql = "DROP TABLE IF EXISTS `{$tableName}`";
+        $run = $this->configs->db->run($sql);
+        $this->configs->db->enableForeignKeyCheck();
+        return $run;
+    }
     private function getTableSchemaName($tableName){
         $sql = "SELECT `schema_name` FROM `zlight_schema_track` WHERE `table_name` = '{$tableName}'";
-        return $this->appConfig->db->run($sql);
+        return $this->configs->db->getRecord($sql);
     }
-    private function resetSchema($name, $tableName, $rebuild=true){
+    private function resetSchema($name, $tableName=null, $rebuild=true){
         //Check track State
-        $trackState = $this->trackStatus($name);
-
-        if($trackState){
+        $trackTableName = $this->trackTableName($name);
+        
+        $replace = ($tableName != null)? true: false;
+       
+        $targetTable = "";
+       
+        if(strlen($trackTableName)){
             //reset
+
             try {
-                $this->appConfig->db->disableForeignKeyCheck();
-                $sql = "DROP TABLE IF EXISTS `{$tableName}`";
-                $run = $this->appConfig->db->run($sql);
-                $this->appConfig->db->enableForeignKeyCheck();
+                // drop old
+                if($replace) {
+                    $this->dropTable($trackTableName); 
+                    $run = $this->dropTable($tableName);
+                    $targetTable = $tableName;
+                }else{
+                    $run =$this->dropTable($trackTableName); 
+                    $targetTable = $trackTableName;
+                }
                 
                 if($run["status"]){
                     //reset in tracker
-                    $this->unlogSchema($name, $tableName);
+                    $this->unlogSchema($name, $targetTable);
                     
                     if($rebuild){
                         $rebuildSchema = $this->buildSchema($name);
@@ -885,7 +942,7 @@ class Console extends CLIColors{
         }
     }
     private function getSchemaFiles(){
-        $schemas = array_slice(scandir($this->appConfig->schemaDir), 2);
+        $schemas = array_slice(scandir($this->configs->schemaDir), 2);
         $trackedFiles = $this->trackedFiles();
         return [
             "schemaFiles" => $schemas,
@@ -951,7 +1008,7 @@ class Console extends CLIColors{
         while(!$answered){
             $dLabel = $rebuild?" and rebuild again":"";
             $prompt = $this->color(" Are you sure you want to drop the entire schema {$dLabel}? Y or N ", "blue", "yellow");
-            $input =  $this->readLine($prompt);
+            $input  =  $this->readLine($prompt);
             
             if($input != "n" && $input != "y"){
                 echo "Please press 'Y' for yes and 'N' for no\n";
@@ -959,17 +1016,20 @@ class Console extends CLIColors{
             } 
 
             if(strtolower($input) == "y"){
-                $schemaData = $this->getSchemaFiles();
-                $totalTracked = count($schemaData["trackedFiles"]);
-                $totalSchema = count($schemaData["schemaFiles"]);
-                $missingSchema = array_diff($schemaData["trackedFiles"], $schemaData["schemaFiles"]);
-                $untrackedSchema = array_diff($schemaData["schemaFiles"], $schemaData["trackedFiles"]);
-            
+                $schemaData         = $this->getSchemaFiles();
+                $totalTracked       = count($schemaData["trackedFiles"]);
+                $totalSchema        = count($schemaData["schemaFiles"]);
+                $missingSchema      = array_diff($schemaData["trackedFiles"], $schemaData["schemaFiles"]);
+                $untrackedSchema    = array_diff($schemaData["schemaFiles"], $schemaData["trackedFiles"]);
+
                 if($totalTracked > 0){
                     foreach ($schemaData["trackedFiles"] as $key => $value) {
                         $name = str_replace(".sql", "", $value);
+
                         if(!$this->resetStatus($name)){//has not been reset
-                            $state =  $this->resetSchema($name, $rebuild);
+
+                            $state =  $this->resetSchema($name, null, $rebuild);
+
                             if($state["status"]){
                                 if($state["code"] == "r2"){
                                     $this->success(["The schema: '{$name}' has been reset and built successfully", "",""], false);
@@ -978,7 +1038,7 @@ class Console extends CLIColors{
                                 }
                             }
                         }else{//reset already
-                            $this->warning(["The schema : '{$name}' has already been reset ","",""]);
+                            $this->warning(["The schema : '{$name}' has already been reset","",""]);
                         }
                     }
                 }else{
@@ -986,14 +1046,17 @@ class Console extends CLIColors{
                 }
                
 
-                $totalMissing = count($missingSchema);
+                $totalMissing   = count($missingSchema);
                 $totalUntracked = count($untrackedSchema);
+
                 if($totalMissing > 0){
                     $this->warning(["The schema ".pluralizer("file","s:-1", $totalMissing).": '".implode(", ",$missingSchema)."' ".pluralizer("is","are", $totalMissing)." missing, if you deleted ".pluralizer("it","them", $totalMissing)." manually, clear ".pluralizer("it","each", $totalMissing)." from tracker by using the:", " untrack:schema ", "command"]);
                 }
+
                 if($totalUntracked > 0){
                     $this->warning(["The schema ".pluralizer("file","s:-1", $totalUntracked).": '".implode(", ",$untrackedSchema)."' ".pluralizer("is","are", $totalUntracked)." untracked, if you added ".pluralizer("it","them", $totalUntracked)." manually, add ".pluralizer("it","each", $totalUntracked)." to tracker by using the:", " track:schema | build:schema -new ", "command"]);
                 }
+
                 $answered = true;
             }else{
                 $answered = true; 
@@ -1003,37 +1066,35 @@ class Console extends CLIColors{
     }
     private function untrackSchema($name){
         $sql = "DELETE FROM `zlight_schema_track` WHERE `schema_name` = '{$name}'";
-        return $this->appConfig->db->run($sql);
+        return $this->configs->db->run($sql);
     }
     private function trackSchema($name, $tableName){
         $sql = "INSERT INTO `zlight_schema_track` SET `build` = '0', `schema_name` = '{$name}', `table_name` = '{$tableName}'";
-        return $this->appConfig->db->run($sql);
+        return $this->configs->db->run($sql);
     }
     private function setupCheck(){
-        $trackState = $this->appConfig->db->tableExist("zlight_schema_track");
-        if($trackState["rowCount"] == 0){// create track table
-            $this->createTrackTable();
+        if ($this->app->pingDatabaseServer()["status"]){
+            $this->databaseCheck($this->dbInfo["db"]);
+            $trackState = $this->configs->db->tableExist("zlight_schema_track");
+            if($trackState["rowCount"] == 0){// create track table
+                $this->createTrackTable();
+            }
         }
     }
     // Schema ends
 
+
     // Database starts
-    private function setDbInit(){
-        $updateEnvFileContent = $this->getEnvFile("true");
-        return $this->executeWrite(".env", $updateEnvFileContent);
-    }
-    private function databaseInitCheck($name){
-        if($this->dbInfo["isDatabaseApp"]){
-            if(!$this->databaseExist($name)){
-                $msg = $this->getMargin(105)."\n";
-                $msg .= "  Database initialization has not been executed. Please run the command: ";
-                $this->write($msg, "white", "red");
-                $msg = "php zlight initialize:database  \n";
-                $this->write($msg, "yellow", "red");
-                $msg = $msg = $this->getMargin(105)."\n";
-                $this->write($msg, "white", "red");
-                die;
-            }
+    private function databaseCheck($name){
+        if(!$this->databaseExist($name)){
+            $msg = $this->getMargin(105)."\n";
+            $msg .= "  Database initialization has not been executed. Please run the command: ";
+            $this->write($msg, "white", "red");
+            $msg = "php zlight initialize:database  \n";
+            $this->write($msg, "yellow", "red");
+            $msg = $msg = $this->getMargin(105)."\n";
+            $this->write($msg, "white", "red");
+            die;
         }
     }
     private function databaseExist($name){
@@ -1041,39 +1102,44 @@ class Console extends CLIColors{
             return false;
         }else{
             $sql = "SHOW DATABASES LIKE '{$name}'";
-            $run = $this->appConfig->xDB->run($sql);
-            return $run["rowCount"] > 0;
+            $run = $this->configs->pdo->query($sql);
+            return $run->rowCount() > 0;
         }
     }
     private function executeCreateDb($name){
         $sql = "CREATE DATABASE `{$name}`";
-        $run = $this->appConfig->db->run($sql);
-        return $run["rowCount"] > 0;
+        $run = $this->configs->pdo->query($sql);
+        return $run->rowCount() > 0;
     }
-    private function createDatabase($name){
+    private function createDatabase(){
+        $name = ucwords($this->argv[2]);
+  
         if(!$this->validate("name", $name)){
             $this->error(["The supplied database name '{$name}' is invalid. Please specify a valid name", "", ""]);
         }
 
         $exist = $this->databaseExist($name);
-        
+  
         if(!$exist){ // create it
-            $createDb = $this->executeCreateDb($name);
-            if($createDb){
-                $this->success(["The database :", $name, " has been created successfully"]);
-            }else{
-                $this->error(["Error encountered while creating the database: '{$name}'", "", ""]);
+            
+            if(env("DB_DATABASE") == $name){ //Already set
+                $this->warning(["The database: ", "'{$name}'", "is already set"]);
+            }else{ //new database name
+                $createDb = $this->executeCreateDb($name);
+                if($createDb){
+                    $this->success(["The database:", $name, " has been created successfully"]);
+                }else{
+                    $this->error(["Error encountered while creating the database: ", "'{$name}'", ""]);
+                }
             }
         }else{
-            $this->error(["The database '{$name}' already exist", "", ""]);
+            $this->error(["The database ", "'{$name}'", "already exist"]);
         }
     }
-    private function getDBConfigFile($env, $writes, $info){
+    private function getDBConfigFile($writes, $info){
         //file line starts from 0
-        $file       = "config/dBDetails.php";
+        $file       = $this->configs->envFile;
         $contents   = "";
-        $started    = false;
-        $ended      = false;
         $fileHandler = fopen($file, "r");
         $sets = [
             "pass" => [
@@ -1110,77 +1176,74 @@ class Console extends CLIColors{
 
         while(!feof($fileHandler)){
             $line = fgets($fileHandler);
-            if(!$started){
-                if(substr_count($line,  $env) > 0){
-                    $started = true;
-                }
-            }
-
-            if($started && !$ended){
-                if(strpos($line, '$user') != false){//user
-                    if($sets["user"]["set"] && !$sets["user"]["status"]){
-                        $contents .= str_replace($info["user"]["old"], $info["user"]["new"], $line, $count);
-                        if($count > 0){
-                            $lastValues["user"] = $info["user"]["new"];
-                            $sets["user"]["status"] = true;
-                            array_push($updates, "user");
-                        } 
-                    }else{
-                        $contents .= $line;
-                    }
-                }else if(strpos($line, '$db') != false){//database
-                    if($sets["database"]["set"] && !$sets["database"]["status"]){
-                        $contents .= str_replace($oldDatabase , $newDatabase , $line, $count);
-                        if($count > 0){
-                            $lastValues["database"] = $info["database"]["new"];
-                            $sets["database"]["status"] = true;
-                            array_push($updates, "database");
-                        } 
-                    }else{
-                        $contents .= $line;
-                    }   
-                }else if(strpos($line, '$pass') != false){//password
-                    if($sets["pass"]["set"] && !$sets["pass"]["status"]){
-                        $contents .= str_replace($oldPassword, $newPassword, $line, $count);
-                        if($count > 0){
-                           $lastValues["pass"] = $info["pass"]["new"];
-                           $sets["pass"]["status"] = true; 
-                           array_push($updates, "pass");
-                        } 
-                    }else{
-                        $contents .= $line;
-                    }   
+   
+            if(strpos($line, 'DB_USER') > -1){//user
+                if($sets["user"]["set"] && !$sets["user"]["status"]){
+                    $contents .= str_replace($info["user"]["old"], $info["user"]["new"], $line, $count);
+                    if($count > 0){
+                        $lastValues["user"] = $info["user"]["new"];
+                        $sets["user"]["status"] = true;
+                        array_push($updates, "user");
+                        addEnv("DB_USER", $info["user"]["new"]);
+                    } 
                 }else{
                     $contents .= $line;
-                }  
-                if(substr_count($line,  "break") > 0) $ended = true;
-            }else{
+                }
+            }else if(strpos($line, 'DB_DATABASE') > -1){//database
+                if($sets["database"]["set"] && !$sets["database"]["status"]){
+                    $contents .= str_replace($oldDatabase , $newDatabase , $line, $count);
+                    if($count > 0){
+                        $lastValues["database"] = $info["database"]["new"];
+                        $sets["database"]["status"] = true;
+                        array_push($updates, "database");
+                        addEnv("DB_DATABASE", $info["database"]["new"]);
+                    } 
+                }else{
+                    $contents .= $line;
+                }   
+            }else if(strpos($line, 'DB_PASSWORD') > -1){//password
+                if($sets["pass"]["set"] && !$sets["pass"]["status"]){
+                    $contents .= str_replace($oldPassword, $newPassword, $line, $count);
+                    if($count > 0){
+                        $lastValues["pass"] = $info["pass"]["new"];
+                        $sets["pass"]["status"] = true; 
+                        array_push($updates, "pass");
+                        addEnv("DB_PASSWORD", $info["pass"]["new"]);
+                    } 
+                }else{
+                    $contents .= $line;
+                }   
+            }else if(strpos($line, 'DB_CHARSET') > -1){//Database charater set
                 if($sets["charset"]["set"] && !$sets["charset"]["status"]){
                     $contents .= str_replace($oldCharset, $newCharset, $line, $count);
                     if($count > 0){
                         $lastValues["charset"] = $info["charset"]["new"];
                         $sets["charset"]["status"] = true;
                         array_push($updates, "charset");
+                        addEnv("DB_CHARSET", $info["charset"]["new"]);
                     } 
                 }else{
                     $contents .= $line;
                 } 
-            }            
+            }else{
+                $contents .= $line;
+            }  
         }
-        
+
         fclose($fileHandler);
+
         return [
             "updates"   => count($updates),
             "contents"  => $contents,
             "values"    => $lastValues
         ];
     }
-    private function writeDatabaseInfo($env, $writes, $info){
-       $newDbInfoContent =  $this->getDBConfigFile($env, $writes, $info);
+    private function writeDatabaseInfo($writes, $info){
+       $newDbInfoContent =  $this->getDBConfigFile($writes, $info);
        if($newDbInfoContent["updates"] == count($writes)){ //content updated for writing
             //write
-            $dbConfigFile = "config/dBDetails.php";
-            if($this->executeWrite($dbConfigFile, $newDbInfoContent["contents"])){
+
+            if($this->executeWrite($this->configs->envFile, $newDbInfoContent["contents"])){
                 return[
                     "status" => true,
                     "values" => $newDbInfoContent["values"]
@@ -1198,35 +1261,33 @@ class Console extends CLIColors{
            ];
        }
     }
-    private function validateDBPassword($dbInfo, $user=null, $password=null){
+    private function validateDBPassword($host, $user, $password){
         try {
-            $password = $password != null?$password:$dbInfo["pass"];
-            $user = $user != null?$user:$dbInfo["user"];
-
-            $xdsn = "mysql:host={$dbInfo["host"]}";
+            $xdsn = "mysql:host={$host}";
             $opt = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES   => false
             ];
-            $xPdo = new PDO($xdsn, $user, $password, $opt);	
+            new PDO($xdsn, $user, $password, $opt);	
             return true;
         } catch (\Throwable $th) {
             return false;
         }
     }
     private function pcd(){
-        $dbFile = require("config/dbDetails.php");
-        $this->info(["Your current database is: ",$dbFile["db"],""]);
+        $this->info(["Your current database is: ",env("DB_DATABASE"),""]);
     }
     // Database ends
+
 
     //Commands
     private function startServer(){
         //get port
         $serverCommand = $this->getAction($this->argv[1]);
-        if(array_key_exists("action", $serverCommand)){
-            $port = explode("@", $serverCommand["action"]);
+
+        if(array_key_exists("object", $serverCommand)){
+            $port = explode("@", $serverCommand["object"]);
             $total = count($port);
             if($total < 2 || $total > 2 ){
                 $this->error(["Specify server port using : " ,"@portNumber"," example: shine:@3000"]);
@@ -1247,17 +1308,18 @@ class Console extends CLIColors{
         
 
         $command = "php -S localhost:".$port[1]." -t public/";
-        $output = shell_exec("php -v");  //Check if php path exist      
+        $output = shell_exec("php -v");  //Check if php path exist     
+
         if ($output != ""){
-            $this->write("ZLight App ".$this->appConfig->appName." started at 127.0.0.1:".$port[1]."\n", "green", "black");
-            $this->write("Press ".$this->color("Ctrl + C", "yellow", "black"). " to shutdown server\n", "green", "black");
+            $this->write("ZLight App ".$this->configs->appName." started at 127.0.0.1:".$port[1]."\n", "green", "black");
+            $this->write($this->color("Press ", "blue", "black").$this->color("Ctrl + C", "yellow", "black"). $this->color(" to shutdown server\n", "blue", "black"), "green", "black");
             shell_exec($command);
         }
     }
-    private function build($action){
+    private function build($object){
         //Action name must only be alphabets
         
-        switch (strtolower($action)) {
+        switch (strtolower($object)) {
             case 'schema':
                 //track setup
                 $this->setupCheck();
@@ -1305,8 +1367,8 @@ class Console extends CLIColors{
                 break;
         }
     }
-    private function reset($action){
-        switch (strtolower($action)) {
+    private function reset($object){
+        switch (strtolower($object)) {
             case 'schema':  
                 //track setup
                 $this->setupCheck();
@@ -1385,8 +1447,8 @@ class Console extends CLIColors{
                 break;
         }
     }
-    private function untrack($action){
-        switch (strtolower($action)) {
+    private function untrack($object){
+        switch (strtolower($object)) {
             case 'schema': 
                 //track setup
                 $this->setupCheck();
@@ -1430,8 +1492,8 @@ class Console extends CLIColors{
                 break;
         }     
     }
-    private function track($action){
-        switch (strtolower($action)) {
+    private function track($object){
+        switch (strtolower($object)) {
             case 'schema': 
                 //track setup
                 $this->setupCheck();
@@ -1445,12 +1507,13 @@ class Console extends CLIColors{
                 }
                 
                 $checkSchema = $this->getSchema($this->argv[2]);
+                
                 if($checkSchema["status"]){//schema exist, check if tracked before tracking
-                    $isTracked = $this->trackStatus($this->argv[2]);
+                    $isTracked = $this->trackStatus($this->argv[2], $checkSchema["tableName"]);
                     if(!$isTracked){
                         $trackSchema = $this->trackSchema($this->argv[2], $checkSchema["tableName"]);
                         if($trackSchema["status"] && $trackSchema["rowCount"] > 0){//tracked successfuly
-                            $this->success(["The schema: '{$this->argv[2]}' has been tracked successfully. Run the ", "build:schema {$this->argv[2]}"," to build the schema"], false);
+                            $this->success(["The schema: '{$this->argv[2]}' has been tracked successfully. Run the command: ", "build:schema {$this->argv[2]}"," to build the schema"], false);
                         }else{
                             $this->error(["Error tracking the schema: '{$this->argv[2]}'", "",""], false);
                         }
@@ -1463,8 +1526,8 @@ class Console extends CLIColors{
                 break;
         }
     }
-    private function delete($action){
-        switch (strtolower($action)) {
+    private function delete($object){
+        switch (strtolower($object)) {
             case 'schema':
                 //track setup
                 $this->setupCheck();
@@ -1478,6 +1541,7 @@ class Console extends CLIColors{
                 }
 
                 $checkSchema = $this->getSchema($this->argv[2]);
+                
                 if($checkSchema["status"]){//schema exist, delete
                     $answered = false;
                     while(!$answered){
@@ -1502,21 +1566,22 @@ class Console extends CLIColors{
             break;
         }
     }
-    private function create($action){
+    private function create($object){
+
         //check for new object name
         if(!isset($this->argv[2])){
-            $this->error(["Please specify the ", $action, " name"]);
+            $this->error(["Please specify the ", $object, " name"]);
         }
 
-        if($action != "database"){
+        if($object != "db"){
             //name must only be alphabets
             if(!$this->validate("alpha", $this->argv[2])){
-                $label = strtolower($action) == "schema"?"schema":$this->argv[2];
+                $label = strtolower($object) == "schema"?"schema":$this->argv[2];
                 $this->error(["The ".ucwords($label)." name must be alphabets only, the name: ", $this->argv[2], " is not all alphabets"]);
             }
         }
        
-        switch (strtolower($action)) {
+        switch (strtolower($object)) {
             case 'controller':
                 $this->buildTemplate("controller");
                 break;
@@ -1534,20 +1599,30 @@ class Console extends CLIColors{
                 break;
             case 'schema':
                 // php zlight create:schema schemaName [DDSType] tableName
-                $this->buildTemplate("schema");
+                if ($this->dbInfo["isDBApp"]){
+                    $this->buildTemplate("schema");
+                }else{
+                    $this->warning(["'DB_APP' config is not set to: ", "true", " in the ".$this->configs->envFile]);
+                }
+                
                 break;
-            case 'database':
-                $this->createDatabase();
+            case 'db':
+                if ($this->dbInfo["isDBApp"]){
+                    $this->createDatabase();
+                }else{
+                    $this->warning(["'DB_APP' config is not set to: ", "true", " in the ".$this->configs->envFile]);
+                }
+                
                 break;
             default:
                 # code...
                 break;
         }
     }
-    private function initialize($action){
-        switch (strtolower($action)) {
-            case 'database': 
-                $databaseExist  = $this->databaseExist($this->dbInfo["db"]);
+    private function initialize($object){              
+        switch (strtolower($object)) {
+            case 'db': 
+
                 $parsedDbInfo     = [
                     "pass"      =>[
                         "old"   => $this->dbInfo["pass"],
@@ -1568,288 +1643,310 @@ class Console extends CLIColors{
                 ];
 
                 $writes     = [];
-                $setState   = false;
+                $charset    = false;
                 $env        = "";
-                if(!$databaseExist){//Not exist
-                    //Environment
-                    $environments = ["dev", "test", "production"];  
-                    
-           
-                    $read = false;
-                    while(!$read){
-                        $prompt = $this->color("Please select the environment to be initialized:\n\t1.Development\n\t2.Testing\n\t3.Production\n\nYour current environment is: '".ENVIRONMENT, "green", "black");
-                        $input  = $this->readLine($prompt);  
-                        if(!($input <= 3 && $input > 0)){
-                            $this->error(["Please use the range 1 - 3 to select the environment. You supplied '{$input}' which is not in the range", "", " Please make a valid a selection"], false);
-                        }else{
-                            $read = true;
-                        }
+                $auth       = [];
+
+                
+                //Environment
+                $environments = ["development", "testing", "production"];  
+                
+    
+                $read = false;
+                while(!$read){
+                    $prompt = $this->color("Please select the environment to be initialized:\n\t1.Development\n\t2.Testing\n\t3.Production\n\nYour current environment is: '".env("ENVIRONMENT")."'", "green", "black");
+                    $input  = $this->readLine($prompt);  
+                    if(!($input <= 3 && $input > 0)){
+                        $this->error(["Please use the range 1 - 3 to select the environment. You supplied '{$input}' which is not in the range", "", " Please make a valid a selection"], false);
+                    }else{
+                        $read = true;
                     }
-                    $env = $environments[$input-1];
-                    
-                    
-                    //Database user
+                }
+
+                $env = $environments[$input-1];
+                
+                
+                //Database user
+                $answered = false;
+                while(!$answered){
+                    $msg = "Your database username is set to: '{$this->dbInfo["user"]}'. Do you want to use this set username? Y or N";
+                    $prompt = $this->color($msg, "green", "black");
+                    $input  = $this->readLine($prompt);  
+                    $input  = strtolower($input);
+                    if($input != "n" && $input != "y"){
+                        echo "Please press 'Y' for yes and 'N' for no\n";
+                        continue;
+                    } 
+                    if($input == "n"){//
+                        //Ask for new database user
+                        $read = false;
+                        while(!$read){
+                            $prompt2    = $this->color("Please type in the database username you would like to use (Alphanumeric only)", "green", "black");
+                            $input2     = $this->readLine($prompt2);  
+                            if(!$this->validate("alphaNum", $input2)){
+                                $this->error(["Database username must be alphanumeric only. The supllied database username '{$input2}' is not all alphanumeric.", "", " Please provide a valid name"], false);
+                                echo "\n";
+                                continue;
+                            }else{
+                                $read = true;
+                            }
+                        }
+                        
+                        $parsedDbInfo["user"]["new"] = $input2;
+                        $auth["user"] = $input2;
+                        array_push($writes, "user");
+                    }else{
+                        $auth["user"] = $this->dbInfo["user"];
+                    }
+                    $answered     = true;
+                }
+                                        
+                //Database
+                if(strlen($this->dbInfo["db"]) > 0){//has database set
                     $answered = false;
                     while(!$answered){
-                        $msg = "Your database username is set to: '{$this->dbInfo["user"]}'. Do you want to use this set username? Y or N";
-                        $prompt = $this->color($msg, "green", "black");
-                        $input  = $this->readLine($prompt);  
-                        $input  = strtolower($input);
+                        $prompt = $this->color("Your database is set to: '{$this->dbInfo["db"]}'. Do you want to use this set database? Y or N ", "green", "black");
+                        $input  = strtolower($this->readLine($prompt));  
                         if($input != "n" && $input != "y"){
                             echo "Please press 'Y' for yes and 'N' for no\n";
                             continue;
                         } 
+
                         if($input == "n"){//
-                            //Ask for new database user
+                            //Ask for new database
                             $read = false;
                             while(!$read){
-                                $prompt2    = $this->color("Please type in the database username you would like to use (Alphanumeric only)", "green", "black");
+                                $prompt2    = $this->color("Please type in the database name you would like to use (Alphanumeric, including ['-','_'])", "green", "black");
                                 $input2     = $this->readLine($prompt2);  
-                                if(!$this->validate("alphaNum", $input2)){
-                                    $this->error(["Database username must be alphanumeric only. The supllied database username '{$input2}' is not all alphanumeric.", "", " Please provide a valid name"], false);
+                                
+                                if(!$this->validate("name", $input2)){
+                                    $this->error(["Database name must be alphanumeric including the characters['-','_']. The supllied database name '{$input2}' contains invalid character(s).", "", " Please provide a valid name"], false);
                                     echo "\n";
                                     continue;
                                 }else{
                                     $read = true;
                                 }
                             }
-                            
-                            $parsedDbInfo["user"]["new"] = $input2;
-                            array_push($writes, "user");
-                        }
-                        $answered     = true;
-                    }
-                                              
-                    //Database
-                    if(strlen($this->dbInfo["db"]) > 0){//has database set
-                        $answered = false;
-                        while(!$answered){
-                            $prompt = $this->color("Your database is set to: '{$this->dbInfo["db"]}'. Do you want to use this set database? Y or N ", "green", "black");
-                            $input  = strtolower($this->readLine($prompt));  
-                            if($input != "n" && $input != "y"){
-                                echo "Please press 'Y' for yes and 'N' for no\n";
-                                continue;
-                            } 
-
-                            if($input == "n"){//
-                                //Ask for new database user
-                                $read = false;
-                                while(!$read){
-                                    $prompt2    = $this->color("Please type in the database name you would like to use (Alphanumeric, including ['-','_'])", "green", "black");
-                                    $input2     = $this->readLine($prompt2);  
-                                    
-                                    if(!$this->validate("name", $input2)){
-                                        $this->error(["Database name must be alphanumeric including the characters['-','_']. The supllied database name '{$input2}' contains invalid character(s).", "", " Please provide a valid name"], false);
-                                        echo "\n";
-                                        continue;
-                                    }else{
-                                        $read = true;
-                                    }
-                                }
-                        
-                                $parsedDbInfo["database"]["new"] = $input2;
-                                array_push($writes, "database");
-                            }
-                            $answered = true;
-                        }
-                    }else{
-                        //Ask for new database
-                        $read = false;
-                        while(!$read){
-                            $prompt     = $this->color("No database is set. Would you like to set the database to work with? Y or N", "green", "black");
-                            $input      = strtolower($this->readLine($prompt));  
-                            if($input != "n" && $input != "y"){
-                                echo "Please press 'Y' for yes and 'N' for no\n";
-                                continue;
-                            } 
-
-                            if($input == "y"){
-                                $subRead = false;
-                                while(!$subRead){
-                                    $prompt2    = $this->color("Please type in the database name you would like to use (Alphanumeric, including ['-','_']): ", "green", "black");
-                                    $input2     = $this->readLine($prompt2);  
-                                    if(!$this->validate("name", $input2)){
-                                        $this->error(["Database name must be alphanumeric including the characters['-','_']. The supllied database name '{$input2}' contains invalid character(s).", "", " Please provide a valid name"], false);
-                                        echo "\n";
-                                        continue;
-                                    }else{
-                                        $parsedDbInfo["database"]["new"] = $input2;
-                                        array_push($writes, "database");
-                                        $subRead  = true;
-                                    }
-                                }
-                            }else{
-                                echo "You have not specified the database to be initialized.\n";
-                                continue;
-                            }
-                            $read = true;
-                        }
-                    }
                     
-                    //Password
-                    if(strlen($this->dbInfo["pass"]) > 0){//has database password set
-                        $answered = false;
-                        while(!$answered){
-                            $prompt = $this->color("Your database password is set to: '{$this->dbInfo["pass"]}'. Do you want to use this set password? Y or N", "green", "black");
-                            $input  = strtolower($this->readLine($prompt)); 
-                            if($input != "n" && $input != "y"){
-                                echo "Please press 'Y' for yes and 'N' for no\n";
-                                continue;
-                            } 
-                            
-                            if($input == "n"){//
-                                //Ask for new database password
-                                $read = false;
-                                while(!$read){
-                                    $prompt2    = $this->color("Please type in the database password you would like to use", "green", "black");
-                                    $input2     = $this->readLine($prompt2); 
-
-                                    if(strlen($input2) < 1){
-                                        $this->error(["You provided an empty password", "", ""], false);
-                                        echo "\n";
-                                        continue;
-                                    }
-                                    $parsedDbInfo["pass"]["new"] = $input2;
-                                    array_push($writes,"pass");
-                                    $read = true;
-                                }
-                            }
-                            $answered = true;
+                            $parsedDbInfo["database"]["new"] = $input2;
+                            $auth["database"] = $input2;
+                            array_push($writes, "database");
+                        }else{
+                            $auth["database"] = $this->dbInfo["db"];
                         }
-                    }else{
-                        //Ask for new database user password
-                        $read = false;
-                        while(!$read){
-                            $prompt    = $this->color("No database password is set. Would you like to set password for database? Y or N", "green", "black");
-                            $input  = strtolower($this->readLine($prompt));  
-                            if($input != "n" && $input != "y"){
-                                echo "Please press 'Y' for yes and 'N' for no\n";
-                                continue;
-                            } 
-
-                            if($input == "y"){
-                                $subRead = false;
-                                while(!$subRead){
-                                    $prompt2    = $this->color("Please type in the database password you would like to use", "green", "black");
-                                    $input2     = $this->readLine($prompt2); 
-
-                                    if(strlen($input2) < 1){
-                                        $this->error(["You provided an empty password", "", " Press 'C' to skip"], false);
-                                        echo "\n";
-                                        continue;
-                                    }
-
-                                    if(strtolower($input2) == "c"){
-                                        $subRead = true;
-                                        continue;
-                                    }
-
-
-                                    //validate password
-                                    if(!$this->validateDBPassword($this->dbInfo["user"], $input2)){
-                                        $this->error(["The password '{$input2}' is incorrect for the user '{$this->dbInfo["user"]}'. Try again", "", ""], false);
-                                        continue;
-                                    };
-
-                                    $parsedDbInfo["pass"]["new"] = $input2;
-                                    array_push($writes,"pass");
-                                    $subRead = true;
-                                }
-                            }
-                            $read = true;
-                        }
+                        $answered = true;
                     }
+                }else{
+                    //Ask for new database
+                    $read = false;
+                    while(!$read){
+                        $prompt     = $this->color("No database is set. Would you like to set the database to work with? Y or N", "green", "black");
+                        $input      = strtolower($this->readLine($prompt));  
+                        if($input != "n" && $input != "y"){
+                            echo "Please press 'Y' for yes and 'N' for no\n";
+                            continue;
+                        } 
 
-                    //Character set
-                    if(strlen($this->dbInfo["charset"]) > 0){//has database character-set set
-                        $answered = false;
-                        while(!$answered){
-                            $prompt = $this->color("Your database character set is set to: '{$this->dbInfo["charset"]}'. Do you want to use this character set? Y or N", "green", "black");
-                            $input  = strtolower($this->readLine($prompt)); 
+                        if($input == "y"){
+                            $subRead = false;
+                            while(!$subRead){
+                                $prompt2    = $this->color("Please type in the database name you would like to use (Alphanumeric, including ['-','_']): ", "green", "black");
+                                $input2     = $this->readLine($prompt2);  
+                                if(!$this->validate("name", $input2)){
+                                    $this->error(["Database name must be alphanumeric including the characters['-','_']. The supllied database name '{$input2}' contains invalid character(s).", "", " Please provide a valid name"], false);
+                                    echo "\n";
+                                    continue;
+                                }else{
+                                    $parsedDbInfo["database"]["new"] = $input2;
+                                    $auth["database"] = $input2;
+                                    array_push($writes, "database");
+                                    $subRead  = true;
+                                }
+                            }
+                        }else{
+                            echo "You have not specified the database to be initialized.\n";
+                            continue;
+                        }
+                        $read = true;
+                    }
+                }
+                
+                //Password
+                if(strlen($this->dbInfo["pass"]) > 0){//has database password set
+                    $answered = false;
+                    while(!$answered){
+                        $prompt = $this->color("Your database password is set to: '{$this->dbInfo["pass"]}'. Do you want to use this set password? Y or N", "green", "black");
+                        $input  = strtolower($this->readLine($prompt)); 
+                        if($input != "n" && $input != "y"){
+                            echo "Please press 'Y' for yes and 'N' for no\n";
+                            continue;
+                        } 
+                        
+                        if($input == "n"){//
+                            //Ask for new database password
+                            $read = false;
+                            while(!$read){
+                                $prompt2    = $this->color("Please type in the database password you would like to use", "green", "black");
+                                $input2     = $this->readLine($prompt2); 
 
-                            if($input != "n" && $input != "y"){
-                                echo "Please press 'Y' for yes and 'N' for no\n";
-                                continue;
-                            } 
-
-                            if($input == "n"){//
-                                //Ask for new database character set
-                                $prompt2        = $this->color("Please type in the database character set you would like to use", "green", "black");
-                                $input2         = $this->readLine($prompt2);
                                 if(strlen($input2) < 1){
-                                    $this->error(["You provided an empty character set", "", ""], false);
+                                    $this->error(["You provided an empty password", "", ""], false);
                                     echo "\n";
                                     continue;
                                 }
-                                $parsedDbInfo["charset"]["new"] = $input2;
-                                array_push($writes, "charset");
+                                $parsedDbInfo["pass"]["new"] = $input2;
+                                $auth["password"] = $input2;
+                                array_push($writes,"pass");
+                                $read = true;
                             }
-                            $answered = true;
+                        }else{
+                            $auth["password"] = $this->dbInfo["pass"];
                         }
-                    }else{//No character-set set
-                        //Ask for new database character set
-                        $read = false;
-                        while(!$read){
-                            $prompt    = $this->color("No database character set is set. Would you like to set one now? Y or N", "green", "black");
-                            $input  = strtolower($this->readLine($prompt));  
-                            if($input != "n" && $input != "y"){
-                                echo "Please press 'Y' for yes and 'N' for no\n";
+                        $answered = true;
+                    }
+                }else{
+                    //Ask for new database user password
+                    $read = false;
+                    while(!$read){
+                        $prompt    = $this->color("No database password is set. Would you like to set password for database? Y or N", "green", "black");
+                        $input  = strtolower($this->readLine($prompt));  
+                        if($input != "n" && $input != "y"){
+                            echo "Please press 'Y' for yes and 'N' for no\n";
+                            continue;
+                        } 
+
+                        if($input == "y"){
+                            $subRead = false;
+                            while(!$subRead){
+                                $prompt2    = $this->color("Please type in the database password you would like to use", "green", "black");
+                                $input2     = $this->readLine($prompt2); 
+
+                                if(strlen($input2) < 1){
+                                    $this->error(["You provided an empty password", "", " Press 'C' to skip"], false);
+                                    echo "\n";
+                                    continue;
+                                }
+
+                                if(strtolower($input2) == "c"){
+                                    $subRead = true;
+                                    continue;
+                                }
+
+
+                                //validate password
+                                if(!$this->validateDBPassword(env("DB_HOST"), $auth["user"], $input2)){
+                                    $this->error(["The password '{$input2}' is incorrect for the user '{$auth["user"]}'. Try again", "", ""], false);
+                                    continue;
+                                };
+
+                                $parsedDbInfo["pass"]["new"] = $input2;
+                                array_push($writes,"pass");
+                                $subRead = true;
+                            }
+                        }else{
+                                //validate password
+                                if(!$this->validateDBPassword(env("DB_HOST"), $this->dbInfo["user"], "")){
+                                    $this->error(["Authentication has failed for the user '{$this->dbInfo["user"]}' with no password set. Please try again", "", ""], false);
+                                    continue;
+                                };
+                                $auth["password"] = $this->dbInfo["pass"];
+                        }
+                        $read = true;
+                    }
+                }
+
+                //Character set
+                if(strlen($this->dbInfo["charset"]) > 0){//has database character-set set
+                    $answered = false;
+                    while(!$answered){
+                        $prompt = $this->color("Your database character set is set to: '{$this->dbInfo["charset"]}'. Do you want to use this character set? Y or N", "green", "black");
+                        $input  = strtolower($this->readLine($prompt)); 
+
+                        if($input != "n" && $input != "y"){
+                            echo "Please press 'Y' for yes and 'N' for no\n";
+                            continue;
+                        } 
+
+                        if($input == "n"){//
+                            //Ask for new database character set
+                            $prompt2        = $this->color("Please type in the database character set you would like to use", "green", "black");
+                            $input2         = $this->readLine($prompt2);
+                            if(strlen($input2) < 1){
+                                $this->error(["You provided an empty character set", "", ""], false);
+                                echo "\n";
                                 continue;
                             }
-                            if($input == "y"){
-                                $subRead = false;
-                                while(!$subRead){
-                                    $prompt2    = $this->color(" Please type in the database character set to use : ", "green", "black");
-                                    $input2     = $this->readLine($prompt2); 
-
-                                    if(strlen($input2) < 1){
-                                        $this->error(["You provided an empty password", "", ""], false);
-                                        echo "\n";
-                                        continue;
-                                    }
-
-                                    $parsedDbInfo["charset"]["new"] = $input2;
-                                    array_push($writes,"charset");
-                                    $subRead = true;
-                                }
-                            }
-                            $read = true;
+                            $parsedDbInfo["charset"]["new"] = $input2;
+                            $charset = $input2;
+                            array_push($writes, "charset");
+                        }else{
+                            $charset = $this->dbInfo["charset"];
                         }
+                        $answered = true;
                     }
-                   
-                    $totalWrites = count($writes);
-                    if($totalWrites > 0){
-                        $write = $this->writeDatabaseInfo($env, $writes, $parsedDbInfo);
-                        if($write["status"]) $setState = true;
+                }else{//No character-set set
+                    //Ask for new database character set
+                    $read = false;
+                    while(!$read){
+                        $prompt    = $this->color("No database character set is set. Would you like to set one now? Y or N", "green", "black");
+                        $input  = strtolower($this->readLine($prompt));  
+                        if($input != "n" && $input != "y"){
+                            echo "Please press 'Y' for yes and 'N' for no\n";
+                            continue;
+                        }
+                        if($input == "y"){
+                            $subRead = false;
+                            while(!$subRead){
+                                $prompt2    = $this->color(" Please type in the database character set to use : ", "green", "black");
+                                $input2     = $this->readLine($prompt2); 
+
+                                if(strlen($input2) < 1){
+                                    $this->error(["You provided an empty password", "", ""], false);
+                                    echo "\n";
+                                    continue;
+                                }
+
+                                $parsedDbInfo["charset"]["new"] = $input2;
+                                $charset = $input2;
+                                array_push($writes,"charset");
+                                $subRead = true;
+                            }
+                        }
+                        $read = true;
                     }
-
-                    $db = $setState? $write["values"]["database"]:$this->dbInfo["db"];
-                    $user = $setState? $write["values"]["user"]:$this->dbInfo["user"];
-                    $pass = $setState? $write["values"]["pass"]:$this->dbInfo["pass"];
-                    $charset = $setState? $write["values"]["charset"]:$this->dbInfo["charset"];
-                    
-                
-                    $this->appConfig->xDB->run("CREATE DATABASE IF NOT EXISTS `{$write["values"]["database"]}`");
-                    
-                    
-
-                    $msg = "\nDatabase initiated successfuly. \n";                      
-                    $msg .= "\tDatabase                 = {$db}\n";
-                    $msg .= "\tDatabase username        = {$user}\n";
-                    $msg .= "\tDatabase password        = {$pass}\n";
-                    $msg .= "\tDatabase character set   = {$charset}\n";
-                    
-                    echo $msg;
-                    $this->setDbInit();                
-                }else{//Already initialized
-                    $this->warning(["Database has been initialized and set to '{$this->dbInfo["db"]}' already. You can use the ", "create:database ", "command to create another database, if needed"]);
                 }
+            
+      
+                if(count($writes) > 0) $this->writeDatabaseInfo($writes, $parsedDbInfo);
+            
+
+                $db         = $auth["database"];
+                $user       = $auth["user"];
+                $pass       = $auth["password"];
+                
+                $databaseExist  = $this->databaseExist($this->dbInfo["db"]);
+            
+                $msg = "\nDatabase initialized successfuly. \n";  
+                
+                if(!$databaseExist){
+                    $this->configs->pdo->query("CREATE DATABASE IF NOT EXISTS `{$db}`");
+                    $msg .= "\tDatabase (New)\t\t = {$db}\n";
+                }else{
+                    $msg .= "\tDatabase (Existing)\t = {$db}\n";
+                }
+                                 
+                
+                $msg .= "\tDatabase username        = {$user}\n";
+                $msg .= "\tDatabase password        = {$pass}\n";
+                $msg .= "\tDatabase character set   = {$charset}\n";
+                
+                echo $msg;
             break;
         }
     }
-    private function use($action){
-        switch (strtolower($action)) {
-            case 'database': 
+    private function use($object){
+        switch (strtolower($object)) {
+            case 'db': 
                 if(!isset($this->argv[2])){
                     $this->error(["The Database name must be supplied, please supply the name of the database name to use", "", ""]);
                 } 
@@ -1877,12 +1974,17 @@ class Console extends CLIColors{
                         "new"   => null,
                     ],
                 ];
+                
                 if($exist){ // use it
-                    $parsedDbInfo["database"]["new"] = $name;
-                    $write = $this->writeDatabaseInfo(ENVIRONMENT, ["database"], $parsedDbInfo);
-                    if($write["status"]){
-                        $this->success(["The database '{$name}' has been set for use ","",""]);
-                        $answered =true;
+                    if($name == env("DB_DATABASE")){
+                        $this->warning(["The database: ", "'{$name}'", "is already set"]);
+                    }else{
+                        $parsedDbInfo["database"]["new"] = $name;
+                        $write = $this->writeDatabaseInfo(["database"], $parsedDbInfo);
+                        if($write["status"]){
+                            $this->success(["The database '{$name}' has been set for use ","",""]);
+                            $answered =true;
+                        }
                     }
                 }else{// not exist
                     $answered = false;
@@ -1897,7 +1999,7 @@ class Console extends CLIColors{
                             $createDb = $this->executeCreateDb($name);
                             if($createDb){
                                 $parsedDbInfo["database"]["new"] = $name;
-                                $write = $this->writeDatabaseInfo(ENVIRONMENT, ["database"], $parsedDbInfo);
+                                $write = $this->writeDatabaseInfo(["database"], $parsedDbInfo);
                                 if($write["status"]){
                                     $this->success(["The database '{$name}' has been created and set for use ","",""]);
                                     $answered =true;
@@ -1911,15 +2013,15 @@ class Console extends CLIColors{
             break;
         }
     }
-    private function current($action){
-        switch (strtolower($action)) {
-            case 'database': 
+    private function current($object){
+        switch (strtolower($object)) {
+            case 'db': 
                 $this->pcd();
             break;
         }
     }
-    private function export($action){
-        switch (strtolower($action)) {
+    private function export($object){
+        switch (strtolower($object)) {
             case 'data': 
                 if(!isset($this->argv[2])){
                     $this->error(["The name of the table to be exported must be supplied, please supply the name of the table.", "", ""]);
@@ -1930,16 +2032,19 @@ class Console extends CLIColors{
                 }
 
                 //check if table exist
-
-                $exist = $this->appConfig->db->tableExist($name);
+                $exist = $this->configs->db->tableExist($name);
                 if($exist["rowCount"] > 0){//export
+                    
                     $exportData = $this->exportData($name);
-                    $file = $this->appConfig->dataDir."/".$name.$this->appConfig->dataFileSuffix.".zld";
+
+                    $file = $this->configs->dataDir."/".$name.$this->configs->dataFileSuffix.".zld.sql";
+                   
                     if($exportData["status"]){
-                        $this->success([$exportData["total"]."/".$exportData["total"] . pluralizer(" record", "s:-1",$exportData["total"])." ".pluralizer("has", "have", $exportData["total"])." been exported to the data file ", $file, ""]);
+                        $this->success([$exportData["total"]. pluralizer(" record", "s:-1",$exportData["total"])." ".pluralizer("has", "have", $exportData["total"])." been exported to the data file ", $file, ""]);
                     }else{
                         $this->warning(["The table '{$name}' is empty, no data to export", "", ""]);
                     }
+
                 }else{//no table found
                     $this->error(["The table ", $name, " does not exist"]);
                 }
@@ -1947,37 +2052,49 @@ class Console extends CLIColors{
             break;
         }
     }
-    private function import($action){
-        switch (strtolower($action)) {
+    private function import($object){//from project to database
+        switch (strtolower($object)) {
             case 'data': 
                 if(!isset($this->argv[2])){
                     $this->error(["The name of the table to be filled with data must be supplied, please supply the name of the table.", "", ""]);
                 } 
-                $name = $this->argv[2];
-                if(!$this->validate("name", $name)){
-                    $this->error(["The supplied table name '{$name}' is invalid. Please specify a valid name", "", ""]);
+
+                $names          = $this->argv[2];
+
+                $allDataFiles   = explode(",", $names);
+
+                $parsedFiles    = []; 
+
+                foreach ($allDataFiles as $dataFileName) {
+                    $dataFileName = trim($dataFileName);
+                    
+                    if(!$this->validate("name", $dataFileName)){
+                        $this->error(["The supplied data file name '{$dataFileName}' is invalid. Please specify a valid name", "", ""]);
+                    }
+
+                    //Check if datafile for table exist
+                    $dataFile = $this->configs->dataDir."/".$dataFileName.$this->configs->dataFileSuffix.".zld.sql";
+                    if(!file_exists($dataFile)){
+                        $this->error(["The Data file ", $dataFile, " not found"]);
+                    }
+
+                    array_push($parsedFiles, $dataFile);
                 }
 
-                //Check if datafile for table exist
-                $dataFile = $this->appConfig->dataDir."/".$name.$this->appConfig->dataFileSuffix.".zld";
-                if(!file_exists($dataFile)){
-                    $this->error(["Data file for the table ", $name, " not found"]);
-                }
                 
-                //check if table exist
-                $tableExist = $this->appConfig->db->tableExist($name);
-                
+                //Begin importing
 
-                if($tableExist["rowCount"] > 0){//import
-                    $importData = $this->importData($name);
+                foreach ($parsedFiles as $parsedFile) {
+                    $importData = $this->importData($parsedFile);
 
-                    // if($exportData["status"]){
-                    //     $this->success([$exportData["total"]."/".$exportData["total"] . pluralizer(" record", "s:-1",$exportData["total"])." ".pluralizer("has", "been", $exportData["total"])." exported to the data file ", $this->appConfig->dataDir."/".$name.$this->appConfig->dataFileSuffix, ""]);
-                    // }else{
-                    //     $this->warning(["The table '{$name}' is empty, no data to export", "", ""]);
-                    // }
-                }else{//no table found
-                    $this->error(["The table ", $name, " does not exist"]);
+                    if($importData["code"] == "c0"){//imported
+                        $this->success([$importData["totalInserted"]." ".pluralizer("record", "s:-1", $importData["totalInserted"])." ".pluralizer("has", "have", $importData["totalInserted"])." been imported succefully to the table: ","","'".$importData["tableName"]."'"], false);
+                    }else if($importData["code"] == "c1") {//no table found
+                        $this->error(["The table ", $importData["tableName"], " does not exist"], false);
+                    }else if($importData["code"] == "c2"){
+                        $this->error(["Error occured during data importation","",""], false);
+                    }
+
                 }
 
             break;
