@@ -40,7 +40,6 @@ class App extends CLIColors{
         $db_pass	    = env("DB_PASSWORD");
         $db_charset	    = env("DB_CHARSET");
         $status         = false;
-        global $env;
 
         try {
             //Build connection strings
@@ -52,10 +51,25 @@ class App extends CLIColors{
 
             $dsn    = "mysql:host={$db_host};dbname={$db_db};charset={$db_charset}";
             $pdo 	= new PDO($dsn, $db_user, $db_pass, $opt);
-            $db 	= new DBAnt($pdo);            
-        }catch (\Throwable $th) {
+            $db 	= new DBAnt($pdo);   
 
-            
+        }catch (\Throwable $th) {
+            $errorMessage = $this->getErrorMessage(1045);
+            try {
+                $msg = $errorMessage["cli"];
+                if($this->env != "cli") $msg = $errorMessage["web"];
+                throw new Error($msg);
+            }catch(\Throwable $th) {
+                if($this->env != "cli"){
+                    trigger_error($th);
+                }else{
+                    echo "\n";
+                    $this->write($errorMessage["cli"], "light_red", "black");
+                    echo "\n";
+                    die();
+                }
+                die();
+            }
         }
 
         return [
@@ -142,7 +156,7 @@ class App extends CLIColors{
         ];
     }
 
-    private function getErrorMessage($errorNumber){
+    public function getErrorMessage($errorNumber){
         $wMsg=""; $cMsg="";
         if($errorNumber == 1045){
              //Web message
@@ -151,14 +165,14 @@ class App extends CLIColors{
              $wMsg .= "<br/>Database User = ".env("DB_USER")."<br/>";
              $wMsg .= "Database Password  = ".env("DB_PASSWORD")."<br/>";
              $wMsg .= "<br/><span style='color:black;'>Please go the config file '<span style='font-weight: bold;'>{$this->config->envFile}</span>' and supply the database details for the current environment</span>";
-             $wMsg .= "<br/><span style='color:black;'>Run the command when done: '<span style='font-weight: bold;'>php zlight initialize:database</span>'. This will guide you through a quick DB initialization</span>";
+             $wMsg .= "<br/><span style='color:black;'>Run the command when done: '<span style='font-weight: bold;'>php zlight initialize:db</span>'. This will guide you through a quick DB initialization process</span>";
 
              //CLi message
              $cMsg .= "INVALID DATABASE CREDENTIALS\n\n";
              $cMsg .= "\tDatabase in use \t = ".env("DB_DATABASE")."\n";
              $cMsg .= "\tDatabase User \t\t = ".env("DB_USER")."\n";
              $cMsg .= "\tDatabase Password\t = ".env("DB_PASSWORD")."\n";
-             $cMsg .= "\nPlease go the config file '".$this->color($this->config->envFile, "yellow","black").$this->color("' and supply the database details for the current environment\nRun the command when done: '", "light_red","black").$this->color("php zlight initialize:database", "yellow", "black").$this->color("'. This will guide you through a quick DB initialization", "light_red", "black");
+             $cMsg .= "\nPlease go the config file '".$this->color($this->config->envFile, "yellow","black").$this->color("' and supply the database details for the current environment\nRun the command when done: '", "light_red","black").$this->color("php zlight initialize:db", "yellow", "black").$this->color("'. This will guide you through a quick DB initialization process", "light_red", "black");
         }else if($errorNumber == 1){
              //Web message
              $wMsg .= "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>DATABASE ENGINE NOT FOUND</span><br/>";
@@ -178,6 +192,17 @@ class App extends CLIColors{
             $cMsg .= "DATABASE CONNECTION ERROR\n\n";
             $cMsg .= "Cannot connect to Database server\n";
             $cMsg .= "Please try restarting the database server";
+        }else if($errorNumber == 1049){
+             //Web message
+             $wMsg .= "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>Database not found</span><br/>";
+             $wMsg .= "<br/>Cannot connect to the configured database <br/>";
+             $wMsg .= "<br/><span style='color:black;'>Please go the config file '<span style='font-weight: bold;'>{$this->config->envFile}</span>' and supply the database details for the current environment</span>";
+             $wMsg .= "<br/><span style='color:black;'>Run the command when done: '<span style='font-weight: bold;'>php zlight initialize:db</span>'. This will guide you through a quick DB initialization process</span>";
+ 
+             //CLi message
+             $cMsg .= "DATABASE NOT FOUND ERROR\n\n";
+             $cMsg .= "Cannot find the target database\n";
+             $cMsg .= "\nPlease go the config file '".$this->color($this->config->envFile, "yellow","black").$this->color("' and supply the database details for the current environment\nRun the command when done: '", "light_red","black").$this->color("php zlight initialize:db", "yellow", "black").$this->color("'. This will guide you through a quick DB initialization process", "light_red", "black");
         }  
 
         return [

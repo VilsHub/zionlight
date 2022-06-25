@@ -14,7 +14,6 @@ function env($key){
     return $_SERVER[$key];
 }
 function setupEnvironment($environment, &$app){
-    global $env;  
 
     if(env("DB_APP")){//setup db connection
         $db_init	= false;
@@ -37,12 +36,34 @@ function setupEnvironment($environment, &$app){
                 PDO::ATTR_EMULATE_PREPARES   => false
             ];
 
-            $xdsn   = "mysql:host={$db_host};charset={$db_charset}";	
-            $xPDO   = new PDO($xdsn, $db_user, $db_pass, $opt);
-
-            $dsn    = "mysql:host={$db_host};dbname={$db_db};charset={$db_charset}";
-            $pdo 	= new PDO($dsn, $db_user, $db_pass, $opt);
-            $db 	= new DBAnt($pdo);  
+            try {
+                $xdsn   = "mysql:host={$db_host};charset={$db_charset}";	
+                $xPDO   = new PDO($xdsn, $db_user, $db_pass, $opt);
+    
+                $dsn    = "mysql:host={$db_host};dbname={$db_db};charset={$db_charset}";
+                $pdo 	= new PDO($dsn, $db_user, $db_pass, $opt);
+                $db 	= new DBAnt($pdo); 
+            } catch(\Throwable $th){
+                $errorNumber = $th->errorInfo[1];
+                $errorMessage = $app->getErrorMessage($errorNumber);
+              
+                try {
+                    $msg = $errorMessage["cli"];
+                    if($app->env != "cli") $msg = $errorMessage["web"];
+                    throw new Error($msg);
+                }catch(\Throwable $th) {
+                    if($app->env != "cli"){
+                        trigger_error($msg);
+                    }else{
+                        echo "\n";
+                        $app->write($msg, "light_red", "black");
+                        echo "\n";
+                        die();
+                    }
+                    die();
+                }
+            }
+            
         }
     
         //connection   
