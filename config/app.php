@@ -6,16 +6,14 @@
 $root               = dirname(__DIR__);
 $permissions        = require_once("authorization.php");
 $envFile            = $root."/host.env";
-$mainDir            = "app";
-$libDir             = $mainDir."/lib/classes/application";
+$mainDir            = $root."/app";
+$libDir             = $mainDir."/lib";
+$classDir           = $libDir ."/classes/application";
 $setupDir           = $root."/setup";
 
-$div                = $root == ""?"":"/";
+$appMainDir         = $root.$mainDir;
 
-$appMainDir         = $root.$div.$mainDir;
-$appLibDir          = $root.$div.$libDir;
-
-// Display Directories
+//Display Directories
 $displayDir         = $root."/display";
 $contentsDir        = "contents";
 $loadDirName        = $contentsDir."/load";
@@ -23,12 +21,16 @@ $xhrDirName         = $contentsDir."/xhr";
 $plugsDir           = "plugs";
 $fragmentsDir       = "fragments";
 
+//Other Libraries Directories
+$traitsDir          = $libDir ."/traits/application";
+$functionsDir       = $libDir ."/function/application";
+
 //Classses Directories
-$modelsDir          = $appLibDir."/models";
-$controllersDir     = $appLibDir."/controllers";
-$queriesDir         = $appLibDir."/queries";
-$middlewaresDir     = $appLibDir."/middlewares";
-$servicesDir        = $appLibDir."/services";
+$modelsDir          = $classDir."/models";
+$controllersDir     = $classDir."/controllers";
+$queriesDir         = $classDir."/queries";
+$middlewaresDir     = $classDir."/middlewares";
+$servicesDir        = $classDir."/services";
 
 //Data and Schema Directories
 $schemaDir          = $setupDir."/schemas";
@@ -65,6 +67,8 @@ return (object) [
     "queriesBankDir"    => $queriesDir,
     "middlewaresDir"    => $middlewaresDir,
     "servicesDir"       => $servicesDir,
+    "traitsDir"         => $traitsDir,
+    "functionsDir"      => $functionsDir,
     "schemaDir"         => $schemaDir,
     "dataDir"           => $dataDir,
     "vendorDir"         => $vendorDir,
@@ -75,6 +79,7 @@ return (object) [
     "queryFileSuffix"   => "Queries",
     "serviceFileSuffix" => "Service",
     "dataFileSuffix"    => "Table",
+    "traitFileSuffix"   => "Trait",
 
     //App attributes
     "appName"           => "YourAppName", //Your App name, used for creating unique session name

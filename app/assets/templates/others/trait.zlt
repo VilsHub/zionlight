@@ -1,0 +1,10 @@
+<?php
+/**
+* This trait implements.......
+* @author Your name
+*/
+
+trait traitName{
+
+}
+?>

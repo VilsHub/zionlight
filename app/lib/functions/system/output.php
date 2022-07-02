@@ -16,8 +16,9 @@ function pretty_print($array, $kill=true){
     Validator::validateArray($array, Message::write("error", $msg1));
     foreach ($array as $key => $value) {
       if(is_array($value)){
-        print_r($value);
-        echo "<br/>";
+        echo '<pre>'; 
+        print_r($array); 
+        echo '</pre>';
       }else{
         echo $key ." => ".$value."<br/>";
       }
@@ -50,4 +51,5 @@ function dump_if($value, $content){
     echo $content;
   }
 }
+
 ?>

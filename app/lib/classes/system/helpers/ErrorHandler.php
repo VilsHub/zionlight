@@ -6,7 +6,13 @@
   class ErrorHandler
   {
     public static function listenForErrors(){
-      
+      function listen($errorNumber, $errorMessage, $file, $lineNumber, $eContext){
+        ErrorHandler::throwError($errorNumber, $errorMessage, $file, $lineNumber, $eContext);
+      }
+      set_error_handler('listen', E_USER_NOTICE);
+    }
+  
+    public static function throwError($errorNumber, $errorMessage, $file, $lineNumber, $eContext){
       function createTrail($trail){
         return "<div style='box-sizing: border-box; width:98%; padding:10px; margin:0 auto; border:solid 1px gray; background-color:black; color:white'>{$trail}</div>";
       }
@@ -19,7 +25,7 @@
         }else{
           $output .= "<br/>TRAIL: <br/>";
         }
-
+    
         $color = "yellow";
         echo "<br/>";
         foreach ($reversedTrail as $error){
@@ -45,21 +51,21 @@
         }
         echo createTrail($output);
       }
-      function listen($errorNumber, $errorMessage, $file, $lineNumber, $eContext){
-        $custom = false;
-        if(isset($eContext["th"])){
-          $message = "<span color='black'><b>Error :</b> </style>".$eContext["th"]->getMessage()."</span><br/><br/>";
-          $message .="<sapn color='black'><b>File : </b></span> Executed in file:  <br/>".$eContext["th"]->getFile(). " at line : ". $eContext["th"]->getLine();
-          echo Message::write("error", $message);
-        }else{
-          $custom = true;
-          echo $errorMessage;
-        }
-        
-        getErrorDetails($custom);
-        die();
+
+      $custom = false;
+     
+      if(isset($eContext["th"])){
+        $message = "<span color='black'><b>Error :</b> </style>".$eContext["th"]->getMessage()."</span><br/><br/>";
+        $message .="<sapn color='black'><b>File : </b></span> Executed in file:  <br/>".$eContext["th"]->getFile(). " at line : ". $eContext["th"]->getLine();
+        echo Message::write("error", $message);
+      }else{
+        $custom = true;
+        // echo $errorMessage;
+        echo Message::write("error", $errorMessage);
       }
-     set_error_handler('listen', E_USER_NOTICE);
+      
+      getErrorDetails($custom);
+      die();
     }
   }
 ?>

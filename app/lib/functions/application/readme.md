@@ -1,1 +1,1 @@
-# Application functions files will live here
+# Application function files will live here

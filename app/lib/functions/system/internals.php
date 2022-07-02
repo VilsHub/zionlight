@@ -16,7 +16,11 @@ function env($key){
 function setupEnvironment($environment, &$app){
 
     if(env("DB_APP")){//setup db connection
-        $db_init	= false;
+        $db_init	= false; 
+        $db         = null;
+        $xPDO       = null;
+        $pdo        = null;
+
         if(env("DB_SETUP_CHECK")){
             $serverStatus   = $app->pingDatabaseServer();
             if ($serverStatus["status"]){
@@ -44,26 +48,33 @@ function setupEnvironment($environment, &$app){
                 $pdo 	= new PDO($dsn, $db_user, $db_pass, $opt);
                 $db 	= new DBAnt($pdo); 
             } catch(\Throwable $th){
-                $errorNumber = $th->errorInfo[1];
-                $errorMessage = $app->getErrorMessage($errorNumber);
-              
-                try {
-                    $msg = $errorMessage["cli"];
-                    if($app->env != "cli") $msg = $errorMessage["web"];
-                    throw new Error($msg);
-                }catch(\Throwable $th) {
+                $type = (is_array($th->errorInfo)) ? "array":"string";
+                
+                if ($type == "array"){
+                    $errorNumber = $th->errorInfo[1];    
+                    $errorMessage = $app->getErrorMessage($errorNumber);
                     if($app->env != "cli"){
-                        trigger_error($msg);
+                        ErrorHandler::throwError($errorNumber, $errorMessage["web"], null, null, null);
                     }else{
                         echo "\n";
-                        $app->write($msg, "light_red", "black");
+                        $app->write($errorMessage["cli"], "light_red", "black");
                         echo "\n";
                         die();
                     }
                     die();
-                }
-            }
-            
+                }else{
+                    $errorMessage = $app->getErrorMessage(1);
+                    if($app->env != "cli"){
+                        ErrorHandler::throwError(null, $errorMessage["web"], null, null, null);
+                    }else{
+                        echo "\n";
+                        $app->write($errorMessage["cli"], "light_red", "black");
+                        echo "\n";
+                        die();
+                    }
+                    die();
+                }  
+            }           
         }
     
         //connection   
