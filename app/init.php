@@ -2,7 +2,6 @@
 
 use vilshub\http\Request;
 use vilshub\router\Router;
-use vilshub\helpers\Message;
 use vilshub\helpers\Style;
 
 //Load required files
@@ -21,7 +20,7 @@ $env          = "web";
 
 
 //System applications
-$applications = require_once(dirname(__DIR__)."/config/applications.php");
+$systemAppsHandler = require_once(dirname(__DIR__)."/config/applications.php");
 
 
 //Instantiate App
@@ -38,17 +37,12 @@ $app->router->maskExtension    = ".java";
 
 $app->boot();
 
-
-if(Request::isForApplication($applications)){ //application
-  $application  = $applications[Request::$id];
-  $configInUse  = strtolower($application["configInUse"]);
+if(Request::isForApplication($systemAppsHandler->ids)){ //application
+  $systemApp    = $systemAppsHandler->{Request::$id};
+  $webHandler   = $systemApp->routeFiles->webHandler;
+  $apiHandler   = $systemApp->routeFiles->apiHandler;
+  $apiID        = $systemApp->apiId;
   
-  if($configInUse != "vendor" && $configInUse != "system") trigger_error(Message::write("error", "<b>applications['".Request::$id."']['configInUse']</b> value must be set to either ".Style::color("system", "green").Style::color(" or ", "red").Style::color("vendor", "green").Style::color(" in ", "red").Style::color("/config/applications.php", "blue")));
-  
-  $webHandler   = $application["config"][$configInUse]["webHandler"];
-  $apiHandler   = $application["config"][$configInUse]["apiHandler"];
-  $apiID        = $application["apiID"];
-
   if(Request::isFor("web", $apiID, 2)){
     require_once($webHandler);
   }else{

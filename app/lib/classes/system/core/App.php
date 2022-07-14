@@ -210,5 +210,17 @@ class App extends CLIColors{
             "cli" => $cMsg
         ];
     }
+
+    public function getLoadBase($displayBlockName){
+        return $this->config->displayDir."/".$displayBlockName."/".$this->config->contentsFolder->load;
+    }
+
+    public function getDisplayBlock($block, $displayBlockFile){
+        return $this->config->displayDir."/".$block."/".$displayBlockFile;
+    }
+
+    public function getFragment($block, $fragmentFile){
+        require_once($this->config->displayDir."/".$block."/".$this->config->fragmentsDir."/".$fragmentFile);
+    }
 }
 ?>

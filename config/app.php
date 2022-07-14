@@ -11,13 +11,13 @@ $libDir             = $mainDir."/lib";
 $classDir           = $libDir ."/classes/application";
 $setupDir           = $root."/setup";
 
-$appMainDir         = $root.$mainDir;
+$appMainDir         = $mainDir;
 
 //Display Directories
 $displayDir         = $root."/display";
 $contentsDir        = "contents";
-$loadDirName        = $contentsDir."/load";
-$xhrDirName         = $contentsDir."/xhr";
+$loadDirName        = "contents/load";
+$xhrDirName         = "contents/xhr";
 $plugsDir           = "plugs";
 $fragmentsDir       = "fragments";
 
@@ -38,7 +38,10 @@ $dataDir            = $setupDir."/data";
 
 //Vendor
 $vendorDir          = $appMainDir."/lib/vendor";
-$applicationDataDir = $appMainDir."/data";
+
+//System Application
+$appsDataDir        = $appMainDir."/data";
+$appsPublicDir      = $appMainDir."/public/apps/";
 
 //assets links
 $assetLinks     = [ 
@@ -72,7 +75,8 @@ return (object) [
     "schemaDir"         => $schemaDir,
     "dataDir"           => $dataDir,
     "vendorDir"         => $vendorDir,
-    "applicationDataDir"=> $applicationDataDir,
+    "appsDataDir"       => $appsDataDir,
+    "appPublicDir"      => $appsPublicDir,
 
     // Suffixes
     "modelFileSuffix"   => "Model",

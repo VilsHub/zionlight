@@ -3,17 +3,17 @@
 <html lang="en" dir="ltr">
   <head>
     <?php
-      require($app->config->fragmentsDir."/head.php");
+      $app->getFragment("home", "head.php");
       $app->router->plugToSocket("publicLinks");
     ?>
   </head>
   <body>
     <div class="page" id="page">
-      <?php require($app->config->fragmentsDir."/header.php");?>
+        <?php $app->getFragment("home", "header.php");?>
         
-      <?php $app->router->showContent;?>
-        
-      <?php require_once($app->config->fragmentsDir."/footer.php")?>
+        <?php $app->router->showContent;?>
+          
+        <?php $app->getFragment("home", "footer.php");?>
     </div>
   </body>
 </html>
