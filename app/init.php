@@ -2,7 +2,6 @@
 
 use vilshub\http\Request;
 use vilshub\router\Router;
-use vilshub\helpers\Style;
 
 //Load required files
 require_once(dirname(__DIR__)."/app/lib/vendor/autoload.php");
@@ -28,7 +27,7 @@ $app          = new App(new Loader, new Router($routes, $socketFiles, $config), 
 
 //Configure application router
 $app->router->defaultBaseFile  = "index.php";
-$app->router->error404File     = $config->displayDir."/error/".$config->contentsFolder->load."/root/404.php";
+$app->router->error404File     = $app->getDisplayFile("error", "/root/404.php");
 $app->router->error404URL      = "/error/404";
 $app->router->maintenanceURL   = "/maintenance";
 $app->router->maintenanceMode  = false;

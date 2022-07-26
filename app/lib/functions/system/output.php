@@ -51,5 +51,4 @@ function dump_if($value, $content){
     echo $content;
   }
 }
-
 ?>

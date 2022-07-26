@@ -93,7 +93,6 @@ class App extends CLIColors{
         $db_user	= env("DB_USER");
         $db_pass	= env("DB_PASSWORD");
         $db_charset	= env("DB_CHARSET");
-        global $env;
 
         $opt = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -196,7 +195,7 @@ class App extends CLIColors{
              //Web message
              $wMsg .= "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>Database not found</span><br/>";
              $wMsg .= "<br/>Cannot connect to the configured database <br/>";
-             $wMsg .= "<br/><span style='color:black;'>Please go the config file '<span style='font-weight: bold;'>{$this->config->envFile}</span>' and supply the database details for the current environment</span>";
+             $wMsg .= "<br/><span style='color:black;'>Please go the config file '<span style='font-weight: bold;'>{$this->config->envFile}</span>' and supply the database details for the current environment";
              $wMsg .= "<br/><span style='color:black;'>Run the command when done: '<span style='font-weight: bold;'>php zlight initialize:db</span>'. This will guide you through a quick DB initialization process</span>";
  
              //CLi message
@@ -221,6 +220,13 @@ class App extends CLIColors{
 
     public function getFragment($block, $fragmentFile){
         require_once($this->config->displayDir."/".$block."/".$this->config->fragmentsDir."/".$fragmentFile);
+    }
+
+    public function getDisplayFile($block, $targetDisplayFile){
+        /**
+         *  @ targetDisplayFile: specify file relative to the display load directory. Example /root/home.php
+         */
+        return $this->config->displayDir."/".$block."/".$this->config->contentsFolder->load.$targetDisplayFile;
     }
 }
 ?>
