@@ -9,7 +9,7 @@
 				<span style="font-weight:bold; font-size:13px; color: #232535;letter-spacing: 3px;">John 1:5</span>
 				<br>
 				<br>
-				<span style="text-transform: uppercase; color: #46798d;">JESUS is the light</span>
+				<span style="text-transform: uppercase; color: #46798d;"><span style="font-weight:bold">JESUS</span> is the light</span>
 			</div>
 		</div>
 	</div>
