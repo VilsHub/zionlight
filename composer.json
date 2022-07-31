@@ -32,7 +32,8 @@
         "app/lib/functions/system/navigator.php",
         "app/lib/functions/system/output.php",
         "app/lib/functions/system/internals.php",
-        "app/lib/functions/system/lexical.php"
+        "app/lib/functions/system/lexical.php",
+        "app/lib/functions/system/data.php"
       ],
       "exclude-from-classmap":[
         "app/lib/classes/system/core/Console.php",

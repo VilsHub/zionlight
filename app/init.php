@@ -1,5 +1,4 @@
 <?php
-
 use vilshub\http\Request;
 use vilshub\router\Router;
 
@@ -33,6 +32,8 @@ $app->router->maintenanceURL   = "/maintenance";
 $app->router->maintenanceMode  = false;
 $app->router->dynamicRoute     = true;
 $app->router->maskExtension    = ".java";
+$app->router->useWordSeperator = true;
+$app->router->wordSeperator    = "-";
 
 $app->boot();
 
