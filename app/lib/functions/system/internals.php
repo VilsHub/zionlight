@@ -1,5 +1,6 @@
 <?php
 use vilshub\dbant\DBAnt;
+use vilshub\validator\Validator;
 
 function loadEnv($envFile){
     $configs    = require_once($envFile);
@@ -33,12 +34,24 @@ function setupEnvironment($environment, &$app){
             $db_user	= env("DB_USER");
             $db_pass	= env("DB_PASSWORD");
             $db_charset	= env("DB_CHARSET");
+            $db_ssl     = env("DB_SSL");
+            $db_cert    = $app->config->miscFiles->db_certificate;;
 
             $opt = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES   => false
             ];
+
+            if ($db_ssl) {
+                $errorMessage   = $app->getErrorMessage("ze0001");
+                $msg            = $errorMessage["cli"];
+            
+                if($app->env != "cli") $msg = $errorMessage["web"];
+            
+                Validator::validateFile($db_cert, $msg);
+                $opt[PDO::MYSQL_ATTR_SSL_CA] =  $db_cert;
+            }
 
             try {
                 $xdsn   = "mysql:host={$db_host};charset={$db_charset}";	
@@ -88,19 +101,13 @@ function setupEnvironment($environment, &$app){
     switch ($environment)
 	{
 		case 'development':
-			ini_set('display_errors', 1);
+			include($app->config->miscFiles->phpini_development);
 			break;
 		case 'testing':
-			error_reporting(-1);
-			ini_set('display_errors', 1);
+			include($app->config->miscFiles->phpini_testing);
 			break;
 		case 'production':
-			ini_set('display_errors', 0);
-			if (version_compare(PHP_VERSION, '5.3', '>=')){
-				error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED & ~E_STRICT & ~E_USER_NOTICE & ~E_USER_DEPRECATED);
-			}else{
-				error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_USER_NOTICE);
-			}
+			include($app->config->miscFiles->phpini_production);
 			break;
 	}
 }

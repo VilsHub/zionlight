@@ -10,6 +10,7 @@ $mainDir            = $root."/app";
 $libDir             = $mainDir."/lib";
 $classDir           = $libDir ."/classes/application";
 $setupDir           = $root."/setup";
+$miscDir            = $mainDir."/misc";
 
 $appMainDir         = $mainDir;
 
@@ -53,6 +54,14 @@ $assetLinks     = [
     ]
 ];
 
+//Misc Files
+$miscFiles = [
+    "db_certificate"    => $miscDir."/certs/DigiCertGlobalRootCA.crt.pem",
+    "phpini_production" => $miscDir."/php-ini/production.php",
+    "phpini_development"=> $miscDir."/php-ini/development.php",
+    "phpini_testing"    => $miscDir."/php-ini/testing.php",
+];
+
 return (object) [
     //Env file
     "envFile"           => $envFile,
@@ -88,8 +97,8 @@ return (object) [
     //App attributes
     "appName"           => "YourAppName", //Your App name, used for creating unique session name
 
-    //AssetLinks
-    "assetLinks"        => (object) $assetLinks,
+    //Misc Files
+    "miscFiles"         => (object) $miscFiles,
 
     //API ID
     "apiId"             => "api", //To identify xhr request
