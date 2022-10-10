@@ -11,6 +11,7 @@ $libDir             = $mainDir."/lib";
 $classDir           = $libDir ."/classes/application";
 $setupDir           = $root."/setup";
 $miscDir            = $mainDir."/misc";
+$logsDir            = $root."/logs";
 
 $appMainDir         = $mainDir;
 
@@ -38,14 +39,14 @@ $schemaDir          = $setupDir."/schemas";
 $dataDir            = $setupDir."/data";
 
 //Vendor
-$vendorDir          = $appMainDir."/lib/vendor";
+$vendorDir          = $mainDir."/lib/vendor";
 
 //System Application
-$appsDataDir        = $appMainDir."/data";
-$appsPublicDir      = $appMainDir."/public/apps/";
+$appsDataDir        = $mainDir."/data";
+$appsPublicDir      = $mainDir."/public/apps/";
 
 //assets links
-$assetLinks     = [ 
+$assetLinks         = [ 
     "dev"   => [
         "vUx" => "http://library.vilshub.com/lib/vUX/4.0.0/",
     ],
@@ -55,12 +56,22 @@ $assetLinks     = [
 ];
 
 //Misc Files
-$miscFiles = [
+$miscFiles          = [
     "db_certificate"    => $miscDir."/certs/DigiCertGlobalRootCA.crt.pem",
     "phpini_production" => $miscDir."/php-ini/production.php",
     "phpini_development"=> $miscDir."/php-ini/development.php",
     "phpini_testing"    => $miscDir."/php-ini/testing.php",
 ];
+
+//Log file
+/**
+ *  {value} => dynamic value, to be supplied on runtime for replacement
+ *  
+ * Example
+ * {user}_logs.log => john_logs.log if user is john
+ * 
+ */
+$logFile            = $logsDir."/logdata.log";
 
 return (object) [
     //Env file
@@ -69,7 +80,7 @@ return (object) [
     // Directories
     "mainDir"           => $mainDir,
     "appRootDir"        => $root,
-    "appMainDir"        => $appMainDir,
+    "appMainDir"        => $mainDir,
     "displayDir"        => $displayDir , 
     "contentsFolder"    => (object) ["load"=>$loadDirName, "xhr"=>$xhrDirName],
     "plugsDir"          => $plugsDir,
@@ -99,6 +110,9 @@ return (object) [
 
     //Misc Files
     "miscFiles"         => (object) $miscFiles,
+
+    //Log file
+    "logFile"           => $logFile,
 
     //API ID
     "apiId"             => "api", //To identify xhr request

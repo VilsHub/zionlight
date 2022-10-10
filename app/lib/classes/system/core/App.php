@@ -24,7 +24,6 @@ class App extends CLIColors{
             Session::start();
             CSRF::generateSessionToken($this->config->CSRFName);
         }
-        loadEnv($this->config->envFile);
         setupEnvironment(env("ENVIRONMENT"), $this);
     }
     public function setPageTitle($value){
@@ -270,6 +269,11 @@ class App extends CLIColors{
          *  @ targetDisplayFile: specify file relative to the display load directory. Example /root/home.php
          */
         return $this->config->displayDir."/".$block."/".$this->config->contentsFolder->load.$targetDisplayFile;
+    }
+
+    public static function initialize($config){
+        setupLogging($config->logFile);
+        loadEnv($config->envFile);
     }
 }
 ?>

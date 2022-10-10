@@ -5,17 +5,19 @@ use vilshub\router\Router;
 //Load required files
 require_once(dirname(__DIR__)."/app/lib/vendor/autoload.php");
 
-//register error handler
-ErrorHandler::listenForErrors();
-
 //Load config files
 $config       = require_once(dirname(__DIR__)."/config/app.php");
 $routes       = require_once(dirname(__DIR__)."/http/routes/content.php");
 $socketFiles  = require_once(dirname(__DIR__)."/http/routes/socket.php");
 
+//register error handler
+ErrorHandler::listenForErrors();
+
+//Initialize App
+App::initialize($config);
+
 //set platform
 $env          = "web";
-
 
 //System applications
 $systemAppsHandler = require_once(dirname(__DIR__)."/config/applications.php");
@@ -33,7 +35,7 @@ $app->router->maintenanceMode  = false;
 $app->router->dynamicRoute     = true;
 $app->router->maskExtension    = ".java";
 $app->router->useWordSeperator = true;
-$app->router->wordSeperator    = "-";
+$app->router->wordSeperator    = "ggg";
 
 $app->boot();
 
@@ -48,6 +50,7 @@ if(Request::isForApplication($systemAppsHandler->ids)){ //application
   }else{
     require_once($apiHandler);
   }
+
 
 }else{ //system
   if(Request::isFor("web", $config->apiId, 1)){

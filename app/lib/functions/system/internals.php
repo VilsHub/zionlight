@@ -111,4 +111,7 @@ function setupEnvironment($environment, &$app){
 			break;
 	}
 }
+function setupLogging($logFile){
+    ini_set("error_log", $logFile);
+}
 ?>
