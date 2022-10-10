@@ -35,7 +35,7 @@ $app->router->maintenanceMode  = false;
 $app->router->dynamicRoute     = true;
 $app->router->maskExtension    = ".java";
 $app->router->useWordSeperator = true;
-$app->router->wordSeperator    = "ggg";
+$app->router->wordSeperator    = "-";
 
 $app->boot();
 
