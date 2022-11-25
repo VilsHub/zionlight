@@ -8,6 +8,9 @@ require_once("./app/lib/classes/system/core/Console.php");
 //Load app config 
 $config = require_once("./config/app.php");
 
-//inialize Console 
+//Initialize App
+App::initialize($config);
+
+//inialize Console
 $console = new Console($argv, $argc, new App(null, null, $config));
 ?>
