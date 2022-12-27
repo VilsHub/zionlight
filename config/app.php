@@ -114,6 +114,9 @@ return (object) [
     //Log file
     "logFile"           => $logFile,
 
+    //AssetLinks
+    "assetLinks"        => (object) $assetLinks,
+
     //API ID
     "apiId"             => "api", //To identify xhr request
     "CSRFName"          => "CSRF_Token", //The name of your CSRF identifier
