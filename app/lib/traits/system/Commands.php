@@ -815,8 +815,9 @@ trait Commands {
                         $this->error(["The table ", $importData["tableName"], " does not exist"], false);
                     }else if($importData["code"] == "c2"){
                         $this->error(["Error occured during data importation","",""], false);
+                    }else if($importData["code"] == "c3"){
+                        $this->error(["Table for the data file '$parsedFile' is not tracked. Run the command: ","php zlight build:schema tableName",""], false);
                     }
-
                 }
 
             break;

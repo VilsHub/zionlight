@@ -131,32 +131,36 @@ trait Data {
        
         if ($tableExist){
             //get schema name
-            $schemaName = $this->getTableSchemaName($tableName)["schema_name"];
-           
+            $schemaName = @$this->getTableSchemaName($tableName)["schema_name"];
             $answered = false;
 
-            while (!$answered) { 
-                $prompt = $this->color("\n You are about to empty the table: '$tableName' and fill it with new data. Do you proceed? Y or N ", "blue", "yellow");
-                $input =  $this->readLine($prompt);  
-                if($input != "n" && $input != "y"){
-                    echo "Please press 'Y' for yes and 'N' for no\n";
-                    continue;
-                } 
-
-                if(strtolower($input) == "y"){
-                    $insertData = $this->insertData($schemaName, $tableName, $insertQuery);
-                    if($insertData["status"]){//imported
-                        $totalInserted  = $insertData["totalInserted"];
-                        $status = "c0";
-                    }else{//could not import data
-                        $status = "c2";
+            if (strlen($schemaName)){
+                while (!$answered) { 
+                    $prompt = $this->color("\n You are about to empty the table: '$tableName' and fill it with new data. Do you proceed? Y or N ", "blue", "yellow");
+                    $input =  $this->readLine($prompt);  
+                    if($input != "n" && $input != "y"){
+                        echo "Please press 'Y' for yes and 'N' for no\n";
+                        continue;
                     } 
+    
+                    if(strtolower($input) == "y"){
+                        $insertData = $this->insertData($schemaName, $tableName, $insertQuery);
+                        if($insertData["status"]){//imported
+                            $totalInserted  = $insertData["totalInserted"];
+                            $status = "c0";
+                        }else{//could not import data
+                            $status = "c2";
+                        } 
+                    }
+    
+                    $answered = true;
                 }
-
-                $answered = true;
+            }else{
+                $status = "c3";// Table not tracked
             }
+            
         }else{
-            $status = "c1";
+            $status = "c1";//Table does not exist
         }
 
         return [
