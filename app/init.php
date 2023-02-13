@@ -16,9 +16,6 @@ ErrorHandler::listenForErrors();
 //Initialize App
 App::initialize($config);
 
-//set platform
-$env          = "web";
-
 //System applications
 $systemAppsHandler = require_once(dirname(__DIR__)."/config/applications.php");
 

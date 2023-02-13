@@ -1,0 +1,16 @@
+/* CSS Document */
+.page header #headerContent #logoCon{
+	flex-grow: 1;
+	position: relative;
+}
+.page header #headerContent #logoCon #logo{
+	position: absolute;
+	width:auto;
+	height:100%;
+	padding-top:10px;
+	box-sizing: border-box;	
+}
+.page header #headerContent #logoCon #logo img{
+	transition:all .2s linear;
+	width:100px;
+}

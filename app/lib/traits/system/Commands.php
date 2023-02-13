@@ -2,8 +2,11 @@
 trait Commands {
     //Commands
     public function startServer(){
+
+        global $argv;
+
         //get port
-        $serverCommand = $this->getAction($this->argv[1]);
+        $serverCommand = $this->getAction($argv[1]);
 
         if(array_key_exists("object", $serverCommand)){
             $port = explode("@", $serverCommand["object"]);
@@ -36,18 +39,21 @@ trait Commands {
         }
     }
     public function build($object){
+
+        global $argv;
+
         //Action name must only be alphabets
         
         switch (strtolower($object)) {
             case 'schema':
                 //track setup
                 $this->setupCheck();
-                if(!isset($this->argv[2])){// Please specify the build type
+                if(!isset($argv[2])){// Please specify the build type
                     $this->error(["Please specify the build type: '-new | -n', '-tracked | -t' or  'schemaFileName'","",""]);
                 }
                 
                 //build specific schema, init or new
-                $arg2 = strtolower($this->argv[2]);
+                $arg2 = strtolower($argv[2]);
                 if($arg2 == "-tracked" || $arg2 == "-t"){//build only tracked
                     $mode = "tracked";
                 }else if($arg2 == "-new" || $arg2 == "-n"){//build new schema
@@ -60,23 +66,23 @@ trait Commands {
                     //try build
                     
                     //validate name
-                    if(!$this->validate("alphaNum", $this->argv[2])){
-                        $this->error(["Schema name must be alpha numeric only, the name:", $this->argv[2], " is not all alpha numeric"]);
+                    if(!$this->validate("alphaNum", $argv[2])){
+                        $this->error(["Schema name must be alpha numeric only, the name:", $argv[2], " is not all alpha numeric"]);
                     }
                     
-                    $buildSchema = $this->buildSchema($this->argv[2]);
+                    $buildSchema = $this->buildSchema($argv[2]);
 
                     if($buildSchema["status"]){//Schema exist
                         if($buildSchema["code"] == 1){//Built successfully
-                            $this->success(["The schema: '{$this->argv[2]}' has been built successfully", "",""], false);
+                            $this->success(["The schema: '{$argv[2]}' has been built successfully", "",""], false);
                         }
                     }else{//No build
                         if($buildSchema["code"] == 4){
-                            $this->warning(["The schema file: '{$this->argv[2]}.sql' is empty, found nothing to build", "",""]);
+                            $this->warning(["The schema file: '{$argv[2]}.sql' is empty, found nothing to build", "",""]);
                         }else if($buildSchema["code"] == 2){
-                            $this->error(["The schema file : '{$this->argv[2]}' is not found. Create one using the: ","create:schema"," command"]);
+                            $this->error(["The schema file : '{$argv[2]}' is not found. Create one using the: ","create:schema"," command"]);
                         }else if($buildSchema["code"] == 3){//Already built
-                            $this->warning(["The schema: '{$this->argv[2]}' has been built already. Use the command: ", "reset:schema"," to reset the schema if you want to build again"]);
+                            $this->warning(["The schema: '{$argv[2]}' has been built already. Use the command: ", "reset:schema"," to reset the schema if you want to build again"]);
                         }
                     }
                 }else{
@@ -87,6 +93,9 @@ trait Commands {
         }
     }
     public function reset($object){
+
+        global $argv;
+
         switch (strtolower($object)) {
             case 'schema':  
                 //track setup
@@ -95,25 +104,25 @@ trait Commands {
                 $rebuild=false; 
                 $schemaFile = "";
                 $auto=true;
-                if(isset($this->argv[2])){
+                if(isset($argv[2])){
                     
-                    if(strtolower($this->argv[2]) != "-r"){// target file given to be reset but not to build
+                    if(strtolower($argv[2]) != "-r"){// target file given to be reset but not to build
                         //Validate schema name
             
-                        if(!$this->validate("alphaNum", $this->argv[2])){
-                            $this->error(["Schema name must be alpha numeric only, the name:", $this->argv[2], " is not all alpha numeric"]);
+                        if(!$this->validate("alphaNum", $argv[2])){
+                            $this->error(["Schema name must be alpha numeric only, the name:", $argv[2], " is not all alpha numeric"]);
                         }
 
-                        $schemaFile = $this->argv[2];
+                        $schemaFile = $argv[2];
                         $auto = false;
                         $rebuild = false;
-                    }else if(strtolower($this->argv[2]) == "-r"){//auto rebuilding enable
-                        if(isset($this->argv[3])){ //has specific schema for reseting and building
-                            if(!$this->validate("alphaNum", $this->argv[3])){
-                                $this->error(["Schema name must be alpha numeric only, the name:", $this->argv[3], " is not all alpha numeric"]);
+                    }else if(strtolower($argv[2]) == "-r"){//auto rebuilding enable
+                        if(isset($argv[3])){ //has specific schema for reseting and building
+                            if(!$this->validate("alphaNum", $argv[3])){
+                                $this->error(["Schema name must be alpha numeric only, the name:", $argv[3], " is not all alpha numeric"]);
                             }
                             $auto = false;
-                            $schemaFile = $this->argv[3];
+                            $schemaFile = $argv[3];
                         }
                         $rebuild = true;
                     }    
@@ -167,27 +176,30 @@ trait Commands {
         }
     }
     public function untrack($object){
+
+        global $argv;
+
         switch (strtolower($object)) {
             case 'schema': 
                 //track setup
                 $this->setupCheck();
 
-                if(!isset($this->argv[2])){
+                if(!isset($argv[2])){
                     $this->error(["The Schema name must be supplied, please supply a schema name to be untracked", "", ""]);
                 } 
 
-                if(!$this->validate("alphaNum", $this->argv[2])){
-                    $this->error(["Schema name must be alpha numeric only, the name: ", $this->argv[2], " is not all alpha numeric"]);
+                if(!$this->validate("alphaNum", $argv[2])){
+                    $this->error(["Schema name must be alpha numeric only, the name: ", $argv[2], " is not all alpha numeric"]);
                 }
 
-                $fileCheck = $this->getSchema($this->argv[2]);
+                $fileCheck = $this->getSchema($argv[2]);
                 
                 $answered = false;
                 while(!$answered){
                     if($fileCheck["status"]){ //file exist
-                        $prompt = $this->color(" The schema file: '{$this->argv[2]}.sql' exist, are you sure you want to untrack? Y or N ", "blue", "yellow");
+                        $prompt = $this->color(" The schema file: '{$argv[2]}.sql' exist, are you sure you want to untrack? Y or N ", "blue", "yellow");
                     }else{
-                        $prompt = $this->color(" Are you sure you want to untrack the schema: '{$this->argv[2]}'? Y or N ", "blue", "yellow");
+                        $prompt = $this->color(" Are you sure you want to untrack the schema: '{$argv[2]}'? Y or N ", "blue", "yellow");
                     }
                     
                     $input =  $this->readLine($prompt);  
@@ -197,11 +209,11 @@ trait Commands {
                     } 
 
                     if(strtolower($input) == "y"){
-                        $untrackSchema = $this->untrackSchema($this->argv[2]);
+                        $untrackSchema = $this->untrackSchema($argv[2]);
                         if($untrackSchema["status"] && $untrackSchema["rowCount"] > 0){//
-                            $this->success(["The schema: '{$this->argv[2]}' has been untracked successfully", "",""], false);
+                            $this->success(["The schema: '{$argv[2]}' has been untracked successfully", "",""], false);
                         }else{
-                            $this->warning(["The schema: '{$this->argv[2]}' was never tracked", "",""]);
+                            $this->warning(["The schema: '{$argv[2]}' was never tracked", "",""]);
                         }
                         $answered = true;
                     }else{
@@ -217,62 +229,65 @@ trait Commands {
                 //track setup
                 $this->setupCheck();
 
-                if(!isset($this->argv[2])){
+                if(!isset($argv[2])){
                     $this->error(["The Schema name must be supplied, please supply a schema name to be tracked", "", ""]);
                 } 
 
-                if(!$this->validate("alphaNum", $this->argv[2])){
-                    $this->error(["Schema name must be alpha numeric only, the name: ", $this->argv[2], " is not all alpha numeric"]);
+                if(!$this->validate("alphaNum", $argv[2])){
+                    $this->error(["Schema name must be alpha numeric only, the name: ", $argv[2], " is not all alpha numeric"]);
                 }
                 
-                $checkSchema = $this->getSchema($this->argv[2]);
+                $checkSchema = $this->getSchema($argv[2]);
                 
                 if($checkSchema["status"]){//schema exist, check if tracked before tracking
-                    $isTracked = $this->trackStatus($this->argv[2], $checkSchema["tableName"]);
+                    $isTracked = $this->trackStatus($argv[2], $checkSchema["tableName"]);
                     if(!$isTracked){
-                        $trackSchema = $this->trackSchema($this->argv[2], $checkSchema["tableName"]);
+                        $trackSchema = $this->trackSchema($argv[2], $checkSchema["tableName"]);
                         if($trackSchema["status"] && $trackSchema["rowCount"] > 0){//tracked successfuly
-                            $this->success(["The schema: '{$this->argv[2]}' has been tracked successfully. Run the command: ", "build:schema {$this->argv[2]}"," to build the schema"], false);
+                            $this->success(["The schema: '{$argv[2]}' has been tracked successfully. Run the command: ", "build:schema {$argv[2]}"," to build the schema"], false);
                         }else{
-                            $this->error(["Error tracking the schema: '{$this->argv[2]}'", "",""], false);
+                            $this->error(["Error tracking the schema: '{$argv[2]}'", "",""], false);
                         }
                     }else{
-                        $this->warning(["The schema: '{$this->argv[2]}' is tracked already", "",""], false);
+                        $this->warning(["The schema: '{$argv[2]}' is tracked already", "",""], false);
                     }                    
                 }else{//file not exist
-                    $this->error(["The schema file: '{$this->argv[2]}.sql' does not exist", "",""], false);
+                    $this->error(["The schema file: '{$argv[2]}.sql' does not exist", "",""], false);
                 }
                 break;
         }
     }
     public function delete($object){
+
+        global $argv;
+
         switch (strtolower($object)) {
             case 'schema':
                 //track setup
                 $this->setupCheck();
 
-                if(!isset($this->argv[2])){
+                if(!isset($argv[2])){
                     $this->error(["The Schema name must be supplied, please supply a schema name to be deleted", "", ""]);
                 } 
 
-                if(!$this->validate("alphaNum", $this->argv[2])){
-                    $this->error(["Schema name must be alpha numeric only, the name: ", $this->argv[2], " is not all alpha numeric"]);
+                if(!$this->validate("alphaNum", $argv[2])){
+                    $this->error(["Schema name must be alpha numeric only, the name: ", $argv[2], " is not all alpha numeric"]);
                 }
 
-                $checkSchema = $this->getSchema($this->argv[2]);
+                $checkSchema = $this->getSchema($argv[2]);
                 
                 if($checkSchema["status"]){//schema exist, delete
                     $answered = false;
                     while(!$answered){
-                        $prompt = $this->color(" The schema file: '{$this->argv[2]}.sql' exist, are you sure you want to delete? Y or N ", "blue", "yellow");
+                        $prompt = $this->color(" The schema file: '{$argv[2]}.sql' exist, are you sure you want to delete? Y or N ", "blue", "yellow");
                         $input =  $this->readLine($prompt);  
                         if($input != "n" && $input != "y"){
                             echo "Please press 'Y' for yes and 'N' for no\n";
                             continue;
                         } 
                         if(strtolower($input) == "y"){
-                            if($this->deleteSchema($this->argv[2], $checkSchema["tableName"])){
-                                $this->success(["The schema: '{$this->argv[2]}' has been deleted successfully", "",""], false); 
+                            if($this->deleteSchema($argv[2], $checkSchema["tableName"])){
+                                $this->success(["The schema: '{$argv[2]}' has been deleted successfully", "",""], false); 
                                 $answered = true;
                             }                        
                         }else{
@@ -280,23 +295,24 @@ trait Commands {
                         }
                     }
                 }else{
-                    $this->error(["The schema file: '{$this->argv[2]}.sql' does not exist ", "", ""]);
+                    $this->error(["The schema file: '{$argv[2]}.sql' does not exist ", "", ""]);
                 }
             break;
         }
     }
     public function create($object){
+        global $argv;
 
         //check for new object name
-        if(!isset($this->argv[2])){
+        if(!isset($argv[2])){
             $this->error(["Please specify the ", $object, " name"]);
         }
 
-        if($object != "db"){
+        if($object != "db" && $object !=  "display"){
             //name must only be alphabets
-            if(!$this->validate("alpha", $this->argv[2])){
-                $label = strtolower($object) == "schema"?"schema":$this->argv[2];
-                $this->error(["The ".ucwords($label)." name must be alphabets only, the name: ", $this->argv[2], " is not all alphabets"]);
+            if(!$this->validate("alpha", $argv[2])){
+                $label = strtolower($object) == "schema"?"schema":$argv[2];
+                $this->error(["The ".ucwords($label)." name must be alphabets only, the name: ", $argv[2], " is not all alphabets"]);
             }
         }
     
@@ -335,6 +351,9 @@ trait Commands {
                 break;
             case 'trait':
                 $this->buildTemplate("trait");
+                break;
+            case 'display':
+                $this->buildTemplate("display");
                 break;
             default:
                 # code...
@@ -667,12 +686,15 @@ trait Commands {
         }
     }
     public function use($object){
+
+        global $argv;
+
         switch (strtolower($object)) {
             case 'db': 
-                if(!isset($this->argv[2])){
+                if(!isset($argv[2])){
                     $this->error(["The Database name must be supplied, please supply the name of the database name to use", "", ""]);
                 } 
-                $name = $this->argv[2];
+                $name = $argv[2];
                 if(!$this->validate("name", $name)){
                     $this->error(["The supplied database name '{$name}' is invalid. Please specify a valid name", "", ""]);
                 }
@@ -743,12 +765,15 @@ trait Commands {
         }
     }
     public function export($object){
+
+        global $argv;
+
         switch (strtolower($object)) {
             case 'data': 
-                if(!isset($this->argv[2])){
+                if(!isset($argv[2])){
                     $this->error(["The name of the table to be exported must be supplied, please supply the name of the table.", "", ""]);
                 } 
-                $name = $this->argv[2];
+                $name = $argv[2];
                 if(!$this->validate("name", $name)){
                     $this->error(["The supplied table name '{$name}' is invalid. Please specify a valid name", "", ""]);
                 }
@@ -775,13 +800,16 @@ trait Commands {
         }
     }
     public function import($object){//from project to database
+
+        global $argv;
+
         switch (strtolower($object)) {
             case 'data': 
-                if(!isset($this->argv[2])){
+                if(!isset($argv[2])){
                     $this->error(["The name of the table to be filled with data must be supplied, please supply the name of the table.", "", ""]);
                 } 
 
-                $names          = $this->argv[2];
+                $names          = $argv[2];
 
                 $allDataFiles   = explode(",", $names);
 

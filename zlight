@@ -1,5 +1,4 @@
 <?php
-$env = "cli";
 
 //Autoload depencies files
 require_once("./app/lib/vendor/autoload.php");
@@ -12,5 +11,5 @@ $config = require_once("./config/app.php");
 App::initialize($config);
 
 //inialize Console
-$console = new Console($argv, $argc, new App(null, null, $config));
+$console = new Console(new App(null, null, $config));
 ?>

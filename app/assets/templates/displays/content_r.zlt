@@ -1,0 +1,17 @@
+<?php //$app->router->plugToSocket("sampleMiddleware"); ?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <?php
+      $app->getFragment("displayName", "head.php");
+      //$app->router->plugToSocket("sampleLinks");
+    ?>
+  </head>
+  <body>
+      <?php $app->getFragment("displayName", "header.php");?>
+      
+      <?php $app->router->showContent;?>
+        
+      <?php $app->getFragment("displayName", "footer.php");?>
+  </body>
+</html>

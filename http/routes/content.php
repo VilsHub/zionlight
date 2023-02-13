@@ -1,6 +1,11 @@
 <?php
-//array key = route definition
-//array value = display base directory for route
+/**
+ * array key    = route definition
+ * array value  = display base directory for route
+ * 
+ * All dynamic segment value could be recieved as data
+ * The segment to be used as the display file should be indicated with a ":", (example "/:sales/branch/{[0-9a-zA-Z]+}") if not specified, the defaultBaseFile will be used, this applies to only dynamic route
+ */
 
 $root               = "/";
 $error              = "/error";

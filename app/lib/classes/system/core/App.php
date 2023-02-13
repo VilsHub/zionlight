@@ -12,15 +12,13 @@ require_once(dirname(__DIR__)."/helpers/CLIColors.php");
 class App extends CLIColors{
     function __construct($loader=null, $router=null, $config){
         parent::__construct();
-        global $env;  
-        $this->env = $env;
         $this->loader = $loader;
         $this->config = $config;
         $this->router = $router;    
     }
 
     public function boot(){
-        if($this->env == "web"){
+        if(PHP_SAPI != "web"){
             Session::start();
             CSRF::generateSessionToken($this->config->CSRFName);
         }
@@ -56,7 +54,7 @@ class App extends CLIColors{
                 $errorMessage   = $this->getErrorMessage("ze0001");
                 $msg            = $errorMessage["cli"];
                 
-                if($this->env != "cli") $msg = $errorMessage["web"];
+                if(PHP_SAPI != "cli") $msg = $errorMessage["web"];
                 
                 Validator::validateFile($db_cert, $msg);
                 $opt[PDO::MYSQL_ATTR_SSL_CA] =  $db_cert;
@@ -70,10 +68,10 @@ class App extends CLIColors{
             $errorMessage = $this->getErrorMessage($th->errorInfo[1]); //1045
             try {
                 $msg = $errorMessage["cli"];
-                if($this->env != "cli") $msg = $errorMessage["web"];
+                if(PHP_SAPI != "cli") $msg = $errorMessage["web"];
                 throw new Error($msg);
             }catch(\Throwable $th) {
-                if($this->env != "cli"){
+                if(PHP_SAPI != "cli"){
                     trigger_error($th);
                 }else{
                     echo "\n";
@@ -119,7 +117,7 @@ class App extends CLIColors{
             $errorMessage   = $this->getErrorMessage("ze0001");
             $msg            = $errorMessage["cli"];
             
-            if($this->env != "cli") $msg = $errorMessage["web"];
+            if(PHP_SAPI != "cli") $msg = $errorMessage["web"];
             
             Validator::validateFile($db_cert, $msg);
             $opt[PDO::MYSQL_ATTR_SSL_CA] =  $db_cert; 
@@ -153,10 +151,10 @@ class App extends CLIColors{
        
             try {
                 $msg = $errorMessage["cli"];
-                if($this->env != "cli") $msg = $errorMessage["web"];
+                if(PHP_SAPI != "cli") $msg = $errorMessage["web"];
                 throw new Error($msg);
             }catch(\Throwable $th) {
-                if($this->env != "cli"){
+                if(PHP_SAPI != "cli"){
                     trigger_error($th);
                 }else{
                     echo "\n";
@@ -261,6 +259,8 @@ class App extends CLIColors{
     }
 
     public function getFragment($block, $fragmentFile){
+        global $app;
+        extract(["app" => $app]);
         require_once($this->config->displayDir."/".$block."/".$this->config->fragmentsDir."/".$fragmentFile);
     }
 
@@ -276,4 +276,5 @@ class App extends CLIColors{
         loadEnv($config->envFile);
     }
 }
+
 ?>

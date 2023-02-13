@@ -202,8 +202,8 @@ trait Schema {
             ];
         }
     }
-    private function writeSchema($newSchemaFile, $schemaTemplateName, $schemaName, $tableName, $points){
-        $schemaContent =  $this->getTemplate("schema", $schemaTemplateName, $tableName, $points);
+    private function writeSchema($newSchemaFile, $schemaTemplateName, $schemaName, $tableName, $properties){
+        $schemaContent =  $this->getTemplate("schema", $schemaTemplateName, $properties);
         if($this->executeWrite($newSchemaFile, $schemaContent)){
             //track schema file
             return $this->trackCreatedSchema($schemaName, $tableName);

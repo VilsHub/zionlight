@@ -1,0 +1,68 @@
+# Post display creation task
+
+After successful creation of your display file, kindly take the following steps to make it accessible
+
+1. Go to the file **http/routes/content.php** and define the unique ID for the created display block, and set its base display directory. **"/root"** is commonly used as the display base. That is:
+
+     ```php
+       ...
+       $yourVariableName     = "blockRoute";
+       ...
+
+       return array(
+         ...
+         $yourVariableName   => "displayBaseForRoute",
+         ...
+       )
+     ```
+
+    Example
+
+     ```php
+      ...
+       $displayName    = "/displayName";
+       ...
+
+       return array(
+         ...
+         $displayName  => "/root",
+         ...
+       )
+     ```
+
+2. Go to the file **http/handlers/web.php** and define the **IF** block for the created display block, in order to capture request and display content related to it. As a guide you can always copy and the already existing **ELSE IF** block, and then modify the paramters to match the created display block. Yours should be as displayed:
+
+    ```php
+    ...
+    else if(Route::block($displayName, Request::$uri)){
+
+      $block      = $app->getDisplayBlock("displayName", "blockName.php");
+      $baseDir    = $app->getLoadBase("displayName");
+      $app->router->listen($block, $baseDir);
+
+    }
+    ...
+    ```
+ 
+ 3. If any page to be displayed within the block, needs its own links, middleware, or some certain files, then go to the file **http/routes/socket.php**, and define its socket, and add the plug files in the display block plug directory **display/displayName/plugs/**. When done, make use of the created socket by executing the code within the display block, fragments, or contents
+
+    **Socket definition**
+
+    ```php
+    ...
+     "sampleSocketName"     => [
+      "pageId"  => $config->displayDir."/displayName/".$config->plugsDir."/targetPlugFile.php"
+    ]
+    ...
+    ```
+
+    Note
+    - The **pageId** could either be on of the url segment to identify the page, or two segments of the url separated with pipe symbol "|" example "a|b" where the a must appear first in the url segment before b (to match the page), from left to right. If b appear first before a, there will be no match. The is to help make page matching unique
+
+    **Socket usage**
+
+    ```php
+    ...
+    $app->router->plugToSocket("sampleSocketName");
+    ...
+    ```

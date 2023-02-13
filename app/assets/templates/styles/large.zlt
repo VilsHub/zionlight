@@ -1,0 +1,71 @@
+/* CSS Document */
+/*
+	H1 @ Level 4 = 68px;
+	scale ratio = 1.618
+	line height ratio = 1.44 => 23px;
+
+*/
+/********Typo*********/
+html {
+    font-size: 16px;
+    line-height: 23px;
+  }
+  body{
+      font-family: OpenSans;
+      font-size: 1rem;
+      line-height: 23px;
+      font-weight: 300;
+      /*max-width: 560px;*/
+  }
+  h1{
+    font-size: 4.25rem;
+      line-height: 69px;
+      font-family: BebasNeue;
+        /*margin-top: 23px;*/
+    margin-bottom: 46px;
+  }
+  h2, h3, h4 {
+      font-family: LibreBaskerville;
+  }
+  h2{
+    font-size: 2.625rem;
+    line-height: 2.875rem;
+   /* margin-top: 1.4375rem;*/
+    margin-bottom: 1.4375rem;
+  }
+  h3{
+    font-size: 1.625rem;
+    line-height: 2.875rem;
+   /* margin-top: 1.4375rem;*/
+    margin-bottom: 0rem;
+      text-transform:uppercase;
+  }
+  /*************************/
+  
+  /************Header**************/
+  .page header {
+      height: 69px;
+  }
+  .page header #headerContent{
+      height:46px;
+  }
+  /********************************/
+  
+  
+  /************Footer**************/
+  .page footer{
+      margin-top: 46px;
+  }
+  .page footer #copyright{
+      margin-top: 46px;
+  }
+  .page footer #copyright .content .con{
+      flex-basis:60%;
+      text-align: center;
+      line-height: 46px;
+      height:46px;
+      font-size: 13px;
+      font-weight: normal;
+  }
+  /********************************/
+  

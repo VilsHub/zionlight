@@ -12,14 +12,15 @@ $classDir           = $libDir ."/classes/application";
 $setupDir           = $root."/setup";
 $miscDir            = $mainDir."/misc";
 $logsDir            = $root."/logs";
+$publicDir          = $root."/public";
 
 $appMainDir         = $mainDir;
 
 //Display Directories
 $displayDir         = $root."/display";
 $contentsDir        = "contents";
-$loadDirName        = "contents/load";
-$xhrDirName         = "contents/xhr";
+$loadDirName        = $contentsDir."/load";
+$xhrDirName         = $contentsDir."/xhr";
 $plugsDir           = "plugs";
 $fragmentsDir       = "fragments";
 
@@ -97,6 +98,7 @@ return (object) [
     "vendorDir"         => $vendorDir,
     "appsDataDir"       => $appsDataDir,
     "appPublicDir"      => $appsPublicDir,
+    "publicDir"         => $publicDir,
 
     // Suffixes
     "modelFileSuffix"   => "Model",

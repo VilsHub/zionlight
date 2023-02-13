@@ -1,0 +1,12 @@
+body{
+    margin: 20% auto;
+    text-align: center;
+    background-color: #e8f0ed;
+}
+
+h1{
+    font-size: 41px;
+}
+p {
+    color:#535050;
+}

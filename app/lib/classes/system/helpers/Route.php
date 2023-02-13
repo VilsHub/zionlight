@@ -29,31 +29,49 @@ class Route{
     public static function segments($path){
       return explode("/",trim($path, "/"));
     }
-    private static function dynamicRouteQuery($route, $uri, $for="web"){
-      $status=false;$data=[];$matched=null;
+    private static function dynamicRouteQuery($route, $uri){
+      $data=[];$matched=null;
       $routeSegments      = self::segments($route);
       $uriSegments        = self::segments($uri);
-      $totalURISegment    = count($uriSegments );
-      $totalRouteSegment  = count($routeSegments );
-      if($for == "web"){
-        $validRange = $totalURISegment > 0; //url segments may be more than the route definition segments
+      $totalURISegment    = count($uriSegments);
+      $totalRouteSegment  = count($routeSegments);
+      $segmentDifference  = $totalURISegment - $totalRouteSegment;
+      $displayFile        = null;
+      $lastTrail          = null;
+
+      if(PHP_SAPI != "cli"){//web
+        $validRange = $segmentDifference == 0 || $segmentDifference == 1; //url segments may be more than the route definition segments with only 1
       }else{
         $validRange = $totalURISegment == $totalRouteSegment;//url segments must be equal to the route definition segments
       }
 
+      if($segmentDifference == 1){// has last trail
+        $lastTrail = $uriSegments[$totalURISegment-1];
+        $trailType = (strpos($lastTrail, "{") !== FALSE)?"dynamic":"static";
+      }
+
+      $n=0;
+
       if($validRange){
+
         //loop through the routes, to test for each segment on the url
         foreach ($routeSegments as $key => $value) {  
+          $n++;
           $matched = 0;
-          if(strpos($value, "{") !== FALSE){ ////dynamic type (it could be data or regEx)
+
+          //get set display file
+          if (strpos($value, ":") !== false) $displayFile = ltrim($value, ":");
+          
+
+          if(strpos($value, "{") !== FALSE){ //dynamic type (it could be data or regEx)
             $parsedData = self::parsedData($value);
             if(self::dynamicRouteType($parsedData) == "regex"){
               //regex type, check for match
               $parsedPattern = "/".$parsedData."/";
-
+              // echo $uriSegments[$key]."</br></br> ". $parsedData;
               if(isset($uriSegments[$key])){
                 if(preg_match($parsedPattern, $uriSegments[$key])){
-                  $data[] = $uriSegments[$key];
+                  $data[] = DataParser::inText($uriSegments[$key]);
                   $matched=true;
                 }else{
                   $matched=false;
@@ -71,8 +89,9 @@ class Route{
               }
             }
           }else{
+
             if(isset($uriSegments[$key])){
-              if($value != $uriSegments[$key]){
+              if(ltrim($value, ":") != $uriSegments[$key]){
                 $matched=false;
                 break;
               }else{
@@ -80,14 +99,45 @@ class Route{
                 continue;
               }
             }
+
           }
+
+          //check if last trail
+          if ($segmentDifference == 0 && $n == $totalRouteSegment){
+              if ($displayFile == null){ //no display file specified, use default trail as file
+                $displayFile = "default";
+              }
+          }
+
+          if ($segmentDifference == 1 && $n == $totalRouteSegment){
+            if($trailType == "static"){
+              if ($displayFile == null){ //no display file specified, use last trail as file
+                $displayFile = $lastTrail;
+              }else{
+                $data[] = DataParser::inText($lastTrail);
+              }
+            }
+          }
+
+          if($totalURISegment == 2 && $n == $totalRouteSegment){
+            if ($displayFile == null){
+              if ((strpos($uriSegments[0], "{") === FALSE)){
+                $displayFile = $uriSegments[0];
+              }
+            }
+          }
+
+
         }
       }
+
       return [
-        "data"          => $data,
-        "matched"       => (bool) $matched,
-        "urlSegments"   => $uriSegments,
-        "routeSegments" => $routeSegments 
+        "data"              => $data,
+        "matched"           => (bool) $matched,
+        "urlSegments"       => $uriSegments,
+        "routeSegments"     => $routeSegments,
+        "displayFile"       => $displayFile,
+        "segmentDifference" => $segmentDifference
       ];
     }
     private static function executeCallBack($callBack, $data){
@@ -151,7 +201,7 @@ class Route{
               }
           }else{
             if(isset($uriBlock[$key])){
-              if($uriBlock[$key] != $value){
+              if($uriBlock[$key] != trim($value, ":")){
                 $status = false;
                 break;
               }

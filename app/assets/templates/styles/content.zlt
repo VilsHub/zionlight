@@ -1,0 +1,36 @@
+#headerBoundary {
+    box-shadow: none;
+    background-color:white;
+    border-bottom: solid 1px #66a820;
+}
+/* #headerContent{
+    
+} */
+#logoCon{
+    position: absolute;
+    height: 100%;
+    width:100px;
+    left:0;
+}
+#logoCon img{
+    margin-top: 7px;
+    width: 80%;
+    height: 80%;
+}
+.hdr{
+    height:46px;
+    margin-bottom: 23px;
+}
+.hdr h2{
+    width:auto;
+    height:100%;
+    padding-left:46px;
+    line-height: 46px;
+}
+body{
+    margin: 0 auto;
+    text-align: center;
+}
+p {
+    color:#535050;
+}
