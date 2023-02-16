@@ -5,7 +5,7 @@
 
 $root               = dirname(__DIR__);
 $permissions        = require_once("authorization.php");
-$envFile            = $root."/host.env";
+$envFile            = $root."/.env";
 $mainDir            = $root."/app";
 $libDir             = $mainDir."/lib";
 $classDir           = $libDir ."/classes/application";

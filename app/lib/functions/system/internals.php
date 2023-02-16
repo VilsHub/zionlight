@@ -1,40 +1,52 @@
 <?php
 use vilshub\dbant\DBAnt;
 use vilshub\validator\Validator;
+use vilshub\Helpers\Style;
 
 function loadEnv($envFile){
-    $configs    = require_once($envFile);
-    $_SERVER    = array_merge($_SERVER, $configs);
-    $_ENV       = array_merge($_ENV, $configs);
+    $fileSystem = new FileSystem($envFile);
+    $fileSystem->readContent("text", null, function($data){
+        writeEnvValues($data);
+    });
+}
+
+function writeEnvValues($data){
+    $config = explode("=", $data);
+    $key    = $config[0];
+    unset($config[0]);
+    $value  = trim(implode("=", $config));
+   
+    //Write values
+    $_SERVER[$key]  = $value;
+    $_ENV[$key]     = $value;
+    putenv("{$key}={$value}");
 }
 function addEnv($key, $value){
     $_SERVER[$key]    = $value;
     $_ENV[$key]       = $value;
-}
-function env($key){
-    return $_SERVER[$key];
+    putenv("{$key}={$value}");
 }
 function setupEnvironment($environment, &$app){
 
-    if(env("DB_APP")){//setup db connection
+    if(getenv("DB_APP")){//setup db connection
         $db_init	= false; 
         $db         = null;
         $xPDO       = null;
         $pdo        = null;
 
-        if(env("DB_SETUP_CHECK")){
+        if(getenv("DB_SETUP_CHECK")){
             $serverStatus   = $app->pingDatabaseServer();
             if ($serverStatus["status"]){
                 $db_init    = $serverStatus["db_init"];
                 $dbStatus   = $app->databaseInitCheck();
             }
         }else{
-            $db_host	= env("DB_HOST");
-            $db_db	    = env("DB_DATABASE");
-            $db_user	= env("DB_USER");
-            $db_pass	= env("DB_PASSWORD");
-            $db_charset	= env("DB_CHARSET");
-            $db_ssl     = env("DB_SSL");
+            $db_host	= getenv("DB_HOST");
+            $db_db	    = getenv("DB_DATABASE");
+            $db_user	= getenv("DB_USER");
+            $db_pass	= getenv("DB_PASSWORD");
+            $db_charset	= getenv("DB_CHARSET");
+            $db_ssl     = getenv("DB_SSL");
             $db_cert    = $app->config->miscFiles->db_certificate;;
 
             $opt = [

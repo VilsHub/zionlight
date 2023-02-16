@@ -6,13 +6,13 @@
   class ErrorHandler
   {
     public static function listenForErrors(){
-      function listen($errorNumber, $errorMessage, $file, $lineNumber, $eContext){
-        ErrorHandler::throwError($errorNumber, $errorMessage, $file, $lineNumber, $eContext);
+      function listen($errorNumber, $errorMessage, $file, $lineNumber){
+        ErrorHandler::throwError($errorNumber, $errorMessage, $file, $lineNumber);
       }
       set_error_handler('listen', E_USER_NOTICE);
     }
   
-    public static function throwError($errorNumber, $errorMessage, $file, $lineNumber, $eContext){
+    public static function throwError($errorNumber, $errorMessage, $file, $lineNumber){
       function createTrail($trail){
         return "<div style='box-sizing: border-box; width:98%; padding:10px; margin:0 auto; border:solid 1px gray; background-color:black; color:white'>{$trail}</div>";
       }
@@ -52,18 +52,18 @@
         echo createTrail($output);
       }
 
-      $custom = false;
-      $logMessage = "";
-      if(isset($eContext["th"])){
-        $message    = "<span color='black'><b>Error :</b> </style>".$eContext["th"]->getMessage()."</span><br/><br/>";
-        $message    .="<sapn color='black'><b>File : </b></span> Executed in file:  <br/>".$eContext["th"]->getFile(). " at line : ". $eContext["th"]->getLine();
-        $logMessage = $eContext["th"]->getMessage();
-        if (env("ENVIRONMENT") != "production") echo Message::write("error", $message);
-      }else{
+      // $custom = false;
+      // $logMessage = "";
+      // if(isset($eContext["th"])){
+      //   $message    = "<span color='black'><b>Error :</b> </style>".$eContext["th"]->getMessage()."</span><br/><br/>";
+      //   $message    .="<sapn color='black'><b>File : </b></span> Executed in file:  <br/>".$eContext["th"]->getFile(). " at line : ". $eContext["th"]->getLine();
+      //   $logMessage = $eContext["th"]->getMessage();
+      //   if (env("ENVIRONMENT") != "production") echo Message::write("error", $message);
+      // }else{
         $custom     = true;
         $logMessage = $errorMessage;
         if (env("ENVIRONMENT") != "production") echo Message::write("error", $errorMessage);
-      }
+      //}
       error_log($logMessage);
       if (env("ENVIRONMENT") != "production") getErrorDetails($custom);
       die();

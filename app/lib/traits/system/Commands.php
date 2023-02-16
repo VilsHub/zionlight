@@ -720,7 +720,7 @@ trait Commands {
                 ];
                 
                 if($exist){ // use it
-                    if($name == env("DB_DATABASE")){
+                    if($name == getenv("DB_DATABASE")){
                         $this->warning(["The database: ", "'{$name}'", "is already set"]);
                     }else{
                         $parsedDbInfo["database"]["new"] = $name;

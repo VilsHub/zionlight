@@ -13,6 +13,7 @@ use Dice\Dice;
   */
 class Loader
 {
+    private $appConfig;
     function __construct(){
         global $config;
         $this->appConfig = $config;

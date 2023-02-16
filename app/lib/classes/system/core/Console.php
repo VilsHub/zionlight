@@ -59,12 +59,12 @@ class Console extends CLIColors{
         $this->app      = $app;
         $this->configs  = $app->config;
         $this->dbInfo   = [
-            "db"            => env("DB_DATABASE"),
-            "isDBApp"       => env("DB_APP"),
-            "user"          => env("DB_USER"),
-            "host"          => env("DB_HOST"),
-            "pass"          => env("DB_PASSWORD"),
-            "charset"       => env("DB_CHARSET")
+            "db"            => getenv("DB_DATABASE"),
+            "isDBApp"       => getenv("DB_APP"),
+            "user"          => getenv("DB_USER"),
+            "host"          => getenv("DB_HOST"),
+            "pass"          => getenv("DB_PASSWORD"),
+            "charset"       => getenv("DB_CHARSET")
         ]; 
 
         

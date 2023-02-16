@@ -3,6 +3,7 @@
  * This class helps to provide file information of a file like mime type, file name, file extenstion and others
  * @author : Stalryvil
  */
+use vilshub\helpers\Style;
 
  class FileInfo {
     private $file;
@@ -28,13 +29,11 @@
         if(file_exists($file)){
             $this->file = $file;
         }else{
-            trigger_error("File info");
+            $msg1 = "Target file $file not found, for ".Style::color(__CLASS__, "black")." contructor. Contructor argument must be a valid file";
+            trigger_error($msg1);
         }
     }
  
-    public function name(){
-
-    }
     public function mimeType(){
         return finfo_file(finfo_open(FILEINFO_MIME_TYPE), $this->file);
     }
