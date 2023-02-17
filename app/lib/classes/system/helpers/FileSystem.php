@@ -60,9 +60,10 @@ use vilshub\helpers\Style;
 
         $fileHandler  =  fopen($this->file, $mode);
         $contents = "";
-
+        $size = $size??4096;
 
         while(!feof($fileHandler)){
+            // continue;
             if ($callBack == null){
 
                 if($type == "text"){//text data
