@@ -62,10 +62,10 @@
       // }else{
         $custom     = true;
         $logMessage = $errorMessage;
-        if (env("ENVIRONMENT") != "production") echo Message::write("error", $errorMessage);
+        if (getAppEnv("ENVIRONMENT") != "production") echo Message::write("error", $errorMessage);
       //}
       error_log($logMessage);
-      if (env("ENVIRONMENT") != "production") getErrorDetails($custom);
+      if (getAppEnv("ENVIRONMENT") != "production") getErrorDetails($custom);
       die();
     }
   }

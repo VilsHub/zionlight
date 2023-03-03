@@ -13,12 +13,8 @@ $socketFiles  = require_once(dirname(__DIR__)."/http/routes/socket.php");
 //register error handler
 ErrorHandler::listenForErrors();
 
-//Initialize App
-App::initialize($config);
-
 //System applications
 $systemAppsHandler = require_once(dirname(__DIR__)."/config/applications.php");
-
 
 //Instantiate App
 $app          = new App(new Loader, new Router($routes, $socketFiles, $config), $config);

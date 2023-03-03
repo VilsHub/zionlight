@@ -6,6 +6,7 @@ use vilshub\helpers\Style;
 
 class Controller
 {
+    public $appConfig, $loader, $request, $session, $validator;
     function __construct(Loader $loader, Request $request, Session $session, Validator $validator){
         global $config;
         $this->appConfig    = $config;

@@ -36,6 +36,7 @@ class SystemApplications
                 public $routeFiles      = null;
                 public $displaySettings = null;
                 public $id              = null;
+                public $displayMaps     = null;
             };
             $obj->id                    = $id;
             $this->appsInstances[$id]   = $obj;

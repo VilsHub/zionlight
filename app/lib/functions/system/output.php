@@ -13,15 +13,16 @@ use vilshub\validator\Validator;
 function pretty_print($array, $kill=true){
     //Validate argument
     $msg1 = "Invalid argument value, ".Style::color("prettyPrint(x)", "black")." function argument must be an array";
-    Validator::validateArray($array, Message::write("error", $msg1));
+    Validator::validateArray($array, $msg1);
     foreach ($array as $key => $value) {
-      if(is_array($value)){
-        echo '<pre>'; 
-        print_r($array); 
-        echo '</pre>';
-      }else{
-        echo $key ." => ".$value."<br/>";
-      }
+        if(is_array($value)){
+          echo '<pre>'; 
+          print_r($array); 
+          echo '</pre>';
+        }else{
+          echo $key ." => ".$value."<br/>";
+        }
+
     }
     if($kill) die;
 }
@@ -50,5 +51,45 @@ function dump_if($value, $content){
   if(Session::get("xid") == $value){
     echo $content;
   }
+}
+$level=1;
+function dump($countable, &$level=1){
+  $n = count($countable);
+
+  if($n > 0){
+    
+    foreach ($countable as $key => $value) {
+      if (is_array($value)){
+        $level++;
+        $tab = tab($level);
+        echo '<pre>'; 
+        echo $tab.$key.": [ ";
+        dump($value, $level);
+
+        echo " ]";
+        echo '</pre>';
+        
+      }else{
+        $tab = tab($level);
+        echo '<pre>'; 
+        echo $tab.$key.": ".$value."=$level";
+        echo '</pre>';
+      }
+     $level--;
+     $level = $level <= 0? 1: $level;
+    }
+
+   
+  }
+
+}
+
+function tab($n){
+  $val = "";
+  for ($i=0; $i < $n ; $i++) { 
+    $val .= "&emsp;&emsp;";
+  }
+
+  return $val;
 }
 ?>

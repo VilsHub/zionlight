@@ -128,5 +128,8 @@ return (object) [
 
     //permissions   
     "permissions"       => $permissions,
+
+    //Will hold the application environments, defined in the .env files on runtime
+    "appEnvs"           => []
 ];
 ?>

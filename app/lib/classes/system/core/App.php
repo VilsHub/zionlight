@@ -11,6 +11,7 @@ require_once(dirname(__DIR__)."/helpers/CLIColors.php");
 
 class App extends CLIColors{
     public $loader, $config, $router;
+
     function __construct($loader, $router, $config){
         parent::__construct();
         $this->loader = $loader;
@@ -23,8 +24,14 @@ class App extends CLIColors{
             Session::start();
             CSRF::generateSessionToken($this->config->CSRFName);
         }
-        setupEnvironment(getenv("ENVIRONMENT"), $this);
+
+
+        setupLogging($this->config->logFile);
+        loadEnv($this->config->envFile, $this);
+        setupEnvironment(getAppEnv("ENVIRONMENT"), $this);
+        
     }
+
     public function setPageTitle($value){
         $msg =  " Invalid argument value, ".Style::color(__CLASS__."->", "black").Style::color("setPageTitle(x)", "black")." method argument must be a string";
         Validator::validateString($value, Message::write("error", $msg));
@@ -32,13 +39,13 @@ class App extends CLIColors{
     }
 
     public function databaseInitCheck(){
-        $db_host	    = getenv("DB_HOST");
-        $db_user	    = getenv("DB_USER");
-        $db_db		    = getenv("DB_DATABASE");
-        $db_pass	    = getenv("DB_PASSWORD");
-        $db_charset	    = getenv("DB_CHARSET");
+        $db_host	    = getAppEnv("DB_HOST");
+        $db_user	    = getAppEnv("DB_USER");
+        $db_db		    = getAppEnv("DB_DATABASE");
+        $db_pass	    = getAppEnv("DB_PASSWORD");
+        $db_charset	    = getAppEnv("DB_CHARSET");
         $status         = false;
-        $db_ssl         = getenv("DB_SSL");
+        $db_ssl         = getAppEnv("DB_SSL");
         $db_cert        = $this->config->miscFiles->db_certificate;
 
         try {
@@ -51,7 +58,7 @@ class App extends CLIColors{
 
             
 
-            if ($db_ssl) {
+            if ($db_ssl === "true") {
                 $errorMessage   = $this->getErrorMessage("ze0001");
                 $msg            = $errorMessage["cli"];
                 
@@ -64,6 +71,7 @@ class App extends CLIColors{
             $dsn    = "mysql:host={$db_host};dbname={$db_db};charset={$db_charset}";
             $pdo 	= new PDO($dsn, $db_user, $db_pass, $opt);
             $db 	= new DBAnt($pdo);   
+            
 
         }catch (\Throwable $th) {
             $errorMessage = $this->getErrorMessage($th->errorInfo[1]); //1045
@@ -101,11 +109,11 @@ class App extends CLIColors{
     public function pingDatabaseServer(){
         $status     = false;
         $db_init    = false;
-        $db_host	= getenv("DB_HOST");
-        $db_user	= getenv("DB_USER");
-        $db_pass	= getenv("DB_PASSWORD");
-        $db_charset	= getenv("DB_CHARSET");
-        $db_ssl     = getenv("DB_SSL");
+        $db_host	= getAppEnv("DB_HOST");
+        $db_user	= getAppEnv("DB_USER");
+        $db_pass	= getAppEnv("DB_PASSWORD");
+        $db_charset	= getAppEnv("DB_CHARSET");
+        $db_ssl     = getAppEnv("DB_SSL");
         $db_cert    = $this->config->miscFiles->db_certificate;
 
         $opt = [
@@ -179,17 +187,17 @@ class App extends CLIColors{
         if($errorNumber == 1045){
              //Web message
              $wMsg .= "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>INVALID DATABASE CREDENTIALS</span><br/>";
-             $wMsg .= "<br/>Database in use = ".getenv("DB_DATABASE")."<br/>";
-             $wMsg .= "<br/>Database User = ".getenv("DB_USER")."<br/>";
-             $wMsg .= "Database Password  = ".getenv("DB_PASSWORD")."<br/>";
+             $wMsg .= "<br/>Database in use = ".getAppEnv("DB_DATABASE")."<br/>";
+             $wMsg .= "<br/>Database User = ".getAppEnv("DB_USER")."<br/>";
+             $wMsg .= "Database Password  = ".getAppEnv("DB_PASSWORD")."<br/>";
              $wMsg .= "<br/><span style='color:black;'>Please go the config file '<span style='font-weight: bold;'>{$this->config->envFile}</span>' and supply the database details for the current environment</span>";
              $wMsg .= "<br/><span style='color:black;'>Run the command when done: '<span style='font-weight: bold;'>php zlight initialize:db</span>'. This will guide you through a quick DB initialization process</span>";
 
              //CLi message
              $cMsg .= "INVALID DATABASE CREDENTIALS\n\n";
-             $cMsg .= "\tDatabase in use \t = ".getenv("DB_DATABASE")."\n";
-             $cMsg .= "\tDatabase User \t\t = ".getenv("DB_USER")."\n";
-             $cMsg .= "\tDatabase Password\t = ".getenv("DB_PASSWORD")."\n";
+             $cMsg .= "\tDatabase in use \t = ".getAppEnv("DB_DATABASE")."\n";
+             $cMsg .= "\tDatabase User \t\t = ".getAppEnv("DB_USER")."\n";
+             $cMsg .= "\tDatabase Password\t = ".getAppEnv("DB_PASSWORD")."\n";
              $cMsg .= "\nPlease go the config file '".$this->color($this->config->envFile, "yellow","black").$this->color("' and supply the database details for the current environment\nRun the command when done: '", "light_red","black").$this->color("php zlight initialize:db", "yellow", "black").$this->color("'. This will guide you through a quick DB initialization process", "light_red", "black");
         }else if($errorNumber == 1){
              //Web message
@@ -213,7 +221,7 @@ class App extends CLIColors{
         }else if($errorNumber == 1049){
              //Web message
              $wMsg .= "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>DATABASE NOT FOUND</span><br/>";
-             $wMsg .= "<br/>Cannot connect to the configured database '".getenv("DB_DATABASE")."'<br/>";
+             $wMsg .= "<br/>Cannot connect to the configured database '".getAppEnv("DB_DATABASE")."'<br/>";
              $wMsg .= "<br/><span style='color:black;'>Please go the config file '<span style='font-weight: bold;'>{$this->config->envFile}</span>' and supply the database details for the current environment";
              $wMsg .= "<br/><span style='color:black;'>Run the command when done: '<span style='font-weight: bold;'>php zlight initialize:db</span>'. This will guide you through a quick DB initialization process</span>";
  
@@ -270,11 +278,6 @@ class App extends CLIColors{
          *  @ targetDisplayFile: specify file relative to the display load directory. Example /root/home.php
          */
         return $this->config->displayDir."/".$block."/".$this->config->contentsFolder->load.$targetDisplayFile;
-    }
-
-    public static function initialize($config){
-        setupLogging($config->logFile);
-        loadEnv($config->envFile);
     }
 }
 
