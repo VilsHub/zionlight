@@ -224,6 +224,9 @@ trait Commands {
         }     
     }
     public function track($object){
+
+        global $argv;
+
         switch (strtolower($object)) {
             case 'schema': 
                 //track setup
@@ -301,6 +304,7 @@ trait Commands {
         }
     }
     public function create($object){
+
         global $argv;
 
         //check for new object name
@@ -395,7 +399,7 @@ trait Commands {
 
                 $read = false;
                 while(!$read){
-                    $prompt = $this->color("Please select the environment to be initialized:\n\t1.Development\n\t2.Testing\n\t3.Production\n\nYour current environment is: '".env("ENVIRONMENT")."'", "green", "black");
+                    $prompt = $this->color("Please select the environment to be initialized:\n\t1.Development\n\t2.Testing\n\t3.Production\n\nYour current environment is: '".getAppEnv("ENVIRONMENT")."'", "green", "black");
                     $input  = $this->readLine($prompt);  
                     if(!($input <= 3 && $input > 0)){
                         $this->error(["Please use the range 1 - 3 to select the environment. You supplied '{$input}' which is not in the range", "", " Please make a valid a selection"], false);
@@ -575,7 +579,7 @@ trait Commands {
 
 
                                 //validate password
-                                if(!$this->validateDBPassword(env("DB_HOST"), $auth["user"], $input2)){
+                                if(!$this->validateDBPassword(getAppEnv("DB_HOST"), $auth["user"], $input2)){
                                     $this->error(["The password '{$input2}' is incorrect for the user '{$auth["user"]}'. Try again", "", ""], false);
                                     continue;
                                 };
@@ -586,7 +590,7 @@ trait Commands {
                             }
                         }else{
                                 //validate password
-                                if(!$this->validateDBPassword(env("DB_HOST"), $this->dbInfo["user"], "")){
+                                if(!$this->validateDBPassword(getAppEnv("DB_HOST"), $this->dbInfo["user"], "")){
                                     $this->error(["Authentication has failed for the user '{$this->dbInfo["user"]}' with no password set. Please try again", "", ""], false);
                                     continue;
                                 };

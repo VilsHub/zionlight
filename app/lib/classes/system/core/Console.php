@@ -2,7 +2,7 @@
 require_once("./app/lib/classes/system/helpers/CLIColors.php");
 class Console extends CLIColors{
     use Commands, Schema, Database, Data;
-
+    public $app, $configs, $dbInfo;
     private $version  = "1.2.0";
     private $commands =[
         "create" => [
@@ -53,18 +53,19 @@ class Console extends CLIColors{
     ];
 
     function __construct($app){
+        
         parent::__construct();
         $app->boot();
         global $argc, $argv;
         $this->app      = $app;
         $this->configs  = $app->config;
         $this->dbInfo   = [
-            "db"            => getenv("DB_DATABASE"),
-            "isDBApp"       => getenv("DB_APP"),
-            "user"          => getenv("DB_USER"),
-            "host"          => getenv("DB_HOST"),
-            "pass"          => getenv("DB_PASSWORD"),
-            "charset"       => getenv("DB_CHARSET")
+            "db"            => getAppEnv("DB_DATABASE"),
+            "isDBApp"       => getAppEnv("DB_APP"),
+            "user"          => getAppEnv("DB_USER"),
+            "host"          => getAppEnv("DB_HOST"),
+            "pass"          => getAppEnv("DB_PASSWORD"),
+            "charset"       => getAppEnv("DB_CHARSET")
         ]; 
 
         

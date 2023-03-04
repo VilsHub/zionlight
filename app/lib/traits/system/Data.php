@@ -46,8 +46,8 @@ trait Data {
         $data               .= "-- Zion Light SQL Dump\n";
         $data               .= "-- App Name         : {$this->configs->appName}\n";
         $data               .= "-- Generation Time  : ".date("M d, Y \a\\t h:i A")."\n"; // Jun 20, 2022 at 05:28 PM";
-        $data               .= "-- Data Engine      : ".env("DB_ENGINE")." version {$dataEngineVersion}"."\n";
-        $data               .= "-- Database Name    : ".env("DB_DATABASE")."\n";
+        $data               .= "-- Data Engine      : ".getAppEnv("DB_ENGINE")." version {$dataEngineVersion}"."\n";
+        $data               .= "-- Database Name    : ".getAppEnv("DB_DATABASE")."\n";
         $data               .= "-- Table Name       : {$tableName}"."\n\n";
         $data               .= "--\n";
         $data               .= "-- Dumping data for table `{$tableName}`\n";
