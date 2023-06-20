@@ -10,35 +10,15 @@ use vilshub\validator\Validator;
 /**
   *
   */
-function pretty_print($array, $kill=true){
-    //Validate argument
-    $msg1 = "Invalid argument value, ".Style::color("prettyPrint(x)", "black")." function argument must be an array";
-    Validator::validateArray($array, $msg1);
-    foreach ($array as $key => $value) {
-        if(is_array($value)){
-          echo '<pre>'; 
-          print_r($array); 
-          echo '</pre>';
-        }else{
-          echo $key ." => ".$value."<br/>";
-        }
-
-    }
-    if($kill) die;
+function pretty_print($countable, $kill=false){
+  Kint::dump($countable);
+  if($kill) die;
 }
-function pp($array, $kill=true){
+function pp($array, $kill=false){
   pretty_print($array, $kill);
 }
 function dd($mixData){
-  if(is_string($mixData)){
-    echo $mixData;
-  }else if (is_array($mixData)){
-    foreach ($mixData as $key => $value) {
-      echo $key ." => ".$value;
-      echo "<br/>";
-    }
-  }
-  die;
+  pretty_print($mixData, true);
 }
 
 function json_encode_with_csrf($array, $token){

@@ -48,5 +48,9 @@
   },
   "config": {
     "vendor-dir": "app/lib/vendor"
+  },
+  "require-dev": {
+    "kint-php/kint": "dev-master",
+    "fakerphp/faker": "1.*"
   }
 }

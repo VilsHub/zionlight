@@ -4,9 +4,8 @@ use vilshub\validator\Validator;
 use vilshub\Helpers\Style;
 
 
-function loadEnv($envFile, &$app){
-    
-    $fileSystem = new FileSystem($envFile);
+function loadEnv($fileSystem, &$app){
+
     $fileSystem->readContent("text", null, function($data) use ($app){
         $env = writeEnvValues($data);
         $app->config->appEnvs[$env["key"]] = $env["value"];
@@ -136,6 +135,7 @@ function setupEnvironment($environment, &$app){
         $app->config->pdo   = $db_init? $dbStatus["pdo"]:$pdo;   
         $app->config->xPDO  = $db_init? $serverStatus["xPDO"]:$xPDO;   
         $app->config->db    = $db_init? $dbStatus["db"]:$db;   
+        $app->db            = $app->config->db;
         
     }
 
@@ -156,5 +156,38 @@ function getAppEnv($key){
         return $app->config->appEnvs[$key];
     }
 
+}
+
+function getProtectedPropertyValue(&$obj, $property){
+    $reflection =  new ReflectionClass($obj);
+    $property = $reflection->getProperty($property);
+    $property->setAccessible(true);
+    return $property->getValue($obj);
+}
+
+function getErrorMessage(&$errorObj, $errorNumber=null){
+    $errMessage     = getProtectedPropertyValue($errorObj, "message");
+    $errFile        = getProtectedPropertyValue($errorObj, "file");
+    $lineNo         = getProtectedPropertyValue($errorObj, "line");
+    $errorNumber    = $errorNumber == null?getProtectedPropertyValue($errorObj, "code"):$errorNumber;
+
+    $wMsg=""; $cMsg="";
+
+    $msg = "The error '<span style='color:red;'>$errMessage</span>' occured at line: <span style='color:blue;'>".$lineNo. "</span> in the file <span style='color:blue;'>".$errFile."</span></br>";
+
+    //Web message
+    $wMsg .= "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>ERROR ENCOUNTERED</span><br/>";
+    $wMsg .= "<br/><span style='color:black;'>".$msg." </span><br/>";
+    
+
+    //CLi message
+    $cMsg .= "ERROR ENCOUNTERED\n\n";
+    $cMsg .= "\n".$msg."\n";
+    
+
+    return [
+        "web" => $wMsg,
+        "cli" => $cMsg
+    ];
 }
 ?>

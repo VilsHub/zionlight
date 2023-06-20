@@ -8,5 +8,5 @@ require_once("./app/lib/classes/system/core/Console.php");
 $config = require_once("./config/app.php");
 
 //inialize Console
-$console = new Console(new App(null, null, $config));
+$console = new Console(new FileSystem($config->envFile), new App(null, null, $config));
 ?>

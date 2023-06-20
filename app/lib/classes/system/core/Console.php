@@ -3,7 +3,7 @@ require_once("./app/lib/classes/system/helpers/CLIColors.php");
 class Console extends CLIColors{
     use Commands, Schema, Database, Data;
     public $app, $configs, $dbInfo;
-    private $version  = "1.2.0";
+    private $version  = "1.3.0";
     private $commands =[
         "create" => [
             "middleware",
@@ -14,7 +14,8 @@ class Console extends CLIColors{
             "schema",
             "db",
             "trait",
-            "display"
+            "display",
+            "seeder"
         ],
         "shine" => 1,
         "build" => [
@@ -49,13 +50,16 @@ class Console extends CLIColors{
         ],
         "import" =>[
             "data"
+        ],
+        "seed" => [
+            "db"
         ]
     ];
 
-    function __construct($app){
+    function __construct($fileSystemObj, $app){
         
         parent::__construct();
-        $app->boot();
+        $app->boot($fileSystemObj);
         global $argc, $argv;
         $this->app      = $app;
         $this->configs  = $app->config;
@@ -98,6 +102,7 @@ class Console extends CLIColors{
         $list .= "\n\t".$this->color(" - Create schema", "yellow", "black")." \t".$this->color("create:schema", "green", "black")." schemaName";
         $list .= "\n\t".$this->color(" - Create database", "yellow", "black")." \t".$this->color("create:db", "green", "black")." databaseName";
         $list .= "\n\t".$this->color(" - Create display", "yellow", "black")." \t".$this->color("create:display", "green", "black")." displayBlockName [options ...]";
+        $list .= "\n\t".$this->color(" - Create seeder", "yellow", "black")." \t".$this->color("create:seeder", "green", "black")." seederName [options ...]";
         echo "\n\n";
         
         $list .= "\n".$this->color(" SHINE", "light_purple", "black");
@@ -129,6 +134,9 @@ class Console extends CLIColors{
         
         $list .= "\n".$this->color(" CURRENT", "light_purple", "black");       
         $list .= "\n\t".$this->color(" - View current DB", "yellow", "black")." \t".$this->color("current:db", "green", "black");
+
+        $list .= "\n".$this->color(" SEED", "light_purple", "black");       
+        $list .= "\n\t".$this->color(" - Seed DB", "yellow", "black")." \t\t".$this->color("seed:db", "green", "black")." seederName";
 
         echo $list;
         echo "\n\n";
@@ -197,6 +205,11 @@ class Console extends CLIColors{
                 $this->validateCommandActionObject($exec, $object);
                 $this->import($object);
                 break;
+            case 'seed':
+                $object = $CommandInfo["object"];
+                $this->validateCommandActionObject($exec, $object);
+                $this->seed($object);
+                break;
             default:
                 # code...
                 break;
@@ -226,7 +239,7 @@ class Console extends CLIColors{
         if($object == null){
             $this->error(["No ".strtoupper($command)." command object supplied. You have not specified any object. The supported ".pluralizer("object", "s:-1", $totalCommandAction)." for ".pluralizer("this", "ese:2", $totalCommandAction)." ".pluralizer("command", "s:-1", $totalCommandAction)." ".pluralizer("is", "are", $totalCommandAction).": ". implode(", ", $this->commands[$command] ).". Example ", $command.":".$this->commands[$command][0], ""]);
         }else if(!in_array($object, $this->commands[$command])){
-            $this->error(["The ".strtoupper($command)." command cannot operate on the specified object:", $object, " It is not supported"]);
+            $this->error(["The ".strtoupper($command)." command cannot operate on the specified object: ", $object, " as it is not supported"]);
         }
     }
     private function error($details, $kill=true){  
@@ -305,7 +318,9 @@ class Console extends CLIColors{
             case 'name':
                 return !preg_match("/[^a-zA-Z0-9\_\-]+/", $value);
                 break;
-
+            case 'integer':
+                return preg_match("/[0-9]+/", $value);
+                break;
             default:
                 # code...
                 break;
@@ -339,8 +354,17 @@ class Console extends CLIColors{
                 $newControllerFile = $dir."/".$name.".php";
 
                 if($this->executeWrite($newControllerFile, $controllerContent)){
+
+                    //Make newly created class visible to composer
+                    $output = shell_exec("composer --version -q");  //Check if composer path exist     
+    
+                    if ($output != ""){
+                        shell_exec("composer dump-autoload -o -q");
+                    }
+
                     $this->success(["The controller: ",$name, " has been created successfully in the directory: ".$dir]);
                 }
+                
                 break;
             case 'model':
                 $dir = $this->configs->modelsDir;
@@ -351,6 +375,13 @@ class Console extends CLIColors{
                 //write to new model file
                 $newModelFile = $dir."/".$name.$this->configs->modelFileSuffix.".php";
                 if($this->executeWrite($newModelFile, $modelContent)){
+
+                    //Make newly created class visible to composer
+                    $output = shell_exec("composer --version -q");  //Check if composer path exist     
+                    if ($output != ""){
+                        shell_exec("composer dump-autoload -o -q");
+                    }
+
                     $this->success(["The Model: ",$name.$this->configs->modelFileSuffix, " has been created successfully in the directory: ".$dir]);
                 }
                 break;
@@ -362,6 +393,13 @@ class Console extends CLIColors{
                 //write to new middleware file
                 $newMiddlewareFile = $dir."/".$name.".php";
                 if($this->executeWrite($newMiddlewareFile, $middlewareContent)){
+
+                    //Make newly created class visible to composer
+                    $output = shell_exec("composer --version -q");  //Check if composer path exist     
+                    if ($output != ""){
+                        shell_exec("composer dump-autoload -o -q");
+                    }
+
                     $this->success(["The Middleware: ",$name, " has been created successfully in the directory: ".$dir]);
                 }
                 break;
@@ -372,6 +410,13 @@ class Console extends CLIColors{
                 //write to new middleware file
                 $newQuerybankFile = $dir."/".$name.$this->configs->queryFileSuffix.".php";
                 if($this->executeWrite($newQuerybankFile, $queryBankContent)){
+
+                    //Make newly created class visible to composer
+                    $output = shell_exec("composer --version -q");  //Check if composer path exist     
+                    if ($output != ""){
+                        shell_exec("composer dump-autoload -o -q");
+                    }
+
                     $this->success(["The QueryBank: ",$name.$this->configs->queryFileSuffix, " has been created successfully in the directory: ".$dir]);
                 }
                 break;
@@ -384,6 +429,13 @@ class Console extends CLIColors{
                 //write to new service file
                 $newServiceFile = $dir."/".$name.$this->configs->serviceFileSuffix.".php";
                 if($this->executeWrite($newServiceFile, $serviceContent)){
+
+                    //Make newly created class visible to composer
+                    $output = shell_exec("composer --version -q");  //Check if composer path exist     
+                    if ($output != ""){
+                        shell_exec("composer dump-autoload -o -q");
+                    }
+
                     $this->success(["The Service: ", $name.$this->configs->serviceFileSuffix, " has been created successfully in the directory: ".$dir]);
                 }
 
@@ -392,11 +444,18 @@ class Console extends CLIColors{
                 $dir = $this->configs->traitsDir;
 
                 $traitFullname = $name.$this->configs->traitFileSuffix;
-                $TraitContent =  $this->getTemplate("trait", "trait", ["{$traitFullname}" =>["lines" => [7], "placeHolder" => "traitName"]]);
+                $TraitContent =  $this->getTemplate("others", "trait", ["{$traitFullname}" =>["lines" => [7], "placeHolder" => "traitName"]]);
 
                 //write to new trait file
                 $newTraitFile = $dir."/".$name.$this->configs->traitFileSuffix.".php";
                 if($this->executeWrite($newTraitFile, $TraitContent)){
+
+                    //Make newly created class visible to composer
+                    $output = shell_exec("composer --version -q");  //Check if composer path exist     
+                    if ($output != ""){
+                        shell_exec("composer dump-autoload --o -q");
+                    }
+                    
                     $this->success(["The Trait: ", $name.$this->configs->traitFileSuffix, " has been created successfully in the directory: ".$dir]);
                 }
 
@@ -591,6 +650,87 @@ class Console extends CLIColors{
                         $this->error(["Error encountered while creating the : ", $name, " display block"]);
                     }
                 }
+            case 'seeder':
+                $dir = $this->configs->seederDir;
+
+                $seederFullname = $name.".php";
+                $options        = $this->getOptions("", ["table-name:", "record-size:"]);
+
+                $newSeederFile = $dir."/".strtolower($seederFullname);
+
+                //Validate record-size option
+                if (array_key_exists("record-size", $options)){
+                    
+                    if (!array_key_exists("data", $options["record-size"])){
+                        $this->error(["No record size specified for seeding, pass the value to the option : ", "--record-size=value", " while executing the create:seeder command"]);
+                    }else{
+                        // check if it is valid
+                        if (!$this->validate("integer", $options["record-size"]["data"])){
+                            $this->error(["The record size specified for seeding, must be an integer, the supplied value : ", "{$options["record-size"]["data"]}", " is not an integer"]);
+                        }
+                    }
+                }else{
+                    $this->error(["No record size specified for seeding, pass the option : ", "--record-size=value", " to the create:seeder command, to specify one"]);
+                }
+
+                //Validate table-name option
+                if (array_key_exists("table-name", $options)){
+                    
+                    if (!array_key_exists("data", $options["table-name"])){
+                        $this->error(["No table name specified for seeding, pass the value to the option : ", "--table-name=value", " while executing the create:seeder command"]);
+                    }else{
+                        // check if it is valid
+                        if (!$this->validate("alphaNum", $options["table-name"]["data"])){
+                            $this->error(["The table name specified for seeding, must be  alpha numberic, the supplied value : ", "{$options["table-name"]["data"]}", " is not alpha numberic"]);
+                        }
+                    }
+                }else{
+                    $this->error(["No table name specified for seeding, pass the option : ", "--table-name=value", " to the create:seeder command, to specify one"]);
+                }
+                
+                $buildInstructions = [
+                    $options["record-size"]["data"] => [
+                        "lines" => [28], 
+                        "placeHolder" => "rSize"
+                    ], 
+                    $options["table-name"]["data"] => [
+                        "lines" => [29], 
+                        "placeHolder" => "tName"
+                    ]
+                ];
+                
+                $seederContent =  $this->getTemplate("others", "seeder",  $buildInstructions);
+                
+                //check file if exist
+                if(file_exists($newSeederFile)){
+                    $answered =false;
+                    while(!$answered){
+                        $prompt = $this->color(" The seeder file: '", "black", "yellow"). $this->color($seederFullname, "blue", "yellow").  $this->color("' exist, do you want to override? Y or N ", "black", "yellow");
+                        $input =  $this->readLine($prompt);
+                        if($input != "n" && $input != "y"){
+                            echo "Please press 'Y' for yes and 'N' for no\n";
+                            continue;
+                        } 
+                        if(strtolower($input) == "y"){
+                           
+                            $write = $this->executeWrite($newSeederFile, $seederContent);
+                            if($write){
+                                $this->success(["The seeder file: '".$seederFullname."' has been created successfully in the directory: '{$dir}'. Complete your seeding template and run: ", "seed:db",""]);
+                            }
+
+                            $answered = true;
+                        }else{
+                            $answered = true;
+                        }
+                    }
+                }else{
+                    $write = $this->executeWrite($newSeederFile, $seederContent);
+                    if($write){
+                        $this->success(["The seeder file: '".$seederFullname."' has been created successfully in the directory: '{$dir}'. Complete your seeding template and run: ", "seed:db",""]);
+                    }
+                }
+
+                break;
             default:
                 # code...
                 break;
@@ -599,13 +739,26 @@ class Console extends CLIColors{
     }
     
     private function getTemplate($templateType, $templateName, $placeholderProp=[]){
-        //$placeholderProp : ["placeHolderContent" => ["lines" => [line1, line2, ...], "placeHolder" => "placeHolderName"]] 
-        //["placeHolderContent" => ["lines" => [6, 12, 16], "placeHolder" => "displayName"]]
+        //$placeholderProp : ["placeHolderValue" => ["lines" => [line1, line2, ...], "placeHolder" => "placeHolderName"]] 
+        //["placeHolderValue" => ["lines" => [6, 12, 16], "placeHolder" => "displayName"]]
         /**
-         * @param string $templateName The template name
-         * @param string $templateType The template type to be built
-         * @param string $placeholderName The value to replace the placeholder name in the template content
-         * @param integer $placeholderLine The line number which the placeholder(s) exist in the template to be built
+         * @param string $templateName      : The template name
+         * @param string $templateType      : The template type to be built, which is also used to get the correct path to the template file
+         * @param array  $placeholderProp   : Holds the line numbers, the placeholder name and value. Here is the sample struture below:
+         *   
+         *                                  [
+         *                                      "Sample-Title" =>[
+         *                                          "lines" => [3], 
+         *                                          "placeHolder" => "pageTitle"
+         *                                      ], 
+         *                                      "users" => [
+         *                                          "lines" => [4, 10], 
+         *                                          "placeHolder" => "displayName"
+         *                                      ]
+         *                                  ]
+         *  In the above example, The place holder with name "PageTitle" will be replace with 'Sample-Title' on line 3, and 
+         *  the placeholder with name 'displayName', will be replace with 'users' on line 4 and 18 
+         *
          */
 
         $file = "";
@@ -641,7 +794,7 @@ class Console extends CLIColors{
                     $lines = $placeholderData["lines"];
     
                     $placeHolderName = $placeholderData["placeHolder"];
-                    //echo count($placeholderProp) ." >> ".$placeHolderName." === \n";
+
                     if(in_array($n+1, $lines)){
                         $tempLine = str_replace($placeHolderName, $placeholderContent, $tempLine);
                     }else{
@@ -662,8 +815,25 @@ class Console extends CLIColors{
 
     private function getOptions($shortDef="", $longDef=[]){
         /**
-         * option type: flag, data, both. Flag: requires no data, Data: requires value, Both: May either be flag or data
+         * option type: flag = option, data = option:, both = option::
+         * Flag: requires no data, 
+         * Data: requires value, 
+         * Both: May either be flag or data
+         * 
+         * 
+         * Return Data type is an array of the structure below:
+         *  [
+         *      'optionName' => [
+         *          'type' => "data|flag|both",
+         *          'passed' => 1 | 0
+         *          'data' => optionValue
+         *      ],
+         *      ..
+         *      ..
+         * ]
+         * 
          */
+
         global $argv;
         $options = [
 
@@ -741,7 +911,10 @@ class Console extends CLIColors{
                         if($optionType == "data"){ //requires data
                         
                             if(count($option) > 1){ //only add option if data exist
-                                $options[$option[0]]["data"] = $option[1];
+                                //check if value is passed
+                                if (strlen($option[1]) > 0){
+                                    $options[$option[0]]["data"] = $option[1];
+                                }
                             }
                         
                         }else{ //add option if data exist or not
@@ -800,6 +973,8 @@ class Console extends CLIColors{
                 unset($options[$option]);
             }
         }
+
+        
         return $options;
 
     }

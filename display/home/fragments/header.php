@@ -1,4 +1,3 @@
-<div id="page">
 <header id="headerBoundary">
     <div id="headerContent">
     <div id="logoCon">

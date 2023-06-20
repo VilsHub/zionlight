@@ -10,7 +10,7 @@ use vilshub\dbant\DBAnt;
 require_once(dirname(__DIR__)."/helpers/CLIColors.php");
 
 class App extends CLIColors{
-    public $loader, $config, $router;
+    public $loader, $config, $router, $db;
 
     function __construct($loader, $router, $config){
         parent::__construct();
@@ -19,7 +19,7 @@ class App extends CLIColors{
         $this->router = $router;    
     }
 
-    public function boot(){
+    public function boot($fileSystem){
         if(PHP_SAPI != "web"){
             Session::start();
             CSRF::generateSessionToken($this->config->CSRFName);
@@ -27,7 +27,7 @@ class App extends CLIColors{
 
 
         setupLogging($this->config->logFile);
-        loadEnv($this->config->envFile, $this);
+        loadEnv($fileSystem, $this);
         setupEnvironment(getAppEnv("ENVIRONMENT"), $this);
         
     }
@@ -70,11 +70,13 @@ class App extends CLIColors{
 
             $dsn    = "mysql:host={$db_host};dbname={$db_db};charset={$db_charset}";
             $pdo 	= new PDO($dsn, $db_user, $db_pass, $opt);
-            $db 	= new DBAnt($pdo);   
             
+            $db 	= new DBAnt($pdo);   
 
         }catch (\Throwable $th) {
-            $errorMessage = $this->getErrorMessage($th->errorInfo[1]); //1045
+            
+            $errorMessage = $this->getErrorMessage($th);
+           
             try {
                 $msg = $errorMessage["cli"];
                 if(PHP_SAPI != "cli") $msg = $errorMessage["web"];
@@ -122,7 +124,7 @@ class App extends CLIColors{
             PDO::ATTR_EMULATE_PREPARES   => false
         ];
 
-        if ($db_ssl) {
+        if ($db_ssl == "true") {
             $errorMessage   = $this->getErrorMessage("ze0001");
             $msg            = $errorMessage["cli"];
             
@@ -145,19 +147,15 @@ class App extends CLIColors{
                 $db_init    = true;
             }
 
-        }catch(\Throwable $th){          
-            if(isset($th->errorInfo[1]) || !$db_init){
-                $errorNumber = (int) $th->errorInfo[1];
-                //2002 => No connection to database
-                //1045 => Invalid user credential
-                //3159 => SSL connection to database error
+        }catch(\Throwable $th){   
+            $errCode = getProtectedPropertyValue($errorObj, "code");
 
-                $errorMessage = $this->getErrorMessage($errorNumber);
-
+            if($errCode != 1){
+                $errorMessage = $this->getErrorMessage($th);
             }else{
-                $errorMessage = $this->getErrorMessage(1);
+                $errorMessage = $this->getErrorMessage($th, 1);
             }
-       
+        
             try {
                 $msg = $errorMessage["cli"];
                 if(PHP_SAPI != "cli") $msg = $errorMessage["web"];
@@ -182,8 +180,15 @@ class App extends CLIColors{
         ];
     }
 
-    public function getErrorMessage($errorNumber){
+    public function getErrorMessage(&$errorObj, $errorNumber=null){
+
+        $errMessage     = getProtectedPropertyValue($errorObj, "message");
+        $errFile        = getProtectedPropertyValue($errorObj, "file");
+        $lineNo         = getProtectedPropertyValue($errorObj, "line");
+        $errorNumber    = $errorNumber == null?getProtectedPropertyValue($errorObj, "code"):$errorNumber;
+
         $wMsg=""; $cMsg="";
+
         if($errorNumber == 1045){
              //Web message
              $wMsg .= "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>INVALID DATABASE CREDENTIALS</span><br/>";
@@ -251,7 +256,19 @@ class App extends CLIColors{
             $cMsg .= "DATABASE SERVER SSL ISSUE\n\n";
             $cMsg .= "\nThe specified SSL file: '".$this->color($this->config->miscFiles->db_certificate, "yellow","black").$this->color("' is not found'", "light_red","black");
 
-        }  
+        } else { //Error object must be supplied
+
+            $msg = "The error '<span style='color:red;'>$errMessage</span>' occured at line: <span style='color:blue;'>".$lineNo. "</span> in the file <span style='color:blue;'>".$errFile."</span></br>";
+
+            //Web message
+            $wMsg .= "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>ERROR ENCOUNTERED</span><br/>";
+            $wMsg .= "<br/><span style='color:black;'>".$msg." </span><br/>";
+            
+
+            //CLi message
+            $cMsg .= "ERROR ENCOUNTERED\n\n";
+            $cMsg .= "\n".$msg."\n";
+        } 
 
         return [
             "web" => $wMsg,
@@ -279,6 +296,15 @@ class App extends CLIColors{
          */
         return $this->config->displayDir."/".$block."/".$this->config->contentsFolder->load.$targetDisplayFile;
     }
+
+    public function generateError($errorMessage, $interface): void{
+        /**
+         * @param string $interface: string of either 'cli' or 'web  
+         */
+     
+        $parsedErrorMessage = $this->getErrorMessage($errorMessage);
+        trigger_error($parsedErrorMessage[$interface]);
+    } 
 }
 
 ?>

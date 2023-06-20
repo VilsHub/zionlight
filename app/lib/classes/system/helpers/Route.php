@@ -151,7 +151,7 @@ class Route{
           $methodName = $controllerInfo[1];
           call_user_func_array(array($buildClass, $methodName), $data); 
         }catch (\Throwable $th) { 
-          trigger_error("");
+          trigger_error($th);
         }        
       }else if(is_callable($callBack)){ //execute function
         call_user_func_array($callBack, $data);

@@ -30,7 +30,7 @@ $app->router->maskExtension    = ".java";
 $app->router->useWordSeperator = true;
 $app->router->wordSeperator    = "-";
 
-$app->boot();
+$app->boot(new FileSystem($config->envFile));
 
 if(Request::isForApplication($systemAppsHandler->ids)){ //application
   $systemApp    = $systemAppsHandler->{Request::$id};

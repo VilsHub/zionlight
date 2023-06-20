@@ -359,6 +359,9 @@ trait Commands {
             case 'display':
                 $this->buildTemplate("display");
                 break;
+            case 'seeder':
+                $this->buildTemplate("seeder");
+                break;
             default:
                 # code...
                 break;
@@ -399,7 +402,7 @@ trait Commands {
 
                 $read = false;
                 while(!$read){
-                    $prompt = $this->color("Please select the environment to be initialized:\n\t1.Development\n\t2.Testing\n\t3.Production\n\nYour current environment is: '".getAppEnv("ENVIRONMENT")."'", "green", "black");
+                    $prompt = $this->color("Please select the environment to be initialized:\n\t1.Development\n\t2.Testing\n\t3.Production\n\nYour current environment is: '".env("ENVIRONMENT")."'", "green", "black");
                     $input  = $this->readLine($prompt);  
                     if(!($input <= 3 && $input > 0)){
                         $this->error(["Please use the range 1 - 3 to select the environment. You supplied '{$input}' which is not in the range", "", " Please make a valid a selection"], false);
@@ -579,7 +582,7 @@ trait Commands {
 
 
                                 //validate password
-                                if(!$this->validateDBPassword(getAppEnv("DB_HOST"), $auth["user"], $input2)){
+                                if(!$this->validateDBPassword(env("DB_HOST"), $auth["user"], $input2)){
                                     $this->error(["The password '{$input2}' is incorrect for the user '{$auth["user"]}'. Try again", "", ""], false);
                                     continue;
                                 };
@@ -590,7 +593,7 @@ trait Commands {
                             }
                         }else{
                                 //validate password
-                                if(!$this->validateDBPassword(getAppEnv("DB_HOST"), $this->dbInfo["user"], "")){
+                                if(!$this->validateDBPassword(env("DB_HOST"), $this->dbInfo["user"], "")){
                                     $this->error(["Authentication has failed for the user '{$this->dbInfo["user"]}' with no password set. Please try again", "", ""], false);
                                     continue;
                                 };
@@ -854,6 +857,48 @@ trait Commands {
 
             break;
         }
+    }
+    public function seed($object){
+
+        global $argv;
+
+        switch (strtolower($object)) {
+            case 'db': 
+                if(!isset($argv[2])){
+                    $this->error(["The seeder name must be supplied, please supply the name of the seeder ", "", ""]);
+                } 
+
+                $seederName = $argv[2];
+                if(!$this->validate("name", $seederName)){
+                    $this->error(["The supplied seeder name '{$seederName}' is invalid. Please specify a valid name", "", ""]);
+                }
+
+                //Check if seeder file for table exist
+                $seederFile = $this->configs->seederDir."/".$seederName.".php";
+
+                if(!file_exists($seederFile)){
+                    $this->error(["The seeder file ", $seederFile, " does not not exist, try creating one with the 'create:seeder' command"]);
+                }
+
+                //import the seeder file
+                require($seederFile);
+
+                /**
+                 * $data        : Holds the data to seed
+                 * $recordSize  : Holds the record size to be seeded
+                 * $tableName   : Holds the table name to perform seeding on
+                 */
+
+                //Execute seeding
+                $exec = $this->app->db->seed($tableName)->data($data, $recordSize);
+                
+                if($exec){
+                    $this->success([$recordSize.pluralizer(" record", "s:-1", $recordSize)." ".pluralizer("has", "have", $recordSize)." been seeded succefully to the table: ","","'".$tableName."'"], false);
+                }else{
+                    $this->error(["Error occured while seeding data to the table: ", $tableName, ""]);
+                }
+                
+            } 
     }
 }
 ?>

@@ -38,6 +38,7 @@ $servicesDir        = $classDir."/services";
 //Data and Schema Directories
 $schemaDir          = $setupDir."/schemas";
 $dataDir            = $setupDir."/data";
+$seederDir          = $setupDir."/seeders";
 
 //Vendor
 $vendorDir          = $mainDir."/lib/vendor";
@@ -94,6 +95,7 @@ return (object) [
     "traitsDir"         => $traitsDir,
     "functionsDir"      => $functionsDir,
     "schemaDir"         => $schemaDir,
+    "seederDir"         => $seederDir ,
     "dataDir"           => $dataDir,
     "vendorDir"         => $vendorDir,
     "appsDataDir"       => $appsDataDir,

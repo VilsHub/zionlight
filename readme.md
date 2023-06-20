@@ -20,7 +20,7 @@ composer create-project --prefer-dist vilshub/zionlight yourProjectName dev-mast
   php zlight
   ```
 
-  ![Zion light commands](https://i.imgur.com/2dJxkmB.png)
+  ![Zion light commands](https://i.imgur.com/QfUPLyN.png)[Imgur]
 
 ## Features ##
 Aside from the conventional features which backend frameworks have, zlight has the following features:
@@ -36,4 +36,3 @@ Aside from the conventional features which backend frameworks have, zlight has t
 ## Documentation ##
 
 The documentation for this framework will be provided soon, you may **Watch**, this repo for further updates.
-
