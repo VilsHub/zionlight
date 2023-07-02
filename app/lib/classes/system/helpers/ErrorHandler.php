@@ -9,6 +9,19 @@
       function listen($errorNumber, $errorMessage, $file, $lineNumber){
         ErrorHandler::throwError($errorNumber, $errorMessage, $file, $lineNumber);
       }
+      function handleFatalError() {
+        $error = error_get_last();
+        if ($error !== null && $error['type'] === E_ERROR) {
+            // Handle the fatal error here
+            // You can log the error, send an email, or perform any necessary actions
+            dd($error);
+        }
+      }
+      function handleExceptions($exception){
+        dd($exception);
+      }
+      register_shutdown_function('handleFatalError');
+      set_exception_handler('handleExceptions');
       set_error_handler('listen', E_USER_NOTICE);
     }
   
@@ -68,5 +81,7 @@
       if (getAppEnv("ENVIRONMENT") != "production") getErrorDetails($custom);
       die();
     }
+
+   
   }
 ?>

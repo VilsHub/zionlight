@@ -3,7 +3,7 @@ require_once("./app/lib/classes/system/helpers/CLIColors.php");
 class Console extends CLIColors{
     use Commands, Schema, Database, Data;
     public $app, $configs, $dbInfo;
-    private $version  = "1.3.0";
+    private $version  = "1.3.1";
     private $commands =[
         "create" => [
             "middleware",
@@ -466,6 +466,12 @@ class Console extends CLIColors{
                 $tableName = "";
                 $schemaName="";
                 
+                //validate template file name
+                if(!$this->validate("name", $argv[2])){
+                    $this->error(["The schema file name: ".$argv[2]." name must be alphabets only, including '- and _', the name: ", $argv[2], " does not match"]);
+                }
+
+
                 //write to new schema file
                 $newSchemaFile = $dir."/".strtolower($argv[2]).".sql";
                 $supportedDDS = ["-create.table", "-alter.table", "-rename.table"];

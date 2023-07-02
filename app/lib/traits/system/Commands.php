@@ -312,11 +312,10 @@ trait Commands {
             $this->error(["Please specify the ", $object, " name"]);
         }
 
-        if($object != "db" && $object !=  "display"){
+        if($object != "db" && $object !=  "display" && $object !=  "schema"){
             //name must only be alphabets
             if(!$this->validate("alpha", $argv[2])){
-                $label = strtolower($object) == "schema"?"schema":$argv[2];
-                $this->error(["The ".ucwords($label)." name must be alphabets only, the name: ", $argv[2], " is not all alphabets"]);
+                $this->error(["The ".ucwords($argv[2])." name must be alphabets only, the name: ", $argv[2], " is not all alphabets"]);
             }
         }
     

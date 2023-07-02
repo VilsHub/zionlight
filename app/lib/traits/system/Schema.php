@@ -124,7 +124,7 @@ trait Schema {
             if($track["status"]) $tracked = true;
         }else{// tracked, just reset
             $reset = $this->resetSchema($name, $tableName, false);
-            if($reset["code"] == "r1") $tracked = true;
+            if($reset["code"] == "r1" || $reset["code"] == "r5") $tracked = true;
         }
         return $tracked;
     }
@@ -203,7 +203,7 @@ trait Schema {
         }
     }
     private function writeSchema($newSchemaFile, $schemaTemplateName, $schemaName, $tableName, $properties){
-        $schemaContent =  $this->getTemplate("schema", $schemaTemplateName, $properties);
+        $schemaContent =  $this->getTemplate("schema", $schemaTemplateName, $properties);   
         if($this->executeWrite($newSchemaFile, $schemaContent)){
             //track schema file
             return $this->trackCreatedSchema($schemaName, $tableName);
@@ -234,14 +234,14 @@ trait Schema {
     private function resetSchema($name, $tableName=null, $rebuild=true){
         //Check track State
         $trackTableName = $this->trackTableName($name);
-        
+    
         $replace = ($tableName != null)? true: false;
        
         $targetTable = "";
        
         if(strlen($trackTableName)){
             //reset
-
+           
             try {
                 // drop old
                 if($replace) {
@@ -256,7 +256,6 @@ trait Schema {
                 if($run["status"]){
                     //reset in tracker
                     $this->unlogSchema($name, $targetTable);
-                    
                     if($rebuild){
                         $rebuildSchema = $this->buildSchema($name);
                         if($rebuildSchema["status"]){
@@ -273,7 +272,13 @@ trait Schema {
                             "code"=>"r1"// reset successfully
                         ];
                     }
+                }else{
+                    return [
+                        "status"=>true,
+                        "code"=>"r5"// no table found for dropping
+                    ];
                 }
+                dd($trackTableName);
             }catch (\Throwable $th) {  
                 $errorMessage = "";
                 $errorMessage .= "Schema        : ". $name." \n";
@@ -429,7 +434,8 @@ trait Schema {
         if ($this->app->pingDatabaseServer()["status"]){
             $this->databaseCheck($this->dbInfo["db"]);
             $trackState = $this->configs->db->tableExist("zlight_schema_track");
-            if($trackState["rowCount"] == 0){// create track table
+
+            if(!$trackState){// create track table
                 $this->createTrackTable();
             }
         }

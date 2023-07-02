@@ -22,7 +22,9 @@ function writeEnvValues($data){
     //Write values
     $_SERVER[$key]  = $value;
     $_ENV[$key]     = $value;
-    putenv("{$key}={$value}");
+    if (strlen($key)){
+        putenv("{$key}={$value}");
+    }
 
     return [
         "key"   => $key,
@@ -159,10 +161,15 @@ function getAppEnv($key){
 }
 
 function getProtectedPropertyValue(&$obj, $property){
-    $reflection =  new ReflectionClass($obj);
-    $property = $reflection->getProperty($property);
-    $property->setAccessible(true);
-    return $property->getValue($obj);
+    if ($obj != null){
+        $reflection =  new ReflectionClass($obj);
+        $property = $reflection->getProperty($property);
+        $property->setAccessible(true);
+        return $property->getValue($obj);
+    }else{
+        return null;
+    }
+    
 }
 
 function getErrorMessage(&$errorObj, $errorNumber=null){

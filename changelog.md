@@ -1,3 +1,15 @@
+# Version 1.2.1
+
+## Optimised
+- Error handler to support capturing fatal error
+- Optimised schema name validation during creation
+
+
+## Fixed
+- Error caused by backward compatibility with dbAnt library
+- Error caused by blank lines in .env file
+
+
 # Version 1.2.0
 
 ## Added

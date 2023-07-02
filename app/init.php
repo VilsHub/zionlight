@@ -5,13 +5,15 @@ use vilshub\router\Router;
 //Load required files
 require_once(dirname(__DIR__)."/app/lib/vendor/autoload.php");
 
+//register error handler
+ErrorHandler::listenForErrors();
+
 //Load config files
 $config       = require_once(dirname(__DIR__)."/config/app.php");
 $routes       = require_once(dirname(__DIR__)."/http/routes/content.php");
 $socketFiles  = require_once(dirname(__DIR__)."/http/routes/socket.php");
 
-//register error handler
-ErrorHandler::listenForErrors();
+
 
 //System applications
 $systemAppsHandler = require_once(dirname(__DIR__)."/config/applications.php");
@@ -33,6 +35,7 @@ $app->router->wordSeperator    = "-";
 $app->boot(new FileSystem($config->envFile));
 
 if(Request::isForApplication($systemAppsHandler->ids)){ //application
+  
   $systemApp    = $systemAppsHandler->{Request::$id};
   $webHandler   = $systemApp->routeFiles->webHandler;
   $apiHandler   = $systemApp->routeFiles->apiHandler;
@@ -46,10 +49,12 @@ if(Request::isForApplication($systemAppsHandler->ids)){ //application
 
 
 }else{ //system
+
   if(Request::isFor("web", $config->apiId, 1)){
     require_once(dirname(__DIR__)."/http/handlers/web.php");
   }else{
     require_once(dirname(__DIR__)."/http/handlers/api.php");
   }
+  
 }
 ?>
