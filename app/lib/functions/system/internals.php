@@ -52,96 +52,105 @@ function setupEnvironment($environment, &$app){
 			break;
 	}
 
+}
+
+function setupDBConnection(&$app, $target){
+
     if(getAppEnv("DB_APP") === "true"){//setup db connection
         $db_init	= false; 
         $db         = null;
         $xPDO       = null;
         $pdo        = null;
+        $target     = strtolower($target);
 
-        if(getAppEnv("DB_SETUP_CHECK") === "true"){
+        $db_host	= getAppEnv("DB_HOST");
+        $db_db	    = getAppEnv("DB_DATABASE");
+        $db_user	= getAppEnv("DB_USER");
+        $db_pass	= getAppEnv("DB_PASSWORD");
+        $db_charset	= getAppEnv("DB_CHARSET");
+        $db_ssl     = getAppEnv("DB_SSL");
+        $db_cert    = $app->config->miscFiles->db_certificate;
 
-            $serverStatus   = $app->pingDatabaseServer();
-            if ($serverStatus["status"]){
-                $db_init    = $serverStatus["db_init"];
-                $dbStatus   = $app->databaseInitCheck();
-            }
-            
-        }else{
-            $db_host	= getAppEnv("DB_HOST");
-            $db_db	    = getAppEnv("DB_DATABASE");
-            $db_user	= getAppEnv("DB_USER");
-            $db_pass	= getAppEnv("DB_PASSWORD");
-            $db_charset	= getAppEnv("DB_CHARSET");
-            $db_ssl     = getAppEnv("DB_SSL");
-            $db_cert    = $app->config->miscFiles->db_certificate;;
 
-            $opt = [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                PDO::ATTR_EMULATE_PREPARES   => false
-            ];
+        //Configure PDO
+        $opt = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false
+        ];
 
-            if ($db_ssl === "true") {
-                $errorMessage   = $app->getErrorMessage("ze0001");
-                $msg            = $errorMessage["cli"];
-            
-                if(PHP_SAPI != "cli") $msg = $errorMessage["web"];
-            
-                Validator::validateFile($db_cert, $msg);
-                $opt[PDO::MYSQL_ATTR_SSL_CA] =  $db_cert;
-            }
+        //Setup SSL if specified
+        if ($db_ssl === "true") {
+            $errorMessage   = $app->getErrorMessage("ze0001");
+            $msg            = $errorMessage["cli"];
+        
+            if(PHP_SAPI != "cli") $msg = $errorMessage["web"];
+        
+            Validator::validateFile($db_cert, $msg);
+            $opt[PDO::MYSQL_ATTR_SSL_CA] =  $db_cert;
+        }
 
-            try {
+        try {
 
+            if ($target == "system"){
+                $serverStatus   = $app->pingDatabaseServer();
+
+                //PDO Connection instance without DB
                 $xdsn   = "mysql:host={$db_host};charset={$db_charset}";	
                 $xPDO   = new PDO($xdsn, $db_user, $db_pass, $opt);
-    
+
+            }else if ($target == "app"){
+
+                //PDO Connection instance with DB
                 $dsn    = "mysql:host={$db_host};dbname={$db_db};charset={$db_charset}";
                 $pdo 	= new PDO($dsn, $db_user, $db_pass, $opt);
 
+                //DBAnt Connection instance
                 $db 	= new DBAnt($pdo); 
 
-            } catch(\Throwable $th){
-   
-                $type = (is_array($th->errorInfo)) ? "array":"string";
-                
-                if ($type == "array"){
-                    $errorNumber = $th->errorInfo[1];    
-                    $errorMessage = $app->getErrorMessage($errorNumber);
-                    if(PHP_SAPI != "cli"){
-                        ErrorHandler::throwError($errorNumber, $errorMessage["web"], null, null, null);
-                    }else{
-                        echo "\n";
-                        $app->write($errorMessage["cli"], "light_red", "black");
-                        echo "\n";
-                        die();
-                    }
-                    die();
-                }else{
-                    $errorMessage = $app->getErrorMessage(1);
-                    if(PHP_SAPI != "cli"){
-                        ErrorHandler::throwError(null, $errorMessage["web"], null, null, null);
-                    }else{
-                        echo "\n";
-                        $app->write($errorMessage["cli"], "light_red", "black");
-                        echo "\n";
-                        die();
-                    }
-                    die();
-                }  
+            }
+            
+        } catch(\Throwable $th){
 
-            }           
-        }
-    
-        //connection   
-        $app->config->pdo   = $db_init? $dbStatus["pdo"]:$pdo;   
-        $app->config->xPDO  = $db_init? $serverStatus["xPDO"]:$xPDO;   
-        $app->config->db    = $db_init? $dbStatus["db"]:$db;   
+            $type = (is_array($th->errorInfo)) ? "array":"string";
+            
+            if ($type == "array"){
+                $errorNumber = $th->errorInfo[1];    
+                $errorMessage = $app->getErrorMessage($th, $errorNumber);
+                if(PHP_SAPI != "cli"){
+                    ErrorHandler::throwError($errorNumber, $errorMessage["web"], null, null, null);
+                }else{
+                    echo "\n";
+                    $app->write($errorMessage["cli"], "light_red", "black");
+                    echo "\n";
+                    die();
+                }
+                die();
+            }else{
+                $errorMessage = $app->getErrorMessage(1);
+                if(PHP_SAPI != "cli"){
+                    ErrorHandler::throwError(null, $errorMessage["web"], null, null, null);
+                }else{
+                    echo "\n";
+                    $app->write($errorMessage["cli"], "light_red", "black");
+                    echo "\n";
+                    die();
+                }
+                die();
+            }  
+
+        } 
+
+
+        //connection in  
+        $app->config->pdo   = $target == "app"?$pdo:null;   
+        $app->config->xPDO  = $target == "system"? $serverStatus["xPDO"]:$xPDO;   
+        $app->config->db    = $target == "app"?$db:null;   
         $app->db            = $app->config->db;
         
     }
-
 }
+
 function setupLogging($logFile){
     ini_set("error_log", $logFile);
 }
@@ -196,5 +205,10 @@ function getErrorMessage(&$errorObj, $errorNumber=null){
         "web" => $wMsg,
         "cli" => $cMsg
     ];
+}
+
+function appInstance(){
+    global $app;
+    return $app;
 }
 ?>

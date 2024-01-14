@@ -1,8 +1,8 @@
 <?php
 trait Database{
     // Database starts
-    private function databaseCheck($name){
-        if(!$this->databaseExist($name)){
+    private function databaseCheck($name, $target="app"){
+        if(!$this->databaseExist($name, $target)){
             $msg = $this->getMargin(105)."\n";
             $msg .= "  Database initialization has not been executed. Please run the command: ";
             $this->write($msg, "white", "red");
@@ -13,18 +13,23 @@ trait Database{
             die;
         }
     }
-    private function databaseExist($name){
+    private function databaseExist($name, $target="app"){
         if(strlen($name) == 0){
             return false;
         }else{
             $sql = "SHOW DATABASES LIKE '{$name}'";
-            $run = $this->configs->pdo->query($sql);
+            if($target == "app"){
+                $run = $this->configs->pdo->query($sql);
+            }else{
+                $run = $this->configs->xPDO->query($sql);
+            }
+            
             return $run->rowCount() > 0;
         }
     }
     private function executeCreateDb($name){
         $sql = "CREATE DATABASE `{$name}`";
-        $run = $this->configs->pdo->query($sql);
+        $run = $this->configs->xPDO->query($sql);
         return $run->rowCount() > 0;
     }
     private function createDatabase(){
@@ -38,7 +43,7 @@ trait Database{
     
         if(!$exist){ // create it
             
-            if(env("DB_DATABASE") == $name){ //Already set
+            if(getAppEnv("DB_DATABASE") == $name){ //Already set
                 $this->warning(["The database: ", "'{$name}'", "is already set"]);
             }else{ //new database name
                 $createDb = $this->executeCreateDb($name);
@@ -192,7 +197,7 @@ trait Database{
         }
     }
     private function pcd(){
-        $this->info(["Your current database is: ",env("DB_DATABASE"),""]);
+        $this->info(["Your current database is: ",getAppEnv("DB_DATABASE"),""]);
     }
     // Database ends
 }

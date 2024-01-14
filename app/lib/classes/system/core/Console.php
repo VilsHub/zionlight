@@ -2,8 +2,8 @@
 require_once("./app/lib/classes/system/helpers/CLIColors.php");
 class Console extends CLIColors{
     use Commands, Schema, Database, Data;
-    public $app, $configs, $dbInfo;
-    private $version  = "1.3.1";
+    public $app, $configs, $dbInfo, $fileSystem, $argc, $argv;
+    private $version  = "1.4.0";
     private $commands =[
         "create" => [
             "middleware",
@@ -59,10 +59,16 @@ class Console extends CLIColors{
     function __construct($fileSystemObj, $app){
         
         parent::__construct();
-        $app->boot($fileSystemObj);
+        
         global $argc, $argv;
         $this->app      = $app;
-        $this->configs  = $app->config;
+        $this->argc      = $argc;
+        $this->argv      = $argv;
+        $this->configs  = $app->config;  
+        $this->fileSystem = $fileSystemObj;
+
+        $this->app->boot($this->fileSystem);
+
         $this->dbInfo   = [
             "db"            => getAppEnv("DB_DATABASE"),
             "isDBApp"       => getAppEnv("DB_APP"),
@@ -72,13 +78,14 @@ class Console extends CLIColors{
             "charset"       => getAppEnv("DB_CHARSET")
         ]; 
 
-        
+
         if($argc <= 1){
             $this->showAllOptions();
         }else{
             //call command manager
             $this->commandManager($argv[1]);
         }
+
     }
 
 
@@ -96,7 +103,7 @@ class Console extends CLIColors{
         $list .= "\n\t".$this->color(" - Create controller", "yellow", "black")."\t".$this->color("create:controller", "green", "black")." controllerName";
         $list .= "\n\t".$this->color(" - Create model", "yellow", "black")." \t".$this->color("create:model", "green", "black")." ModelName";
         $list .= "\n\t".$this->color(" - Create queries bank", "yellow", "black")." \t".$this->color("create:queriesBank", "green", "black")." queriesbankName";
-        $list .= "\n\t".$this->color(" - Create middleware", "yellow", "black")." \t".$this->color("create:middleware", "green", "black")." middlewareName";
+        $list .= "\n\t".$this->color(" - Create middleware", "yellow", "black")." \t".$this->color("create:middleware", "green", "black")." middlewareName [options ...]";
         $list .= "\n\t".$this->color(" - Create service", "yellow", "black")." \t".$this->color("create:sevice", "green", "black")." serviceName";
         $list .= "\n\t".$this->color(" - Create trait", "yellow", "black")." \t".$this->color("create:trait", "green", "black")." traitName";
         $list .= "\n\t".$this->color(" - Create schema", "yellow", "black")." \t".$this->color("create:schema", "green", "black")." schemaName";
@@ -143,10 +150,16 @@ class Console extends CLIColors{
     }
     private function commandManager($command){
         $CommandInfo = $this->getAction($command);
-        $exec = $CommandInfo["command"];
+        $exec = strtolower($CommandInfo["command"]);
         $this->validateCommand($exec);
-        
-        switch (strtolower($exec)){
+
+        if (!($this->dbInfo["isDBApp"] && $exec == "create" && $CommandInfo["object"] == "db")){// apps command
+            $this->app->DBInit("app");
+        }else{ //system command
+            $this->app->DBInit("system");
+        }
+       
+        switch ($exec){
             case 'create':
                 $object = $CommandInfo["object"];
                 $this->validateCommandActionObject($exec, $object);
@@ -386,12 +399,32 @@ class Console extends CLIColors{
                 }
                 break;
             case 'middleware':
+                $options = $this->getOptions("", ["from:"]);
+                $from=false;
                 $dir = $this->configs->middlewaresDir;
+                $fromFile="";
+                $templateDir = $this->configs->appRootDir."/app/assets/templates";
+                $templateName = "middleware";
+                $templateType = "class";
+               
 
-                $middlewareContent =  $this->getTemplate("class", "middleware",  ["{$name}" =>["lines" => [6], "placeHolder" => "className"]]);
+                if (isset($options["from"]) && isset($options["from"]["data"])){
+                    
+                    $fromFile=$templateDir."/classes/middlewares/".$options["from"]["data"].".zlt";
 
+                    if (file_exists($fromFile)){
+                        $templateName = $options["from"]["data"];
+                        $templateType = "pre-madeMiddleware";
+                    }else{
+                        $this->warning(["No pre-made middleware for '", $options['from']['data'], "' the default middleware content will be generated"]);
+                    }
+                }
+
+                $middlewareContent =  $this->getTemplate($templateType, $templateName,  ["{$name}" =>["lines" => [6], "placeHolder" => "className"]]);
+               
                 //write to new middleware file
                 $newMiddlewareFile = $dir."/".$name.".php";
+               
                 if($this->executeWrite($newMiddlewareFile, $middlewareContent)){
 
                     //Make newly created class visible to composer
@@ -774,6 +807,8 @@ class Console extends CLIColors{
  
         if($templateType == "class"){
             $dir .= "classes/";
+        }else if($templateType == "pre-madeMiddleware"){
+            $dir .= "classes/middlewares/";
         }else if($templateType == "schema"){
             $dir .= "schemas/";
         }else if($templateType == "display"){

@@ -1,0 +1,28 @@
+<?php
+/**
+* This middleware handles authentication 
+* @author Your name
+*/ 
+class className extends Middleware
+{
+    use Auth;
+    
+    /**
+     * Supported hash type are: passwordHashing
+     *
+     * tableName        : The name of user table
+     * columns.id       : The column in the tableName which holds the user names
+     * columns.password : The column in the table which holds the hash passoword of user
+     */
+
+    public $hashType = "passwordHashing";
+
+    function __construct(Loader $loader){
+        parent::__construct($loader);
+        $this->schemaData["tableName"]              = "targetTableNameHere";
+        $this->schemaData["columns"]["id"]          = "usernameColumnNameHere";
+        $this->schemaData["columns"]["password"]    = "passwordColumnNameHere";
+    }
+
+}
+?>

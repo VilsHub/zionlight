@@ -89,5 +89,14 @@ use vilshub\helpers\Style;
             return $contents;
         }
     }
+
+    public static function upload($tmpFile, $path, $name){
+        if(is_dir($path)){
+            $des = $path."/".$name;
+            if(!file_exists($des)){
+                return (move_uploaded_file($tmpFile, $des));
+            }
+        }
+    }
  }
 ?>

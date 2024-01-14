@@ -156,8 +156,9 @@ trait Schema {
         if($schemaData["status"]){
             //check build
             if(!$isBuilt){
+               
                 //build
-                if(strlen($schemaData["data"]) == 0){//no data to be built
+                if(strlen($schemaData["data"]) == 0){//no data to be built 
                     return [
                         "status"=>false,
                         "code"=>4 //no schema file content
@@ -165,10 +166,13 @@ trait Schema {
                 }else{//has data to be built
                     try {
                         $this->configs->db->disableForeignKeyCheck();
-                        $run = $this->configs->db->run($schemaData["data"]);
+                        $this->configs->db->run($schemaData["data"]);
                         $this->configs->db->enableForeignKeyCheck();
                         
-                        if($run["status"]){
+                        //check if schema is created
+                        $exist = $this->configs->db->tableExist($schemaData["tableName"]);
+
+                        if($exist){
                             //log schema
                             $this->logSchema($name, $schemaData["tableName"]);
                             return [
@@ -176,7 +180,8 @@ trait Schema {
                                 "code"=>1
                             ];
                         }
-                    }catch (\Throwable $th) {        
+
+                    }catch (\Throwable $th) {    
                         $errorMessage = "";
                         $errorMessage .= "Schema        : ". $name." \n";
                         $errorMessage .= "Error number  : ".$th->errorInfo[1]."\n";
@@ -317,6 +322,7 @@ trait Schema {
             foreach ($missingSchema as $key => $value) {
                 $name = str_replace(".sql", "", $value);
                 $state =  $this->buildSchema($name);
+
                 if($state["status"]){
                     if($state["code"] == 1){
                         $this->success(["The schema: '{$name}' has been built successfully", "",""], false);
@@ -329,7 +335,7 @@ trait Schema {
             }
             
             if($totalMissing == 0){
-                $this->warning(["The new schema found", "",""]);
+                $this->warning(["No new schema found", ""," Try targeting a specific schema or tracked schema"]);
             }
         }else if($mode == "tracked"){
             if($totalTracked>0){

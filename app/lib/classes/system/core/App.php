@@ -25,11 +25,14 @@ class App extends CLIColors{
             CSRF::generateSessionToken($this->config->CSRFName);
         }
 
-
         setupLogging($this->config->logFile);
         loadEnv($fileSystem, $this);
         setupEnvironment(getAppEnv("ENVIRONMENT"), $this);
         
+    }
+
+    public function DBInit($target){
+        setupDBConnection($this, $target);
     }
 
     public function setPageTitle($value){
@@ -228,12 +231,14 @@ class App extends CLIColors{
              $wMsg .= "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>DATABASE NOT FOUND</span><br/>";
              $wMsg .= "<br/>Cannot connect to the configured database '".getAppEnv("DB_DATABASE")."'<br/>";
              $wMsg .= "<br/><span style='color:black;'>Please go the config file '<span style='font-weight: bold;'>{$this->config->envFile}</span>' and supply the database details for the current environment";
+             $wMsg .= "<br/><span style='color:black;'>You can also run the command ''<span style='font-weight: bold;'>php zlight create:db</span>' This will create a new database";
              $wMsg .= "<br/><span style='color:black;'>Run the command when done: '<span style='font-weight: bold;'>php zlight initialize:db</span>'. This will guide you through a quick DB initialization process</span>";
  
              //CLi message
              $cMsg .= "DATABASE NOT FOUND ERROR\n\n";
-             $cMsg .= "Cannot find the target database\n";
-             $cMsg .= "\nPlease go the config file '".$this->color($this->config->envFile, "yellow","black").$this->color("' and supply the database details for the current environment\nRun the command when done: '", "light_red","black").$this->color("php zlight initialize:db", "yellow", "black").$this->color("'. This will guide you through a quick DB initialization process", "light_red", "black");
+             $cMsg .= "Cannot connect to the configured database '".getAppEnv("DB_DATABASE")."'\n";
+             $cMsg .= "\nYou can also run the command '".$this->color("php zlight create:db", "yellow","black").$this->color("'. This will create a new database", "light_red", "black");
+             $cMsg .= "\n".$this->color("Please go the config file '", "light_red","black").$this->color($this->config->envFile, "yellow","black").$this->color("' and supply the database details for the current environment\nRun the command when done: '", "light_red","black").$this->color("php zlight initialize:db", "yellow", "black").$this->color("'. This will guide you through a quick DB initialization process", "light_red", "black");
         }else if($errorNumber == 3159){
              //Web message
              $wMsg .= "<br/><span style='color:#93381a;text-transform: uppercase;font-weight: bold;'>CCANNOT CONNECT TO DATABASE SERVER</span><br/>";
